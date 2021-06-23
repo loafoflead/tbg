@@ -1,0 +1,8 @@
+{Red,DarkGray}You Died. :(
+Oops! looks like you're dead :( $thats a shame
+{Red}Game Over{end}.
+{Black,White}You died, and the game is over. You can restart if you want, you do have all the power{end}.
+{Yellow,Green}ooooo youuu dieeeddddd
+Cringe gamer loss </3
+{White,Green}YOU WON!!!!!{end,end}- oh wait, you {Red}died. {end}$Oh well, you can reload the game now if you want.
+## if(player.hp <= 0) { game_over(); }
