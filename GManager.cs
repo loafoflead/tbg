@@ -30,7 +30,7 @@ public class GManager {
 
         box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
         box.nl();
-        box.Print(env.description);
+        box.Print(env.current_room.desc);
         box.print_screen();
 
         while (is_running == true) {

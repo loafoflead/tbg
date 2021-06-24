@@ -8,10 +8,11 @@ public class Environment {
 
     
 
-    public List<room_short> room_tags;
+    public List<room_short> rooms;
     private XmlNodeList room_list;
     public XmlDocument current_doc;
-    private string room_file_name;
+    public string room_file_name; //name if the xml file containing the rooms
+
 
     public List<Item> all_items;
     public List<Interactable> all_interactables;
@@ -38,7 +39,7 @@ public class Environment {
 
 
     
-    public List<direction> room_directions;
+    
 
     public bool forwards;
     public bool left;
@@ -55,12 +56,12 @@ public class Environment {
 
     public Environment(GManager g) {
         gm = g;
-        room_tags = new List<room_short>();
+        rooms = new List<room_short>();
     }
 
     public void load_env(string filenam) {
         string filename = "environments\\" + filenam + "\\" + filenam;
-        room_tags = new List<room_short>();
+        rooms = new List<room_short>();
         room_interctable_tags = new List<string>();
         room_item_tags = new List<string>();
         room_file_name = filename + "_room.xml";
@@ -68,7 +69,7 @@ public class Environment {
         current_doc.Load(room_file_name);
         room_list = current_doc.GetElementsByTagName("room");
         foreach (XmlNode nod in room_list) {
-            room_tags.Add(new room_short{
+            rooms.Add(new room_short{
                 tag = nod.ChildNodes.Item(1).InnerText,
                 id = int.Parse(nod.ChildNodes.Item(0).InnerText),
                 associated_node = nod,
@@ -79,7 +80,10 @@ public class Environment {
             });
         }
 
-        loadRoom(room_tags[0].tag);
+        load_rooms();
+
+
+        loadRoom(rooms[0].tag);
 
         all_interactables = new List<Interactable>();
         load_env_interactables(filename);
@@ -87,6 +91,18 @@ public class Environment {
         load_env_items(filename);
         
     }
+
+    public void load_rooms() {
+
+        foreach(room_short rs in rooms) {
+            loadRoom_ind(rs);
+        }
+
+    }
+
+
+
+
     //works
     void load_env_items(string filename) {
         item_doc = new XmlDocument();
@@ -129,10 +145,30 @@ public class Environment {
         }
     }
 
+    void loadRoom_ind(room_short room_) {
+
+        current_room = room_;
+
+        room_.front_locked = false;
+        room_.back_locked = false;
+        room_.left_locked = false;
+        room_.right_locked = false;
+
+        room_.id = int.Parse(room_.associated_node.ChildNodes.Item(0).InnerText);
+
+        room_.name = room_.associated_node.ChildNodes.Item(2).InnerText;
+        room_.tag = room_.associated_node.ChildNodes.Item(1).InnerText;
+        
+        room_.desc = room_.associated_node.ChildNodes.Item(3).InnerText;
+
+        get_ind_dirs(room_);
+
+    }
+
     //works
     public void loadRoom(string tag) {
-        current_room = room_tags.Find(room_short => room_short.tag == tag);
-        forwards = false;
+        current_room = rooms.Find(room_short => room_short.tag == tag);
+        /*forwards = false;
         left = false;
         right = false;
         backwards = false;
@@ -152,11 +188,93 @@ public class Environment {
         } catch {
             room_interctable_tags = new List<string>();
             room_interctable_tags.Add(rrom.ChildNodes.Item(5).InnerText);
+        }*/
+    }
+
+
+    void get_ind_dirs(room_short rs) {
+
+        XmlNode dirs = rs.associated_node.ChildNodes.Item(4); //this gets the 'direction' tag from the file
+        rs.room_directions = new List<direction>();
+
+        int dir = 0;
+        foreach(XmlNode child in dirs) { //runs through each direction, 'left', 'right', etc...
+            if (child.ChildNodes.Item(0).InnerText != "") {
+                switch (dir) {
+                    case 0:
+                        left = true;
+                        load_individual_dir(direction_enum.left, child, rs);
+                    break;
+
+                    case 1:
+                        right = true;
+                        load_individual_dir(direction_enum.right, child, rs);
+                    break;
+
+                    case 2:
+                        forwards = true;
+                        load_individual_dir(direction_enum.forwards, child, rs);
+                    break;
+
+                    case 3:
+                        backwards = true;
+                        load_individual_dir(direction_enum.backwards, child, rs);
+                    break;
+
+                    default:
+                        break;
+                }
+                dir ++;
+            }
         }
+
+    }
+
+    void load_individual_dir(direction_enum dir, XmlNode direction_node, room_short room) {
+
+        try{ 
+            direction direc = new direction{
+
+            corresponding_enum = dir,
+            direction_str = dir.ToString(),
+            direction_int = (int) dir,
+
+            direction_leads = direction_node.ChildNodes.Item(0).InnerText,
+            action_dialogue = direction_node.ChildNodes.Item(1).InnerText,
+            is_locked = System.Convert.ToBoolean(int.Parse(direction_node.ChildNodes.Item(2).InnerText)),
+            item_locked_dialogue = direction_node.ChildNodes.Item(3).InnerText,
+            item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
+            tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
+            item_required = direction_node.ChildNodes.Item(5).InnerText,
+            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+
+            };  
+            room.room_directions.Add(direc);
+        } catch {
+            direction direc = new direction{
+
+            corresponding_enum = dir,
+            direction_str = dir.ToString(),
+            direction_int = (int) dir,
+
+            direction_leads = direction_node.ChildNodes.Item(0).InnerText,
+            action_dialogue = direction_node.ChildNodes.Item(1).InnerText,
+            is_locked = false,
+            item_locked_dialogue = direction_node.ChildNodes.Item(3).InnerText,
+            item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
+            tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
+            item_required = direction_node.ChildNodes.Item(5).InnerText,
+            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+
+            }; 
+            room.room_directions.Add(direc);
+        }
+
+
     }
 
     //to be tested
-    void getDirs(XmlNode room) {
+    /*void getDirs(XmlNode room) {
         XmlNode dirs = room.ChildNodes.Item(4); //this gets the 'direction' tag from the file
         room_directions = new List<direction>();
         int dir = 0;
@@ -189,10 +307,10 @@ public class Environment {
                 dir ++;
             }
         }
-    }
+    }*/
 
     //to be tested
-    void load_dir(direction_enum dir, XmlNode direction_node) {
+/*    void load_dir(direction_enum dir, XmlNode direction_node) {
         try{ 
             direction direc = new direction{
 
@@ -230,10 +348,10 @@ public class Environment {
             }; 
             room_directions.Add(direc);
         }
-    }
+    }*/
 
     public int Move(direction_enum direction_Enum) {
-        foreach(direction direc in room_directions) {
+        foreach(direction direc in current_room.room_directions) {
             if (direc.direction_int == (int) direction_Enum) {
                 if (direc.is_locked != true) {
                     effect_direction(direc);
@@ -260,7 +378,7 @@ public class Environment {
 
     public int Unlock(direction direct) {
         foreach(Item it in gm.player.inv.player_inventory) {
-            foreach(direction dir in room_directions) {
+            foreach(direction dir in current_room.room_directions) {
                 if (it.tag == dir.item_required) {
                     dir.is_locked = false;
                     gm.box.Print(dir.item_unlock_dialogue);
@@ -271,7 +389,7 @@ public class Environment {
         return 0;
     }
     public int Unlock_enum(direction_enum direction_Enum) {
-        foreach(direction direc in room_directions) {
+        foreach(direction direc in current_room.room_directions) {
             if (direc.corresponding_enum == direction_Enum) {
 
                 if(gm.player.inv.player_inventory.Contains(get_item_from_tag(direc.item_required))) {
@@ -300,7 +418,7 @@ public class Environment {
 
     //works
     public XmlNode get_room_tag(string ta) {
-        foreach(room_short rs in room_tags) {
+        foreach(room_short rs in rooms) {
             if (rs.tag == ta) { //searches all the room tags for a match with given room tag
                 System.Console.WriteLine("found room tag: " + rs.associated_node.ChildNodes.Item(1).InnerText);
                 return rs.associated_node;
@@ -429,7 +547,7 @@ public class Environment {
     }
 
     public direction get_direction(string name) {
-        foreach(direction dir in room_directions) {
+        foreach(direction dir in current_room.room_directions) {
             if (dir.direction_str == name) {
                 return dir;
             }
@@ -470,10 +588,10 @@ public class Environment {
 
     public List<Item> get_items_in_room() {
         List<Item> ret_list = new List<Item>();
-        foreach (Item it in all_items) { //search through every item in the environment
-            foreach(string h in room_item_tags) { //then through all items in the room
-                if (h == it.tag) { //if any of the tags matches any of the items, add it to the list of item to return
+        foreach (Item it in all_items) { //search through every item in add it to the list of item to return
                     ret_list.Add(it);
+            foreach(string h in room_item_tags) { //then through all items in the room
+                if (h == it.tag) { //if any of the tags matches any of the items, 
                 }
             }
         }
@@ -584,11 +702,19 @@ public class direction {
 }
 
 public class room_short {
-        public string tag;
-        public int id;
-        public XmlNode associated_node;
-        public bool front_locked;
-        public bool left_locked;
-        public bool right_locked;
-        public bool back_locked;
-    }
+
+    public List<direction> room_directions;
+
+    public string desc;
+
+
+    public string tag;
+    public string name;
+    public int id;
+    public XmlNode associated_node;
+    public bool front_locked;
+    public bool left_locked;
+    public bool right_locked;
+    public bool back_locked;
+    
+}

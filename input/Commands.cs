@@ -120,7 +120,7 @@ public class Commands {
             case "explore":
             case "check":
             case "look":
-                gm.box.Print(gm.env.description);
+                gm.box.Print(gm.env.current_room.desc);
             break;
 
             case "q":
@@ -204,7 +204,7 @@ public class Commands {
                         break;
 
                         case "dirs":
-                            foreach(direction dirt in gm.env.room_directions) {
+                            foreach(direction dirt in gm.env.current_room.room_directions) {
                                 gm.box.Print("{Magenta}" + dirt.direction_str + ", is_locked: " + dirt.is_locked + ", item_required: " + dirt.item_required + ", leads: " + dirt.direction_leads);
                             }
                         break;
@@ -242,7 +242,7 @@ public class Commands {
                     switch (arguments[1]) {
             
                     case "rooms":
-                        foreach(room_short rom in gm.env.room_tags) {
+                        foreach(room_short rom in gm.env.rooms) {
                             gm.box.Print(rom.tag);
                         }
                     break;
