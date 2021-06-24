@@ -25,11 +25,9 @@ public class Environment {
     public string description;
 
     //                                                      INTERACTABLES & ITEMS 
-    public List<string> room_interctable_tags;
     public XmlDocument interactable_doc;
     public XmlNodeList interactables_xml;
     public string interactable_doc_name;
-    public List<string> room_item_tags;
     public XmlDocument item_doc;
     public XmlNodeList items_xml;
     public string item_doc_name;
@@ -62,8 +60,6 @@ public class Environment {
     public void load_env(string filenam) {
         string filename = "environments\\" + filenam + "\\" + filenam;
         rooms = new List<room_short>();
-        room_interctable_tags = new List<string>();
-        room_item_tags = new List<string>();
         room_file_name = filename + "_room.xml";
         current_doc = new XmlDocument();
         current_doc.Load(room_file_name);
@@ -162,6 +158,21 @@ public class Environment {
         room_.desc = room_.associated_node.ChildNodes.Item(3).InnerText;
 
         get_ind_dirs(room_);
+
+        XmlNode rrom = room_.associated_node;
+
+        try {
+            room_.room_item_tags = new List<string>(rrom.ChildNodes.Item(6).InnerText.Split('/'));
+        } catch {
+            room_.room_item_tags = new List<string>();
+            room_.room_item_tags.Add(rrom.ChildNodes.Item(6).InnerText);
+        }
+        try {
+            room_.room_interactable_tags = new List<string>(rrom.ChildNodes.Item(5).InnerText.Split('/'));
+        } catch {
+            room_.room_interactable_tags = new List<string>();
+            room_.room_interactable_tags.Add(rrom.ChildNodes.Item(5).InnerText);
+        }
 
     }
 
@@ -435,7 +446,7 @@ public class Environment {
 
     public void UseAl(string alias, string verb) {
         foreach(Interactable it in all_interactables) {
-            if (it.aliases.Contains(alias) && room_interctable_tags.Contains(it.tag)) {
+            if (it.aliases.Contains(alias) && current_room.room_interactable_tags.Contains(it.tag)) {
                 UseVerb(it, verb);
             }
         }
@@ -537,7 +548,7 @@ public class Environment {
     public List<Interactable> get_room_interactables() {
         List<Interactable> return_list = new List<Interactable>();
         foreach(Interactable it in all_interactables) {
-            foreach(string itr in room_interctable_tags) {
+            foreach(string itr in current_room.room_interactable_tags) {
                 if (it.tag == itr) {
                     return_list.Add(it);
                 }
@@ -590,7 +601,7 @@ public class Environment {
         List<Item> ret_list = new List<Item>();
         foreach (Item it in all_items) { //search through every item in add it to the list of item to return
                     ret_list.Add(it);
-            foreach(string h in room_item_tags) { //then through all items in the room
+            foreach(string h in current_room.room_item_tags) { //then through all items in the room
                 if (h == it.tag) { //if any of the tags matches any of the items, 
                 }
             }
@@ -704,6 +715,9 @@ public class direction {
 public class room_short {
 
     public List<direction> room_directions;
+    public List<string> room_interactable_tags;
+    public List<string> room_item_tags;
+
 
     public string desc;
 

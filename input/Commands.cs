@@ -130,7 +130,7 @@ public class Commands {
 
             default:
 
-                foreach(string obj_tag in gm.env.room_interctable_tags) {
+                foreach(string obj_tag in gm.env.current_room.room_interactable_tags) {
                     Interactable temp_obj = gm.env.get_interactable_tag(obj_tag);
 
                     foreach(string verb in temp_obj.verbs) {
@@ -222,11 +222,13 @@ public class Commands {
                         case "obj":
                             Interactable temp = gm.env.get_interactable_tag(arguments[2]);
                             temp.item_req = "";
+                            gm.box.Print("{Magenta}" + arguments[2] + " unlocked.");
                         break;
 
                         case "dir":
                             direction tem = gm.env.get_direction(arguments[2]);
                             tem.is_locked = false;
+                            gm.box.Print("{Magenta}" + arguments[2] + " unlocked.");
                         break;
 
                     }
@@ -255,7 +257,7 @@ public class Commands {
                                 }
                             }
                             else {
-                                foreach(string it in gm.env.room_interctable_tags) {
+                                foreach(string it in gm.env.current_room.room_interactable_tags) {
                                     gm.box.Print(it);
                                 }
                             }
@@ -270,7 +272,7 @@ public class Commands {
                                 }
                             }
                             else {
-                                foreach(string it in gm.env.room_item_tags) {
+                                foreach(string it in gm.env.current_room.room_item_tags) {
                                     gm.box.Print(it);
                                 }
                             }
