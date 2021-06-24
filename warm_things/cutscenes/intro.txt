@@ -1,0 +1,3 @@
+{Red,White}Welcome!
+I hope you have fun playing this epic game, make sure to type '?' or 'help' if you need help, thanks!
+{Blue}GOOD LUCK!!!!!! {DarkGray}*press any key to skip cutscenes* *ctrl + c to force quit the game*

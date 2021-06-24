@@ -1,0 +1,82 @@
+<env01item>
+
+    <item>
+
+        <tag>headband</tag>
+        <name>Stasis Headband</name>
+
+        <desc>A tastelessly blue and green colored headband, with the words, '{DarkCyan}ENJOY YOUR STASIS!!!{end}' sewn into it in some shade of light green.</desc>
+
+        <aliases>headband/band/the headband</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>screwdriver</tag>
+        <name>Flathead Screwdriver</name>
+
+        <desc>A flathead screwdriver with a red plastic handle. Maybe it could be used to {Yellow}unscrew{end} something.</desc>
+
+        <aliases>screwdriver/flathead screwdriver</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>blue_keycard</tag>
+        <name>{Blue}Blue Keycard{end}</name>
+
+        <desc>A plastic card with a barcode and a faded {Yellow}blue{end} strip on it. It looks like it could be used to {Yellow}open a door{end} of some kind.</desc>
+
+        <aliases>keycard/blue keycard/the keycard/kaycard with blue stripe</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>magic_wand</tag>
+        <name>{Magenta}Magic{end} {Red}Wand{end}</name>
+
+        <desc>A plastic card with a barcode and a faded {Yellow}blue{end} strip on it. It looks like it could be used to {Yellow}open a door{end} of some kind.</desc>
+
+        <aliases>wand/magic wand/magic stick/funny stick ;)</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>mop</tag>
+        <name>{Yellow}Dirty mop{end}</name>
+
+        <desc>An old, dirty mop. The end of it is still wet.</desc>
+
+        <aliases>mop/the mop/dirty mop</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>staff_key</tag>
+        <name>{DarkGray}Staff key{end}</name>
+
+        <desc>A stainless steel access key. It has a weird futuristic looking pattern on it, and seems important.</desc>
+
+        <aliases>key/the key/staff key</aliases>
+
+    </item>
+
+</env01item>
+
+<!--  TEMPLATE
+    <item>
+
+        <tag></tag>
+        <name></name>
+
+        <desc></desc>
+
+        <aliases></aliases>
+
+    </item>
+-->

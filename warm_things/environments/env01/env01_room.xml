@@ -1,0 +1,300 @@
+<env01>
+
+    <room> 
+
+        <id>0</id>
+
+        <tag>stasis_vault</tag>
+        <name>Stasis Vault</name>
+
+        <desc>A room containing your crew's stasis chambers. The window of the other chambers are foggy and dark. There's a {Yellow}Cupboard{end} on the right wall, next to a drink dispenser with a sign saying 'Out of commission' on it. On the floor you can see a {Yellow}headband{end}, and ahead of you something that looks like a {Yellow}control panel{end}. To your left is a {Yellow}vault door{end}.</desc>
+        
+        <directions>
+            <left>
+                <leads>vault_hallway</leads>
+                <dia>The vault door slides open before you, and you walk through.</dia>
+                <lock>1</lock>
+                <lock_dia>You try and open the vault door, but it refuses to budge. A screen lights up on it with an icon of a {Yellow}keycard{end} with a {Blue}blue{end} strip on it.</lock_dia>
+                <unlock_dia>You scan the blue keycard, and the door slides open</unlock_dia>
+                <lock_reqs>blue_keycard</lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs>cupboard/control_panel/magic_portal</objs>
+        <items>headband</items>
+
+    </room>
+
+    <room> 
+
+        <id>1</id>
+
+        <tag>vault_hallway</tag>
+        <name>Vault Hallway</name>
+
+        <desc>A long steel hallway with flickering LED lights across it's length. There's a {Yellow}vent{end} to your left, and it looks like it's {Yellow}screwed{end} on tight. Ahead of you is another door with a {Blue}blue{end} strip across it. Behind you is the door you entered from.</desc>
+        
+        <directions>
+            <left>
+                <leads>vent</leads>
+                <dia>You clamber into the vent hatch.</dia>
+                <lock>1</lock>
+                <lock_dia>You struggle with the vent hatch, but it's {Yellow}screwed{end} shut.</lock_dia>
+                <unlock_dia>You unscrew the screws holding the vent together, and remove the panel covering.</unlock_dia>
+                <lock_reqs>screwdriver</lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads>vault_lobby</leads>
+                <dia>You scan your keycard and go through the door.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads>stasis_vault</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+        
+        <objs></objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>2</id>
+
+        <tag>vent</tag>
+        <name>Vent</name>
+
+        <desc>A long steel hallway. It's cramped, you really just want to get out of it as quickly as you can. Luckily, there appears to be an exit ahead of you.</desc>
+        
+        <directions>
+            <left>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads>janitors_closet</leads>
+                <dia>You tumble out of the vent hatch.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads>vault_hallway</leads>
+                <dia>You tumble out of the vent shaft into the vault hallway.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>3</id>
+
+        <tag>janitors_closet</tag>
+        <name>Janitory Closet</name>
+
+        <desc>A tiny cramped room. There's a {Yellow}mop{end} on the ground, and some kind of {Yellow}dispenser{end} on the wall. There's a door ahead of you, but it looks {Yellow}locked{end}.</desc>
+        
+        <directions>
+            <left>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads>staff_room</leads>
+                <dia>You open the creaky door.</dia>
+                <lock>1</lock>
+                <lock_dia>You try and open the door, but it's firmly shut. Maybe you could find a {Yellow}key{end} to unlock it.</lock_dia>
+                <unlock_dia>You fit your key into the lock, and it opens.</unlock_dia>
+                <lock_reqs>staff_key</lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs>drinks_dispenser</objs>
+        <items>mop</items>
+
+    </room>
+
+
+</env01>
+
+<!-- TEMPLATE
+    <room> 
+
+        <id></id>
+
+        <tag></tag>
+        <name></name>
+
+        <desc></desc>
+        
+        <directions>
+            <left>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs></objs>
+        <items></items>
+
+    </room>
+-->

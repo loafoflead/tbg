@@ -1,0 +1,16 @@
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.exe
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.deps.json
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.runtimeconfig.json
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.runtimeconfig.dev.json
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.dll
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\ref\warm_things.dll
+C:\Users\benja\Documents\warm_things\bin\Debug\net5.0\warm_things.pdb
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.csprojAssemblyReference.cache
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.AssemblyInfoInputs.cache
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.AssemblyInfo.cs
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.csproj.CoreCompileInputs.cache
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.dll
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\ref\warm_things.dll
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.pdb
+C:\Users\benja\Documents\warm_things\obj\Debug\net5.0\warm_things.genruntimeconfig.cache

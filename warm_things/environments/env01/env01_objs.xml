@@ -1,0 +1,98 @@
+<env01obj>
+
+    <obj>
+
+        <tag>cupboard</tag>
+        <name>Cupboard</name>
+
+        <verbs>open/use/examine</verbs>
+        <action>give:screwdriver</action>
+        <action_dia>You rummage through the cupboard, brushing away expired medicine and bottles of unidentified substances. You find a {Yellow}screwdriver{end} at the back of the cupboard.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>sc_driver</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rummage through the cupboard again, but find nothing</used_dialogue>
+
+        <aliases>cupboard/the cupboard</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>control_panel</tag>
+        <name>Strange Panel</name>
+
+        <verbs>use/examine/approach</verbs>
+        <action>give:blue_keycard</action>
+        <action_dia>The panel lights up as you approach it, a friendly blue button lighting up on it's surface. You press it, and out of a slot on the panel's side a {Yellow}blue keycard{end} slides out. You pocket it.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>sc_driver</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You try and interact with the panel further, but the display seemed to have powered off completely, and didn't respond to your touch.</used_dialogue>
+
+        <aliases>panel/control panel/red panel</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>magic_portal</tag>
+        <name>Magic Portal</name>
+
+        <verbs>use/examine/approach/enter/punch</verbs>
+        <action>go:vault_hallway</action>
+        <action_dia>you move through the magic portal</action_dia>
+
+        <item_req>magic_wand</item_req>
+        <item_dia>you try and go through, but it doesnt exist yet</item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>portal/magic portal</aliases>
+
+    </obj>
+
+
+</env01obj>
+
+<!-- TEMPLATE
+    
+    <obj>
+
+        <tag></tag>
+        <name></name>
+
+        <verbs>open/use/examine</verbs>
+        <action>give:/go:/take:</action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1/0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+    </obj>
+
+-->
