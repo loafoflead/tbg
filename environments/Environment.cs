@@ -208,9 +208,37 @@ public class Environment {
         XmlNode dirs = rs.associated_node.ChildNodes.Item(4); //this gets the 'direction' tag from the file
         rs.room_directions = new List<direction>();
 
-        int dir = 0;
-        foreach(XmlNode child in dirs) { //runs through each direction, 'left', 'right', etc...
+        foreach(XmlNode child in dirs) { //runs through and loads each direction, 'left', 'right', etc...
             if (child.ChildNodes.Item(0).InnerText != "") {
+            switch (child.Name) {
+
+                case "left":
+                    left = true;
+                    load_individual_dir(direction_enum.left, child, rs);
+                break;
+
+                case "right":
+                    right = true;
+                    load_individual_dir(direction_enum.right, child, rs);
+                break;
+
+                case "forward":
+                    forwards = true;
+                    load_individual_dir(direction_enum.forwards, child, rs);
+                break;
+
+                case "back":
+                    backwards = true;
+                    load_individual_dir(direction_enum.backwards, child, rs);
+                break;
+
+                default:
+                break;
+
+            }
+            }
+
+            /*if (child.ChildNodes.Item(0).InnerText != "") {
                 switch (dir) {
                     case 0:
                         left = true;
@@ -236,7 +264,7 @@ public class Environment {
                         break;
                 }
                 dir ++;
-            }
+            }*/
         }
 
     }
@@ -478,9 +506,7 @@ public class Environment {
                 return 0;
 
             case 3:
-                gm.box.nl();
-                gm.box.Print("{Cyan}>\t{end}<{Red}X{end}> {end}({end,end}" + get_item_from_tag(obj.item_req).name + "{end})");
-                gm.box.nl();
+                gm.situ_change(GManager.change_types.missing_item, get_item_from_tag(obj.item_req).name);
                 gm.box.Print(obj.item_lock_dia);
                 return 3; //3 if obect is locked
             
@@ -516,15 +542,26 @@ public class Environment {
     //to be tested
     public int Go(string room_tag) {
         try {
-            loadRoom(room_tag); //loads a room with the given room tag
-            return 1;
+            room_short r = get_room_via_tag(room_tag);
+            if (r != null) {
+                current_room = get_room_via_tag(room_tag);
+                return 1;
+            } 
+            else return 0;
         } catch {
             return 0;
         }
     }
 
 
-
+    room_short get_room_via_tag(string tag) {
+        foreach(room_short rs in rooms) {
+            if (rs.tag == tag) {
+                return rs;
+            }
+        }
+        return null;
+    }
 
     //INTERACTABLES WORK 100%
     public Interactable get_interactable_tag(string tagname) {

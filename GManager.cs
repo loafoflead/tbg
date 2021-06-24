@@ -66,9 +66,7 @@ public class GManager {
                     box.Print("Inventory full!");
                 }
                 else {
-                    box.nl();
-                    box.Print("{Cyan}>\t{end}<{Green}+{end}> {end}({end,end}" +env.get_item_from_tag(result).name + "{end})");
-                    box.nl();
+                    situ_change(change_types.gain_item, env.get_item_from_tag(result).name);
                 }
                 break;
             
@@ -79,9 +77,7 @@ public class GManager {
                     box.Print("Internal error 'Go', location not found ERR_09");
                 }
                 else {
-                    box.nl();
-                    box.Print("{Cyan}>\t{end}<{DarkYellow}→{end}> ({Green}" + env.get_room_name_by_tag(result) + "{end})");
-                    box.nl();
+                    situ_change(change_types.move_to, env.get_room_name_by_tag(result));
                 }
             break;
 

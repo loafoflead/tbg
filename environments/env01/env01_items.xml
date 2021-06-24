@@ -44,7 +44,27 @@
 
     </item>
 
+    <item>
 
+        <tag>mop</tag>
+        <name>{Yellow}Dirty mop{end}</name>
+
+        <desc>An old, dirty mop. The end of it is still wet.</desc>
+
+        <aliases>mop/the mop/dirty mop</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>staff_key</tag>
+        <name>{DarkGray}Staff key{end}</name>
+
+        <desc>A stainless steel access key. It has a weird futuristic looking pattern on it, and seems important.</desc>
+
+        <aliases>key/the key/staff key</aliases>
+
+    </item>
 
 </env01item>
 
@@ -55,6 +75,8 @@
         <name></name>
 
         <desc></desc>
+
+        <aliases></aliases>
 
     </item>
 -->

@@ -3,7 +3,9 @@
 public class Player {
 
     public PlayerInventory inv;
-    GManager gM;
+    public GManager gM;
+
+    public bool is_operator = false;
 
 
     public string[] player_tags; //hard limit on player tags for safety
@@ -13,7 +15,7 @@ public class Player {
         player_tags = new string[50];
         tag_index = 0;
         gM = gManager;
-        inv = new PlayerInventory();
+        inv = new PlayerInventory(this);
     }
 
     public void add_tag(string tag) {

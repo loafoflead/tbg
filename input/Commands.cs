@@ -11,9 +11,11 @@ public class Commands {
         arguments = new string[10];
     }
 
-    string h = "";
+    public string h = "";
+    public bool succeeded = false;
     public void getInput() {
         gm.box.k.stopListener();
+        succeeded = true;
         h = Console.ReadLine();
         arguments = new string[10];
         if (h.Contains(" ")) arguments = h.Split(" ");
@@ -40,7 +42,7 @@ public class Commands {
         }
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
-        gm.box.Print("{Gray}" + get_string(arguments) + " <", Box.format_options.right);
+        if (succeeded == true) gm.box.Print("{DarkGray}" + get_string(arguments));
 
         gm.box.k.startListener();
 
@@ -57,7 +59,76 @@ public class Commands {
     void regular_commands() {
 
         switch (arguments[0]) {
-            
+
+            case "clear":
+            case "clr":
+            case "cls":
+                gm.box.clr_buffer();
+            break;
+
+            case "take":
+            case "get":
+            case "pickup":
+                try {
+                    foreach(string it in gm.env.current_room.room_item_tags) {
+                        if (gm.env.get_item_from_tag(it).aliases.Contains(arguments[1])) {
+                            if(gm.player.inv.add_to_inv(gm.env.get_item_from_tag(it)) == 1) {
+                                gm.situ_change(GManager.change_types.gain_item, gm.env.get_item_from_tag(it).name);
+                            }
+                            else {
+                                gm.box.Print("Item not found!");
+                            }
+                        }
+                    }
+                } catch {
+                    gm.box.Print("Item not found!");
+                }
+            break;
+
+            case "drop":
+            case "dr":
+                try {
+
+                    foreach(Item it in gm.player.inv.player_inventory) {
+                        if (it.aliases.Contains(arguments[1])) {
+                            gm.situ_change(GManager.change_types.lose_item, it.name);
+                            gm.player.inv.player_inventory.Remove(it);
+                            return;
+                        }
+                    }
+
+                    gm.box.Print("Item not found.");
+
+                }catch {
+                    gm.box.Print("Unknown item!");
+                }
+            break;
+
+            case "list":
+                try {
+
+                    switch (arguments[1]) {
+
+                        case "items":
+                        case "item":
+                        case "i":
+                            int index = 1;
+                            foreach(Item it in gm.player.inv.player_inventory) {
+                                gm.box.Print(index + ": " + it.name);
+                            }
+                            if (gm.player.inv.player_inventory.Count < 1) {
+                                gm.box.Print("Inventory empty!");
+                            }
+                        break;
+
+                    }
+
+
+                } catch {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items''.");
+                }
+            break;
+
             case "go":
             case "move":
                 try {
@@ -123,6 +194,11 @@ public class Commands {
                 gm.box.Print(gm.env.current_room.desc);
             break;
 
+            case "where":
+            case "room":
+                gm.box.Print(gm.env.current_room.name);
+            break;
+
             case "q":
             case "quit":
                 gm.is_running = false;
@@ -147,10 +223,23 @@ public class Commands {
 
                 }
 
-                gm.box.Print("{DarkGray}>\tUnknown Command!'" + get_string(arguments) + "'");
+                gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
+                succeeded = false;
 
                 //do thing to sift through every interctable to check if any of the args correspond to the verb or the object k cool bye
                 //thanks!
+            break;
+
+            case "_<":
+                
+                if (gm.player.is_operator == true) {
+                    gm.box.Print(">{Gray}Cheats {Red}disabled{end}, '{DarkCyan}/{Gray}' commands will no longer have any effect.");
+                    gm.player.is_operator = false;
+                } else {
+                    gm.box.Print(">{Gray}Cheats {Red}activated{end}, use '{DarkCyan}/{Gray}' to begin a command.");
+                    gm.player.is_operator = true;
+                }
+                
             break;
 
         }
@@ -162,6 +251,12 @@ public class Commands {
 
 
     void admin_commands() {
+
+        if(gm.player.is_operator == false) {
+            gm.box.Print("{Red}>[WARNING]: You do not have permission to execute {DarkRed}operator{Red} commands.");
+            return;
+        }
+
         arguments[0] = arguments[0].Replace("/", "");
 
         switch (arguments[0]) {
@@ -185,7 +280,7 @@ public class Commands {
                     gm.situ_change(GManager.change_types.move_to, gm.env.current_name);
                 }
                 else {
-                    gm.box.Print("{Gray}Location not found, ({Blue}" + arguments[1] + "{end})");
+                    gm.box.Print("{Gray}Location not found, ({Red}" + arguments[1] + "{end})");
                 }
                 break;
 
