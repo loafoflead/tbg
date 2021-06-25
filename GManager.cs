@@ -81,6 +81,10 @@ public class GManager {
                 }
             break;
 
+            case "say":
+                box.Print("{Cyan}- \"" +result + "\"");
+            break;
+
             default:
                 box.Print("Fatal 'Do' Internal Error occurred ERR_07");
             break;

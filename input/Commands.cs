@@ -351,9 +351,14 @@ public class Commands {
                                     gm.box.Print(it.name);
                                 }
                             }
-                            else {
+                            else if(arguments[2] == "room" || arguments[2] == "r") {
                                 foreach(string it in gm.env.current_room.room_interactable_tags) {
                                     gm.box.Print(it);
+                                }
+                            }
+                            else {
+                                foreach(Interactable it in gm.env.all_interactables) {
+                                    gm.box.Print(it.name);
                                 }
                             }
                         } 
@@ -366,9 +371,14 @@ public class Commands {
                                     gm.box.Print(it.name);
                                 }
                             }
-                            else {
+                            else if(arguments[2] == "room" || arguments[2] == "r") {
                                 foreach(string it in gm.env.current_room.room_item_tags) {
                                     gm.box.Print(it);
+                                }
+                            }
+                            else {
+                                foreach(Item it in gm.env.all_items) {
+                                    gm.box.Print(it.name);
                                 }
                             }
                         } 

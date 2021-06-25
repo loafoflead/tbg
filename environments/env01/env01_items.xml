@@ -66,6 +66,17 @@
 
     </item>
 
+    <item>
+
+        <tag>crowbar</tag>
+        <name>{Red}Crow{DarkGray}bar{end}</name>
+
+        <desc>A steel crowbar, it's body is painted red, and the paint is chipped, revealing the metallic surface beneath. It awakens a faint memory within you.</desc>
+
+        <aliases>crowbar/gamer stick/bar/crow</aliases>
+
+    </item>
+
 </env01item>
 
 <!--  TEMPLATE

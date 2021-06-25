@@ -42,6 +42,8 @@ public class Box {
         Print("{Purple}##" + to_print);
     }
 
+
+
     public void Print(string to_print, format_options fo = format_options.left) {
         height = Console.WindowHeight;
         width = Console.WindowWidth;
@@ -340,6 +342,15 @@ public class Box {
 
     public void waitf(float seconds) {
         Thread.Sleep((int) seconds * 1000);
+    }
+
+
+    public List<string> copy_buffer() {
+        return buffer;
+    }
+
+    public void replace_buffer(List<string> new_bffer) {
+        buffer = new_bffer;
     }
 
 }

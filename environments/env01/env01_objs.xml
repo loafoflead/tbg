@@ -69,6 +69,121 @@
 
     </obj>
 
+    <obj>
+
+        <tag>drinks_dispenser</tag>
+        <name>{Cyan}Drinks machine{end}</name>
+
+        <verbs>use/examine/drink/eat</verbs>
+        <action></action>
+        <action_dia>You poke at the drinks dispenser, and a can of unidentified blue soda falls from it. You try and drink the stuff, it tastes dreadful. You throw away the can.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>drank_drink</tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>dispenser/drinks dispenser/drinks machine/drinks</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>service_robot</tag>
+        <name>Broken service robot</name>
+
+        <verbs>examine/interact/use/help/greet</verbs>
+        <action>go:trash_compacter</action>
+        <action_dia>The robot's eyes power up, one of them dimmer than the other, and in a shaky synthetic voice it says: '{Green}helLo, h0w may i b{#^~^ of service? #beep#{end}'. You wave at it, and try to talk. Before you can, the thing reaches out it's arm and a huge pulse of energy goes into your body. When you open your eyes, you see that you are no longer in the staff room.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>service</tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>robot/service robot/service/man</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>informational_droid</tag>
+        <name>{Green}Help {DarkRed}Bot!{end}</name>
+
+        <verbs>examine/chat with/talk up/flirt with</verbs>
+        <action>say:Hello! The ship is currently on crash course with planet 11-BI, otherwise known as 'TBG', or 'Terre Bande Grandiose', it is reccommended you evacuuate the ship.</action>
+        <action_dia>You blink at the droid in surprise, and try and ask it a question. The computer stays silent.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>droid/bot/robot/info bot/informational bot</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>cleaning_droid</tag>
+        <name>{Cyan}Clean Camille{DarkGray}(tm){end}</name>
+
+        <verbs>examine/greet</verbs>
+        <action>give:crowbar</action>
+        <action_dia>The mechanical droid unfurls and delivers a crowbar into your hands. You barely have the time to be shocked, as the very next moment it explodes, briefly clouding your vision with smoke.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>crow</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>The mechanical droid... doesn't appear to exist anymore.</used_dialogue>
+
+        <aliases>droid/clean boy/cleaning droid/mechanical cleaning droid</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>table</tag>
+        <name>Table</name>
+
+        <verbs>examine/touch</verbs>
+        <action>say:Sometimes, the best solution to a problem, is the easiest.</action>
+        <action_dia>The table says, imparting it's wisdom upon you.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>The table has grown silent, no more wise words will come from it again.</used_dialogue>
+
+        <aliases></aliases>
+
+    </obj>
+
 
 </env01obj>
 
@@ -92,6 +207,8 @@
         
         <one_time_use>1/0</one_time_use>
         <used_dialogue></used_dialogue>
+
+        <aliases></aliases>
 
     </obj>
 
