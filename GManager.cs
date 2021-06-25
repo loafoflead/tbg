@@ -97,7 +97,7 @@ public class GManager {
 
     public void cutscene(cutscene_types ct, string file_name = "") {
 
-        string folder_path = "C:\\Users\\benja\\Documents\\warm_things\\cutscenes\\"; //gets the cutscene folder
+        string folder_path = "C:\\Users\\benja\\Documents\\tbg\\cutscenes\\"; //gets the cutscene folder
         box.clr();
 
         switch (ct) {
