@@ -87,6 +87,14 @@ public class Commands {
 
             case "drop":
             case "dr":
+
+                if (arguments[1] != null) {
+                    if (arguments[1] == "all") {
+                        gm.player.inv.reset_inv();
+                        gm.situ_change(GManager.change_types.drop_all, "{Red}all{end}");
+                    }
+                }
+
                 try {
 
                     foreach(Item it in gm.player.inv.player_inventory) {
@@ -110,6 +118,8 @@ public class Commands {
                     switch (arguments[1]) {
 
                         case "items":
+                        case "inv":
+                        case "inventory":
                         case "item":
                         case "i":
                             int index = 1;
@@ -119,6 +129,10 @@ public class Commands {
                             if (gm.player.inv.player_inventory.Count < 1) {
                                 gm.box.Print("Inventory empty!");
                             }
+                        break;
+
+                        default:
+                            gm.box.Print("Unknown list element: " + arguments[1]);
                         break;
 
                     }
@@ -175,7 +189,7 @@ public class Commands {
                 }
                 break;
 
-            case "examine":
+            case "inspect":
             case "exa":
 
                 try {
@@ -219,12 +233,12 @@ public class Commands {
                             }
                         }
                     }
-                    
-
+        
                 }
 
-                gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
                 succeeded = false;
+                gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
+                
 
                 //do thing to sift through every interctable to check if any of the args correspond to the verb or the object k cool bye
                 //thanks!
@@ -348,7 +362,7 @@ public class Commands {
                         if (arguments[2] != null) {
                             if (arguments[2] == "all" || arguments[2] == "a") {
                                 foreach(Interactable it in gm.env.all_interactables) {
-                                    gm.box.Print(it.name);
+                                    gm.box.Print(it.name + " - " + it.tag);
                                 }
                             }
                             else if(arguments[2] == "room" || arguments[2] == "r") {
@@ -358,7 +372,7 @@ public class Commands {
                             }
                             else {
                                 foreach(Interactable it in gm.env.all_interactables) {
-                                    gm.box.Print(it.name);
+                                    gm.box.Print(it.name + " - " + it.tag);
                                 }
                             }
                         } 
@@ -368,7 +382,7 @@ public class Commands {
                         if (arguments[2] != null) {
                             if (arguments[2] == "all" || arguments[2] == "a") {
                                 foreach(Item it in gm.env.all_items) {
-                                    gm.box.Print(it.name);
+                                    gm.box.Print(it.name + " - " + it.tag);
                                 }
                             }
                             else if(arguments[2] == "room" || arguments[2] == "r") {
@@ -378,7 +392,7 @@ public class Commands {
                             }
                             else {
                                 foreach(Item it in gm.env.all_items) {
-                                    gm.box.Print(it.name);
+                                    gm.box.Print(it.name + " - " + it.tag);
                                 }
                             }
                         } 

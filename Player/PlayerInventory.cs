@@ -23,4 +23,8 @@ public class PlayerInventory {
         }
     }
 
+    public void reset_inv() {
+        player_inventory = new List<Item>();
+    }
+
 }

@@ -58,7 +58,7 @@
     <item>
 
         <tag>staff_key</tag>
-        <name>{DarkGray}Staff key{end}</name>
+        <name>{Gray}Staff key{end}</name>
 
         <desc>A stainless steel access key. It has a weird futuristic looking pattern on it, and seems important.</desc>
 

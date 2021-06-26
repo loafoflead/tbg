@@ -82,7 +82,7 @@ public class GManager {
             break;
 
             case "say":
-                box.Print("{Cyan}- \"" +result + "\"");
+                box.Print("{Cyan}- \"" +result + "{Cyan}\"");
             break;
 
             default:
@@ -134,6 +134,7 @@ public class GManager {
         lose_item,
         move_to,
         missing_item,
+        drop_all,
 
     }
 
@@ -164,6 +165,13 @@ public class GManager {
                 box.Print("{Cyan}>\t{end}<{Red}X{end}> ({DarkRed}" + result + "{end})");
                 box.nl();
             break;
+
+            case change_types.drop_all:
+                box.nl();
+                box.Print("{Cyan}>\t{end}<{Red}--{end}> ({DarkRed}" + result + "{end})");
+                box.nl();
+            break;
+
 
             default:
                 box.nl();
