@@ -1,12 +1,54 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
 public class FileManager {
 
     Random rand = new Random();
+    public string most_recent_file;
 
     public FileManager() {
+
+    }
+
+
+    public int write_at(string content, int line, string file) {
+        try {
+
+            StreamWriter str_wr = new StreamWriter(file);
+
+            for (int i = 0; i < line; i ++) {
+                str_wr.WriteLine(content);
+            }
+
+            str_wr.Close();
+            return 1;
+
+        } catch {
+            return 0;
+        }
+    }
+
+    public int write_next(string content, string file) {
+
+        try {
+
+            StreamReader str_r = new StreamReader(file);
+
+            int index = 0;
+
+            while(str_r.Peek() != -1) {
+                index ++;
+            }
+
+            str_r.Close();
+
+            return write_at(content, index, file);
+
+        } catch {
+            return 2;
+        }
 
     }
 
@@ -66,6 +108,25 @@ public class FileManager {
     }
     public int getRan1_0() {
         return rand.Next(0,2);
+    }
+
+    public string newFile(string filename, string path = @"logs\") {
+        string file = path + filename; //the @ means you dont have to use escape sequences when making \n newline or \\ slashes 
+        
+
+        if (File.Exists(file)) {
+            string f = filename + "_" + DateTime.Now.Minute.ToString().Replace(@"\", "/");
+            newFile(f, path);
+        }
+        else {
+
+            StreamWriter write = File.CreateText(file);
+            return file;
+
+        }
+
+        return "Error";
+
     }
 
 

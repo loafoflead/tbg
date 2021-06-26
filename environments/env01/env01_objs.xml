@@ -120,7 +120,7 @@
         <tag>informational_droid</tag>
         <name>{Green}Help {DarkRed}Bot!{end}</name>
 
-        <verbs>examine/chat with/talk up/flirt with</verbs>
+        <verbs>examine/chat with/talk up/flirt with/kick/bully</verbs>
         <action>say:Hello! The ship is currently on crash course with planet 11-BI, otherwise known as 'TBG', or 'Terre Bande Grandiose', it is reccommended you evacuuate the ship.</action>
         <action_dia>You blink at the droid in surprise, and try and ask it a question. The computer stays silent, then bursts out:</action_dia>
 
@@ -143,7 +143,7 @@
         <tag>cleaning_droid</tag>
         <name>{Cyan}Clean Camille{DarkGray}(tm){end}</name>
 
-        <verbs>examine/greet</verbs>
+        <verbs>examine/greet/punch/hurt/destroy</verbs>
         <action>give:crowbar</action>
         <action_dia>The mechanical droid unfurls and delivers a crowbar into your hands. You barely have the time to be shocked, as the very next moment it explodes, briefly clouding your vision with smoke.</action_dia>
 

@@ -42,7 +42,10 @@ public class Commands {
         }
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
-        if (succeeded == true) gm.box.Print("{DarkGray}" + get_string(arguments));
+        if (succeeded == true) {
+            gm.fm.write_next(get_string(arguments), gm.log_file);
+            gm.box.Print("{DarkGray}" + get_string(arguments));
+        }
 
         gm.box.k.startListener();
 
@@ -220,13 +223,31 @@ public class Commands {
 
             default:
 
-                foreach(string obj_tag in gm.env.current_room.room_interactable_tags) {
-                    Interactable temp_obj = gm.env.get_interactable_tag(obj_tag);
+                try {
 
-                    foreach(string verb in temp_obj.verbs) {
+                foreach(string obj_tag in gm.env.current_room.room_interactable_tags) { //runs through each obj in current room
+                    Interactable temp_obj = gm.env.get_interactable_tag(obj_tag); //gets the object
+
+                    foreach(string verb in temp_obj.verbs) { //runs through each verb in the object
                         if (verb == arguments[0]) {
                             foreach(string alias in temp_obj.aliases) {
                                 if (alias == arguments[1]) {
+                                    gm.env.UseVerb(temp_obj, arguments[0]);
+                                    return;
+                                }
+                                if (alias == (arguments[1] + " " + arguments[2])) {
+                                    gm.env.UseVerb(temp_obj, arguments[0]);
+                                    return;
+                                }
+                            }
+                        }
+                        if (verb == (arguments[0] + arguments[1])) {
+                            foreach(string alias in temp_obj.aliases) {
+                                if (alias == arguments[2]) {
+                                    gm.env.UseVerb(temp_obj, arguments[0]);
+                                    return;
+                                }
+                                if (alias == (arguments[2] + " " + arguments[3])) {
                                     gm.env.UseVerb(temp_obj, arguments[0]);
                                     return;
                                 }
@@ -238,7 +259,9 @@ public class Commands {
 
                 succeeded = false;
                 gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
-                
+                } catch {
+                    gm.box.Print("Unexpected error searching for interactable.");
+                }
 
                 //do thing to sift through every interctable to check if any of the args correspond to the verb or the object k cool bye
                 //thanks!

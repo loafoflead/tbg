@@ -10,12 +10,21 @@ public class GManager {
     public bool is_running = true;
 
 
+    public string log_file = "";
+
+
     public GManager() {
         box = new Box();
         fm = new FileManager();
         env = new Environment(this);
         player = new Player(this);
         cm = new Commands(this);
+
+        log_file = fm.newFile("log_01");
+        if (fm.write_at("pee", 1, log_file) == 0) {
+            box.Print("file not found");
+            box.flush();
+        }
 
         env.load_env("env01");
 
@@ -28,10 +37,15 @@ public class GManager {
         box.refresh_box();
         box.clr_text();
 
-        box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
-        box.nl();
-        box.Print(env.current_room.desc);
-        box.print_screen();
+        if (cm.YN("Do you want to read a log file?") == true) {
+            loadave(System.Console.ReadLine());
+        }
+        else {
+            box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
+            box.nl();
+            box.Print(env.current_room.desc);
+            box.print_screen();
+        }
 
         while (is_running == true) {
             cm.getInput();
@@ -58,10 +72,19 @@ public class GManager {
     }
 
 
+    void loadave(string filename) {
+
+    }
+
+
     public void Do(string action, string result) {
         switch (action) {
             case "give":
-                int res = player.inv.add_to_inv(env.get_item_from_tag(result));
+                
+                Item it = env.get_item_from_tag(result);
+                int res = 0;
+                if (it.tag != null) res = player.inv.add_to_inv(it);
+                else box.Print("{DarkRed}Item not found: " + it.name);
                 if (res == 2) {
                     box.Print("Inventory full!");
                 }
@@ -97,7 +120,7 @@ public class GManager {
 
     public void cutscene(cutscene_types ct, string file_name = "") {
 
-        string folder_path = "C:\\Users\\benja\\Documents\\tbg\\cutscenes\\"; //gets the cutscene folder
+        string folder_path = "cutscenes\\"; //gets the cutscene folder
         box.clr();
 
         switch (ct) {
