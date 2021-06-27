@@ -180,7 +180,7 @@
         <one_time_use>1</one_time_use>
         <used_dialogue>The table has grown silent, no more wise words will come from it again.</used_dialogue>
 
-        <aliases></aliases>
+        <aliases>table/tab/ble</aliases>
 
     </obj>
 

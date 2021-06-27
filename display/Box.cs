@@ -48,7 +48,7 @@ public class Box {
         height = Console.WindowHeight;
         width = Console.WindowWidth;
 
-        if (buffer.Count > height - 15) {
+        if (buffer.Count > height - 8) {
             for (int i = 0; i <  buffer.Count -(height - 15); i ++) {
                 buffer.Remove(buffer[i]);
             }

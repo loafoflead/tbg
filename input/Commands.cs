@@ -43,7 +43,7 @@ public class Commands {
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
         if (succeeded == true) {
-            gm.fm.write_next(get_string(arguments), gm.log_file);
+            //gm.fm.write_next(get_string(arguments), gm.log_file); BIG BROKEN !!!!!!!
             gm.box.Print("{DarkGray}" + get_string(arguments));
         }
 
@@ -63,6 +63,10 @@ public class Commands {
 
         switch (arguments[0]) {
 
+            case "back":
+                gm.env.loadRoom_ind(gm.env.previous_room);
+            break;
+
             case "clear":
             case "clr":
             case "cls":
@@ -77,12 +81,15 @@ public class Commands {
                         if (gm.env.get_item_from_tag(it).aliases.Contains(arguments[1])) {
                             if(gm.player.inv.add_to_inv(gm.env.get_item_from_tag(it)) == 1) {
                                 gm.situ_change(GManager.change_types.gain_item, gm.env.get_item_from_tag(it).name);
+                                return;
                             }
                             else {
                                 gm.box.Print("Item not found!");
+                                return;
                             }
                         }
                     }
+                    gm.box.Print("Item not found!");
                 } catch {
                     gm.box.Print("Item not found!");
                 }
@@ -108,7 +115,7 @@ public class Commands {
                         }
                     }
 
-                    gm.box.Print("Item not found.");
+                    gm.box.Print("Item not found: " + arguments[1]);
 
                 }catch {
                     gm.box.Print("Unknown item!");
@@ -139,7 +146,7 @@ public class Commands {
                         break;
 
                     }
-
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items''.");
 
                 } catch {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items''.");
@@ -195,15 +202,16 @@ public class Commands {
             case "inspect":
             case "exa":
 
-                try {
 
-                    gm.box.Print(gm.env.get_item_from_alias(arguments[1]).description);
-
-                } catch {
+                Item prt = gm.env.get_item_from_alias(arguments[1]);
+                if (prt == null) {
                     gm.box.Print("Incorrect usage of '{Cyan}examine{end}', usage: 'examine [item]', where item is an item in your inventory. You can type 'list' to list these items.");
+                }else {
+                    gm.box.Print(prt.description);
                 }
+                
 
-                break;
+            break;
 
             case "explore":
             case "check":
@@ -327,7 +335,14 @@ public class Commands {
 
                         case "obj":
                             Interactable temp = gm.env.get_interactable_tag(arguments[2]);
-                            gm.box.Print("{Magenta}" + temp.name + ", has_been_used: " + temp.has_been_used + ", one_time_use: " + temp.one_time_use);
+                            gm.box.Print("{Magenta}" + temp.name + "{Magenta}, lock: " + temp.item_req + ", has_been_used: " + temp.has_been_used + ", one_time_use: " + temp.one_time_use + ".");
+                        break;
+
+                        case "objs":
+                            foreach(string it in gm.env.current_room.room_interactable_tags) {
+                                Interactable tempo = gm.env.get_interactable_tag(it);
+                                gm.box.Print("{Magenta}" + tempo.name + "{Magenta}, lock: " + tempo.item_req + ", has_been_used: " + tempo.has_been_used + ", one_time_use: " + tempo.one_time_use + ".");
+                            }
                         break;
 
                         case "dir":
@@ -339,6 +354,10 @@ public class Commands {
                             foreach(direction dirt in gm.env.current_room.room_directions) {
                                 gm.box.Print("{Magenta}" + dirt.direction_str + ", is_locked: " + dirt.is_locked + ", item_required: " + dirt.item_required + ", leads: " + dirt.direction_leads);
                             }
+                        break;
+
+                        default:
+                            gm.box.Print("Incorrect syntax: usage: '{Cyan}status [obj/direction] [object name/direction]'.");
                         break;
 
                     }
@@ -353,19 +372,47 @@ public class Commands {
 
                         case "obj":
                             Interactable temp = gm.env.get_interactable_tag(arguments[2]);
+                            if (temp.tag == null) {
+                                gm.box.Print("Interactable not found.");
+                                return;
+                            }
                             temp.item_req = "";
                             gm.box.Print("{Magenta}" + arguments[2] + " unlocked.");
                         break;
 
                         case "dir":
                             direction tem = gm.env.get_direction(arguments[2]);
+                            if (tem.direction_leads == null) {
+                                gm.box.Print("Direction not found.");
+                                return;
+                            }
                             tem.is_locked = false;
                             gm.box.Print("{Magenta}" + arguments[2] + " unlocked.");
+                        break;
+
+                        default:
+                            gm.box.Print("Incorrect syntax: usage: '{Cyan}unlock [obj/direction] [object name/direction]'.");
                         break;
 
                     }
                 } catch {
                     gm.box.Print("Incorrect syntax: usage: '{Cyan}unlock [obj/direction] [object name/direction]'.");
+                }
+            break;
+
+            case "do":
+                gm.Do(arguments[1], arguments[2]);
+                break;
+
+            case "env":
+                try {
+                    if(arguments[1] == null) {
+                        gm.box.Print("Incorrect syntax, usage is: '{Cyan}env [name of env file]{end}.");
+                    }
+                    gm.env.load_env(arguments[1]);
+                    gm.box.Print("environment succesfully loaded: " + arguments[1] + ", please be aware any errors such as {Red}missing rooms or objects{end} are not caught by the parser.");
+                } catch {
+                    gm.box.Print("Error: either the environment file you asked for doesn't exist, or is missing key files in order to be loaded.");
                 }
             break;
             
@@ -429,7 +476,7 @@ public class Commands {
                     default:
                         gm.box.Print("Incorrect syntax, usage is: '{Cyan}list [element]{end}', where element is rooms, interactables, or items.");
                     break;
-                }
+                    }
                 } catch {
                     gm.box.Print("Incorrect syntax, usage is: '{Cyan}list [element]{end}', where element is rooms, interactables, or items.");
                 }

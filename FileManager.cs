@@ -91,6 +91,8 @@ public class FileManager {
 
             string[] st = ToBeReturned.ToArray();
 
+            r.Close();
+
             return st;
 
 
@@ -121,6 +123,7 @@ public class FileManager {
         else {
 
             StreamWriter write = File.CreateText(file);
+            write.Close();
             return file;
 
         }

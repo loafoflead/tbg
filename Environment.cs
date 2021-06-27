@@ -21,6 +21,7 @@ public class Environment {
     public string current_name;
     public int id;
     public room_short current_room;
+    public room_short previous_room;
 
     public string description;
 
@@ -141,7 +142,9 @@ public class Environment {
         }
     }
 
-    void loadRoom_ind(room_short room_) {
+    public void loadRoom_ind(room_short room_) {
+
+        previous_room = current_room;
 
         current_room = room_;
 

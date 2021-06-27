@@ -20,11 +20,11 @@ public class GManager {
         player = new Player(this);
         cm = new Commands(this);
 
-        log_file = fm.newFile("log_01");
+        /*log_file = fm.newFile("log_01");
         if (fm.write_at("pee", 1, log_file) == 0) {
             box.Print("file not found");
             box.flush();
-        }
+        }*/
 
         env.load_env("env01");
 
