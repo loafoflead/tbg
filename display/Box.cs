@@ -16,6 +16,8 @@ public class Box {
     public ConsoleColor default_foreground = ConsoleColor.White;
     public ConsoleColor default_background = ConsoleColor.Black;
 
+    public ConsoleColor box_colour = ConsoleColor.White;
+
     public Box() {
         buffer = new List<string>();
         k = new KeyHandler();
@@ -147,6 +149,7 @@ public class Box {
         height = Console.WindowHeight;
         width = Console.WindowWidth;
         Console.SetCursorPosition(0,0);
+        Console.ForegroundColor = box_colour;
         Console.Write(seperator_character);
         int i = 0;
         for(i = 0; i < width - 1; i ++) {

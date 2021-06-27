@@ -10,6 +10,9 @@ public class GManager {
     public bool is_running = true;
 
 
+    public bool show_old_msgs = true;
+
+
     public string log_file = "";
 
 

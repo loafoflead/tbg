@@ -336,8 +336,8 @@
                 <lock_tag_req></lock_tag_req>
             </forward>
             <back>
-                <leads></leads>
-                <dia></dia>
+                <leads>vent</leads>
+                <dia>You clamber back into the vent.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>

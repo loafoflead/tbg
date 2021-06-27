@@ -547,6 +547,7 @@ public class Environment {
         try {
             room_short r = get_room_via_tag(room_tag);
             if (r != null) {
+                previous_room = current_room;
                 current_room = get_room_via_tag(room_tag);
                 return 1;
             } 

@@ -42,7 +42,7 @@ public class Commands {
         }
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
-        if (succeeded == true) {
+        if (succeeded == true && gm.show_old_msgs == true) {
             //gm.fm.write_next(get_string(arguments), gm.log_file); BIG BROKEN !!!!!!!
             gm.box.Print("{DarkGray}" + get_string(arguments));
         }
@@ -102,6 +102,7 @@ public class Commands {
                     if (arguments[1] == "all") {
                         gm.player.inv.reset_inv();
                         gm.situ_change(GManager.change_types.drop_all, "{Red}all{end}");
+                        return;
                     }
                 }
 
@@ -135,9 +136,11 @@ public class Commands {
                             int index = 1;
                             foreach(Item it in gm.player.inv.player_inventory) {
                                 gm.box.Print(index + ": " + it.name);
+                                return;
                             }
                             if (gm.player.inv.player_inventory.Count < 1) {
                                 gm.box.Print("Inventory empty!");
+                                return;
                             }
                         break;
 
@@ -200,7 +203,6 @@ public class Commands {
                 break;
 
             case "inspect":
-            case "exa":
 
 
                 Item prt = gm.env.get_item_from_alias(arguments[1]);
@@ -233,40 +235,43 @@ public class Commands {
 
                 try {
 
-                foreach(string obj_tag in gm.env.current_room.room_interactable_tags) { //runs through each obj in current room
-                    Interactable temp_obj = gm.env.get_interactable_tag(obj_tag); //gets the object
+                    foreach(string obj_tag in gm.env.current_room.room_interactable_tags) { //runs through each obj in current room
+                        Interactable temp_obj = gm.env.get_interactable_tag(obj_tag); //gets the object
 
-                    foreach(string verb in temp_obj.verbs) { //runs through each verb in the object
-                        if (verb == arguments[0]) {
-                            foreach(string alias in temp_obj.aliases) {
-                                if (alias == arguments[1]) {
-                                    gm.env.UseVerb(temp_obj, arguments[0]);
-                                    return;
-                                }
-                                if (alias == (arguments[1] + " " + arguments[2])) {
-                                    gm.env.UseVerb(temp_obj, arguments[0]);
-                                    return;
-                                }
+                        if(temp_obj.verbs.Contains(arguments[0])) {
+                            if (temp_obj.aliases.Contains(arguments[1])) {
+                                gm.env.UseVerb(temp_obj, arguments[0]);
+                                return;
                             }
                         }
-                        if (verb == (arguments[0] + arguments[1])) {
-                            foreach(string alias in temp_obj.aliases) {
-                                if (alias == arguments[2]) {
-                                    gm.env.UseVerb(temp_obj, arguments[0]);
-                                    return;
-                                }
-                                if (alias == (arguments[2] + " " + arguments[3])) {
-                                    gm.env.UseVerb(temp_obj, arguments[0]);
-                                    return;
-                                }
+
+                        if(temp_obj.verbs.Contains(arguments[0] +  " " + arguments[1])) {
+                            if (temp_obj.aliases.Contains(arguments[2])) {
+                                gm.env.UseVerb(temp_obj, arguments[0] +  " " + arguments[1]);
+                                return;
                             }
                         }
-                    }
+
+                        if(temp_obj.verbs.Contains(arguments[0] +  " " + arguments[1])) {
+                            if (temp_obj.aliases.Contains(arguments[2] +  " " + arguments[3])) {
+                                gm.env.UseVerb(temp_obj, arguments[0] +  " " + arguments[1]);
+                                return;
+                            }
+                        }
+
+                        if(temp_obj.verbs.Contains(arguments[0])) {
+                            if (temp_obj.aliases.Contains(arguments[1] + " " + arguments[2])) {
+                                gm.env.UseVerb(temp_obj, arguments[0]);
+                                return;
+                            }
+                        }
+
+                        
         
-                }
+                    }
 
-                succeeded = false;
-                gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
+                    succeeded = false;
+                    gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
                 } catch {
                     gm.box.Print("Unexpected error searching for interactable.");
                 }
@@ -328,6 +333,86 @@ public class Commands {
                     gm.box.Print("{Gray}Location not found, ({Red}" + arguments[1] + "{end})");
                 }
                 break;
+
+            case "border":
+                if (arguments[1] == null || arguments[1].Length > 1){
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}border [single character]'.");
+                    return;
+                }
+                else {
+
+                    gm.box.seperator_character = char.Parse(arguments[1]);
+                    return;
+
+                } 
+
+            case "disp":
+            case "display":
+                if (arguments[1] == null) {
+                    return;
+                }
+
+                switch (arguments[1]) {
+
+                    case "show_previous_message":
+                    case "prev_msg":
+                    case "msg":
+                        if (gm.show_old_msgs == true) {
+                            gm.show_old_msgs = false;
+                        }
+                        else {
+                            gm.show_old_msgs = true;
+                        }
+                    break;
+
+                }
+
+            break;
+
+            case "colour":
+            case "color":
+            case "col":
+                if (arguments[1] == null || arguments[1] == null) {
+                    gm.box.Print("Incorrect syntax, usage is: '{Cyan}colour [foreground/background/border] [consolecolour]'");
+                    return;
+                }
+                switch (arguments[1]) {
+
+                    case "border":
+                        try {
+                            gm.box.box_colour = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                        } catch {
+                            gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
+                        }
+                    break;
+
+                    case "foreground":
+                    case "fg":
+                    case "text":
+                        try {
+                            gm.box.default_foreground = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                        } catch {
+                            gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
+                        }
+                    break;
+
+                    case "background":
+                    case "bg":
+                    case "highlight":
+                    case "hl":
+                        try {
+                            gm.box.default_background = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                        } catch {
+                            gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
+                        }
+                    break;
+
+                    default:
+                        gm.box.Print("Incorrect syntax, usage is: '{Cyan}colour [foreground/background/border] [consolecolour]'");
+                        break;
+
+                }
+            break;
 
             case "status":
                 try {
