@@ -60,7 +60,7 @@ public class Box {
             buffer.Add("{Red}[EMPTY_LINE]{end}");
             return;
         }
-        if (to_print.Length > width - 5) {
+        /*if (to_print.Length > width - 5) {
             string[] ne = split_at(to_print, width - 2);
             
             switch(fo) {
@@ -90,9 +90,9 @@ public class Box {
             
             
             
-            Print(ne[1], fo);
+            //Print(ne[1], fo);
         }
-        else {
+        else {*/
             switch(fo) {
                 case format_options.left:
                     buffer.Add(to_print);
@@ -117,7 +117,7 @@ public class Box {
                     buffer.Add(temp);
                 break;
             }
-        }
+        //}
     }
 
     string[] split_at(string to_split, int index) {
@@ -178,12 +178,14 @@ public class Box {
             foreach(sub_string str in strings) {
                 Console.ForegroundColor = str.fg_color;
                 Console.BackgroundColor = str.bg_color;
-                if (Console.CursorLeft > width - 12) {
-                    line_index ++;
-                    Console.SetCursorPosition(2, line_index);
-                }
                 Console.SetCursorPosition(Console.CursorLeft, line_index);
-                Console.Write(str.content.Replace("$", ""));
+                foreach(char ch in str.content.Replace("$", "")) {
+                    if (Console.CursorLeft > width - 3) {
+                            line_index ++;
+                            Console.SetCursorPosition(2, line_index);
+                        }
+                    Console.Write(ch);
+                }
                 default_col();
             }
             line_index ++;
@@ -202,12 +204,10 @@ public class Box {
             List<sub_string> strings = get_colours(f);
             Console.SetCursorPosition(2, line_index);
             foreach(sub_string str in strings) {
+                //Console.Write(str.content + ", ");
+                
                 Console.ForegroundColor = str.fg_color;
                 Console.BackgroundColor = str.bg_color;
-                if (Console.CursorLeft > width - 2) {
-                    line_index ++;
-                    Console.SetCursorPosition(2, line_index);
-                }
                 Console.SetCursorPosition(Console.CursorLeft, line_index);
                 foreach(char b in str.content) {
                     if (k.recently_pressed == true) {
@@ -222,13 +222,19 @@ public class Box {
                     }
                     if (b == ' ') Console.Write(b);
                     else {
+                        if (Console.CursorLeft > width - 3) {
+                            line_index ++;
+                            Console.SetCursorPosition(2, line_index);
+                        }
                         Console.Write(b);
                         Thread.Sleep(del);
                     }
                 }
+                
                 default_col();
             }
             line_index ++;
+            //Console.ReadKey();
             //k.stopListener();
         }
         
@@ -278,9 +284,9 @@ public class Box {
                 }
 
                 
-                if (s.Contains('}')) {
-                    sstring = s.Split('}')[1];
-                }
+                
+                sstring = s.Split('}')[1]; //get the text content of the substring
+                
 
 
                 string fg_col = "";
@@ -295,12 +301,11 @@ public class Box {
                     bg_col = "0";
                 }
 
-                if (fg_col == "end" || fg_col == "e" || fg_col == "def") {
+                if (fg_col == "end" || fg_col == "def") {
                     fg_col = "15";
-                }
-                if (bg_col == "end" || bg_col == "e" || bg_col == "def") {
                     bg_col = "0";
                 }
+                
 
 
                 try { //try and add the int value of the colour to the sub string
