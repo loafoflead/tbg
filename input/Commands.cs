@@ -550,6 +550,15 @@ public class Commands {
 
                 }
             break;
+
+            case "use":
+                if (gm.env.all_interactables.Contains(gm.env.get_interactable_tag(arguments[1]))) {
+                    gm.env.UseF(gm.env.get_interactable_tag(arguments[1]));
+                }
+                else {
+                    gm.box.PrintD("Interactable not found.");
+                }
+            break;
             
             case "l":
             case "ls":

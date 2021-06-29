@@ -143,7 +143,7 @@
         <tag>cleaning_droid</tag>
         <name>{Cyan}Clean Camille{DarkGray}(tm){end}</name>
 
-        <verbs>examine/greet/punch/hurt/destroy</verbs>
+        <verbs>gen/greet/punch/hurt/destroy</verbs>
         <action>give:crowbar</action>
         <action_dia>The mechanical droid unfurls and delivers a crowbar into your hands. You barely have the time to be shocked, as the very next moment it explodes, briefly clouding your vision with smoke.</action_dia>
 
@@ -166,8 +166,8 @@
         <tag>table</tag>
         <name>Table</name>
 
-        <verbs>examine/touch</verbs>
-        <action>say:Sometimes, the best solution to a problem, is the easiest.</action>
+        <verbs>gen/touch/greet/kick/bash</verbs>
+        <action>if:op=true;say:haxxxx/say:he's legit</action>
         <action_dia>The table imparts it's wisdom upon you, saying:</action_dia>
 
         <item_req></item_req>
@@ -195,7 +195,7 @@
         <name></name>
 
         <verbs>open/use/examine</verbs>
-        <action>give:/go:/take:</action>
+        <action></action> if:[tag/inv/name/room/op]=[condition];[go/say/if/print/take/give]:[result]/[go/say/if/print/take/give]:[result] (fucntions like if/else where everything after the / is put in else)
         <action_dia></action_dia>
 
         <item_req></item_req>

@@ -23,6 +23,18 @@ public class PlayerInventory {
         }
     }
 
+    public void remove_rand() {
+        System.Random r = new System.Random();
+        int g = r.Next(1,player_inventory.Count);
+        for (int i = 0; i < g; i ++) {
+            player_inventory.RemoveAt(i);
+        }
+    }
+
+    public void remov(Item i) {
+        player_inventory.Remove(i);
+    }
+
     public void reset_inv() {
         player_inventory = new List<Item>();
     }

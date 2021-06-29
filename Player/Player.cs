@@ -7,6 +7,8 @@ public class Player {
     public GManager gM;
 
     public bool is_operator = false;
+    public string name = "no_name";
+    public string bio ="bio_empty";
 
 
     public List<string> player_tags; //hard limit on player tags for safety

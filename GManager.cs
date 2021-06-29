@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+
+
 public class GManager {
 
     public Box box;
@@ -105,6 +109,114 @@ public class GManager {
                 else {
                     situ_change(change_types.move_to, env.get_room_name_by_tag(result));
                 }
+            break;
+
+            case "take":
+                switch(result) {
+                    case "all":
+                        player.inv.reset_inv();
+                        situ_change(change_types.lose_item, "{DarkRed}INVENTORY DELETED!{end}");
+                    break;
+
+                    case "any":
+                        player.inv.remove_rand();
+                        situ_change(change_types.lose_item, "{Red}Random item{end}");
+                    break;
+
+                    default:
+                        foreach(Item i in player.inv.player_inventory) {
+                            if (i.tag == result) {
+                                player.inv.remov(i);
+                                situ_change(change_types.lose_item, i.name);
+                                return;
+                            }
+                        }
+                        box.Print("Internal error 'Do' command, 'take' tag invalid.");
+                    break;
+                }
+            break;
+
+            case "if": //example of syntax: if:inv=headband;go:vault_lobby/say:get headband
+            try {
+                string compare_tag = result.Split('=')[0];
+
+                string condition = result.Split("=")[1].Split(";")[0];
+                
+                string if_true = result.Split(";")[1].Split('/')[0];
+
+                string if_false = result.Split('/')[1];
+
+
+                switch(compare_tag) {
+                    
+                    case "inv":
+
+                        if(player.inv.player_inventory.Contains(env.get_item_from_tag(result.Split("=")[1].Split(";")[0]))) {
+
+                            Do(result.Split(';')[1].Split(':')[0], result.Split(';')[1].Split(':')[1].Split('/')[0]);
+
+                        }
+                        else {
+                            Do(result.Split('/')[1].Split(':')[0], result.Split('/')[1].Split(':')[1]);
+                        }
+
+                    break;
+
+                    case "name":
+                        
+                        if(player.name == condition) {
+                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                        }
+                        else {
+                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                        }
+
+                    break;
+
+                    case "room":
+                        if(env.current_tag == condition) {
+                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                        }
+                        else {
+                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                        }
+                    break;
+
+                    case "op":
+                    bool tf = false;
+                        if (condition == "true" || condition == "t" || condition == "1") {
+                            tf = true;
+                        }
+                        else {
+                            tf = false;
+                        }
+
+                        if(player.is_operator == tf) {
+                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                        }
+                        else {
+                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                        }
+                    break;
+
+                    case "tag":
+                        if(player.player_tags.Contains(condition)) {
+                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                        }
+                        else {
+                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                        }
+                    break;
+
+                }
+            } catch {
+                box.Print("Internal error in xml level folder using interactable, command was: " + action + ":" + result);
+            }
+
+            break;
+
+            case "print":
+                box.Print(result);
             break;
 
             case "say":

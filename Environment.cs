@@ -116,6 +116,10 @@ public class Environment {
         }
     }
 
+    public static string[] generic_verbs = new string[] {
+        "examine", "explore", "search"
+    };
+
     //works 
     void load_env_interactables(string filename) {
         interactable_doc = new XmlDocument();
@@ -138,6 +142,11 @@ public class Environment {
                 used_dialogue = nod.ChildNodes.Item(11).InnerText,
                 aliases = new List<string>(nod.ChildNodes.Item(12).InnerText.Split('/')),
             };
+            if (new_obj.verbs.Contains("gen")) {
+                foreach(string s in generic_verbs) {
+                    new_obj.verbs.Add(s);
+                }
+            }
             all_interactables.Add(new_obj);
         }
     }
@@ -677,12 +686,12 @@ public class Interactable {
     public string full_action;
     public string action_prefix {
         get {
-            return full_action.Split(':')[0];
+            return full_action.Split(':',2)[0];
         }
     }
     public string action_result {
         get {
-            return full_action.Split(':')[1];
+            return full_action.Split(':',2)[1];
         }
     }
     public string action_dia;
