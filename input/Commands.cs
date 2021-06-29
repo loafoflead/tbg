@@ -203,7 +203,7 @@ public class Commands {
                 break;
 
             case "inspect":
-
+            case "insp":
 
                 Item prt = gm.env.get_item_from_alias(arguments[1]);
                 if (prt == null) {
@@ -349,6 +349,7 @@ public class Commands {
             case "disp":
             case "display":
                 if (arguments[1] == null) {
+                    gm.box.Print("Incorrect syntax, usage is: '{Cyan}display [msg/display element]{end}'");
                     return;
                 }
 
@@ -365,6 +366,10 @@ public class Commands {
                         }
                     break;
 
+                    default:
+                        gm.box.Print("Unknown display element.");
+                    break;
+
                 }
 
             break;
@@ -372,7 +377,7 @@ public class Commands {
             case "colour":
             case "color":
             case "col":
-                if (arguments[1] == null || arguments[1] == null) {
+                if (arguments[1] == null || arguments[2] == null) {
                     gm.box.Print("Incorrect syntax, usage is: '{Cyan}colour [foreground/background/border] [consolecolour]'");
                     return;
                 }
@@ -380,7 +385,8 @@ public class Commands {
 
                     case "border":
                         try {
-                            gm.box.box_colour = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                            gm.box.box_colour = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[2]);
+                            gm.box.Print("Border colour successfully changed!");
                         } catch {
                             gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
                         }
@@ -390,7 +396,8 @@ public class Commands {
                     case "fg":
                     case "text":
                         try {
-                            gm.box.default_foreground = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                            gm.box.default_foreground = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[2]);
+                            gm.box.Print("Foreground colour successfully changed!");
                         } catch {
                             gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
                         }
@@ -401,7 +408,8 @@ public class Commands {
                     case "highlight":
                     case "hl":
                         try {
-                            gm.box.default_background = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[1]);
+                            gm.box.default_background = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), arguments[2]);
+                            gm.box.Print("Highlight colour successfully changed!");
                         } catch {
                             gm.box.Print("Unknown colour, perhaps you mispelled the colour name.");
                         }
@@ -500,6 +508,48 @@ public class Commands {
                     gm.box.Print("Error: either the environment file you asked for doesn't exist, or is missing key files in order to be loaded.");
                 }
             break;
+
+            case "tag":
+            case "tags":
+                if(arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is: '{Cyan}tag [add/remove/list] [optional tag to remove or add]{end}.");
+                    return;
+                }
+                switch (arguments[1]) {
+
+                    case "add":
+                        gm.player.player_tags.Add(arguments[2]);
+                        gm.box.Print(arguments[2] + " successfully added.");
+                    break;
+
+                    case "remove":
+                        if(gm.player.player_tags.Contains(arguments[2])) {
+                            gm.player.player_tags.Remove(arguments[2]);
+                            gm.box.Print(arguments[2] + " successfully removed.");
+                        }
+                        else {
+                            gm.box.PrintD("Tag not found.");
+                        }
+                    break;
+
+                    case "reset":
+                        gm.player.reset_tags();
+                    break;
+
+                    case "list":
+                        string h = "";
+                        foreach(string ta in gm.player.player_tags) {
+                            h += ta + " ";
+                        }
+                        gm.box.PrintD(h);
+                    break;
+
+                    default:
+                        gm.box.Print("Incorrect syntax, usage is: '{Cyan}tag [add/remove/list] [optional tag to remove or add]{end}.");
+                    return;
+
+                }
+            break;
             
             case "l":
             case "ls":
@@ -511,6 +561,14 @@ public class Commands {
                         foreach(room_short rom in gm.env.rooms) {
                             gm.box.Print(rom.tag);
                         }
+                    break;
+
+                    case "tags":
+                        string h = "";
+                        foreach(string ta in gm.player.player_tags) {
+                            h += ta + " ";
+                        }
+                        gm.box.PrintD(h);
                     break;
 
                     case "objs":

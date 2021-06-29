@@ -1,4 +1,5 @@
-
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player {
 
@@ -8,11 +9,11 @@ public class Player {
     public bool is_operator = false;
 
 
-    public string[] player_tags; //hard limit on player tags for safety
+    public List<string> player_tags; //hard limit on player tags for safety
     public int tag_index;
 
     public Player(GManager gManager) {
-        player_tags = new string[50];
+        player_tags = new List<string>();
         tag_index = 0;
         gM = gManager;
         inv = new PlayerInventory(this);
@@ -30,6 +31,10 @@ public class Player {
             }
         }
         return false;
+    }
+
+    public void reset_tags() {
+        player_tags = new List<string>();
     }
 
 }
