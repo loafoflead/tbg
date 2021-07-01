@@ -76,10 +76,87 @@ Admin commands:
 Environments:
     Environments are made up of three xml files, one containing the interactables in the room, one containing the items, and one detailing the rooms. in the folder env_01 there exists a template for each of these
     commented out at the bottom of each file.
-    room files contain a name, a description, a tag, an id, directions, the items in the room, and the objects in the room.
-    the name and description are self explanatory, the id is meaningless, but the tag is important.
-    the tag is how other rooms or interactables can interface with the room. For example, if you called your room {Red}DANGER ZONE{end}, it would be inconvenient to have to write the excape sequences
-    each time you wanted to reference it, so make the tag dange_zone, for example.
+
+    Room files contain a name, a description, a tag, an id, directions, the items in the room, and the objects in the room.
+    The name and description are self explanatory, the id is meaningless, but the tag is important.
+    The tag is how other rooms or interactables can interface with the room. For example, if you called your room {Red}DANGER ZONE{end}, it would be inconvenient to have to write the excape sequences
+    each time you wanted to reference it, so make the tag danger_zone, for example.
     The directions node contains four directions, leave the 'leads' tag blank if you dont want the direction to exist. other than that, the tags are relatively self explanatory.
     for the objs and items tags, put a '/' separated list of all the object and item tags you can in your room, and if they exist in your environment_items.xml file, they will be loaded into the room.
     be aware that mispelling information or adding in items or interactables that do not exist may cause a crash or other unexpected errors!
+
+    Item files contain item nodes made up of a tag, a name, and a description. Since the items can't actually be used individually, there's no point in assigning functions to them, instead
+    letting the rooms and interactables use them as keys and other things.
+    The tag and name system works the same as with the rooms, but there's also the alias list, which is a '/' seperated list of the different names to call the item by when the player is
+    referencing it. Its very important not to leave this field blank, as it can cause a crash or other unexpected issues.
+
+    Interactable files are the most complex of the bunch, with a whole bunch of tags and weird syntaxes.
+    To get the basic things out of the way, interactables use the same alias system as items to be used by the player, and the same tag and name system as rooms and items.
+    Now, onto the new stuff;
+        -Verbs 
+            Each interactable has it's own '/' seperated list of verbs, which can be used to interface with it. Avoid naming these verbs the same as any of the commands listed above, as it it can
+            cause unexpected issues.
+        -Action Dia (Action dialogue)
+            The dialogue the interactable displays when it is used by the player.
+        -Item required & Item dialogue
+            The item the obj needs to be used by the player, and the dialogue it will display if the player does not posess the item.
+        -Tag required & tag dialogue
+            These tags are obsolete :/
+        -Tag given
+            The tag added to the player when they use the interactable
+        -one time use & used dialogue
+            Whether the interactable can only be used once and what dialogue it should display when it has already been used.
+        
+        Finally, there's a tag called the 'action' tag, this is the most stupidly overengineered one of all of them, so buckle in. This tag allows you to perform simple actions such as,
+            go: [room tag]
+            say: [words to be printed on the screen in cyan double quotes]
+            give: [item tag to be given to the player]
+            take: [all/random/ or the item tag to take from the player] (note: if the player doesn't posess the item, nothing happens.)
+            print: [any text to be printed raw to the screen]
+            null: [do nothing]
+
+        But there is also a tag called 'if'. The general syntax of the 'if' tag is as follows:
+            
+            <action>if:(name=loafoflead):(say:hello bread)?(take:all)</action>
+
+        So, let's break this down. 
+            Firstly, we can see that the 'if' tag is place right at the start, followed by a colon, what follows in rounded brackets is the condition to be met.
+            Conditions include,
+                -name (the player's name)
+                -inv (searches the player's inventory for the specified item)
+                -room (the current room's tag)
+                -op (whether or not the player has operator status)
+                -tag (searches the player's tags for a specific tag)
+            After the condition is an '=' sign, and what is written behind the '=' symbol is the condition to be met,
+                E.G:
+                    if:(name=Derek) 
+                          ^     ^
+                checks player the name you're
+                    name        looking for
+
+            After the condition in brackets, there is another colon signifying what happens if the condition is met.
+                if:(name=Derek):(say:hi Derek)?[...]
+                                    ^   ^
+                               action to execute if 
+                                condition is met    
+            Finally, after the first condition is a '?', and everything after that is to be executed if the condition is not met.
+                if:(name=Derek):(say:hi Derek)?(say:You smell)
+                                                      ^
+                                              execute if condition is
+                                                    NOT met
+        
+        With all that explained, there's only one more thing that i should probably clarify. Nested ifs are supported, but not to a massive extent. For example,
+            if:(name=no_name):(if:(inv=headband):(say:hi)?(say:bye))?(say:i like france)
+            This, is a valid tag to be put in the action node.
+        This statement can be broken down into it's component parts:
+            if:(name=no_name):          ([...])     ?      (say:i like france)
+                    ^                      ^                        ^
+                the condition     execute if condition  execute if condition is not
+                                        is met                     met
+        Then, we can easily take the segment inside sqare brackets, '[...]', or '(if:(inv=headband):(say:hi)?(say:bye))', and apply the exact same logic to it that we applied to the 
+        earlier tags.
+
+    So there, a step by step breakdown of everything you need to know about environment files and how to configure them. And keep in mind the action tag system can be interacted with directly using 
+    commands for testing, the only thing to note is that a command like this one, 'if:(name=hihi):(say:haha)?(say:bye)', will be entered like this, '/do if (name=hihi):(say:haha)?(say:bye)'
+
+END OF README (yeah, theres actually nothing more. oh actually, there's this '_<') ((now it's done))
