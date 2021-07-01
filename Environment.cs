@@ -120,6 +120,8 @@ public class Environment {
         "examine", "explore", "search"
     };
 
+    static char[] escap = { '\r', '\n' };
+
     //works 
     void load_env_interactables(string filename) {
         interactable_doc = new XmlDocument();
@@ -131,7 +133,7 @@ public class Environment {
                 tag = nod.ChildNodes.Item(0).InnerText,
                 name = nod.ChildNodes.Item(1).InnerText,
                 verbs = new List<string>(nod.ChildNodes.Item(2).InnerText.Split('/')),
-                full_action = nod.ChildNodes.Item(3).InnerText,
+                full_action = nod.ChildNodes.Item(3).InnerText.Replace("\r","").Replace("\n","").Replace(" ",""),
                 action_dia = nod.ChildNodes.Item(4).InnerText,
                 item_req = nod.ChildNodes.Item(5).InnerText,
                 item_lock_dia = nod.ChildNodes.Item(6).InnerText,
@@ -683,7 +685,16 @@ public class Interactable {
     public string name;
     public string tag;
     public List<string> verbs;
-    public string full_action;
+
+    private string action;
+    public string full_action {
+        get {
+            return action;
+        }
+        set{
+            action = value;
+        }
+    }
     public string action_prefix {
         get {
             return full_action.Split(':',2)[0];

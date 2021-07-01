@@ -13,6 +13,8 @@ public class GManager {
 
     public bool is_running = true;
 
+    bool intro = false;
+
 
     public bool show_old_msgs = true;
 
@@ -34,7 +36,7 @@ public class GManager {
         }*/
 
         env.load_env("env01");
-
+        if (intro == true) {
         cutscene(cutscene_types.intro);
         box.waitf(1);
         box.clr_buffer();
@@ -53,6 +55,12 @@ public class GManager {
             box.Print(env.current_room.desc);
             box.print_screen();
         }
+        }
+
+        box.clr_buffer();
+        box.refresh_box();
+        box.clr_text();
+        box.print_screen();
 
         while (is_running == true) {
             cm.getInput();
@@ -83,6 +91,9 @@ public class GManager {
 
     }
 
+    public void Do(string full_act) {
+        Do(full_act.Split(':',2)[0], full_act.Split(':',2)[1]);
+    }
 
     public void Do(string action, string result) {
         switch (action) {
@@ -137,27 +148,66 @@ public class GManager {
             break;
 
             case "if": //example of syntax: if:inv=headband;go:vault_lobby/say:get headband
+                       // new syntax: if:(inv=headband):(go:vault)?(say:get headband)
+                       // if:(name=hi):(if:(op=true):(say:no)?(say:pee))?(say:bye)
+                       // if:(name=no_name):(say:noname haha cringe)?(say:i like pee)
+                       /*if     :    (name=no_name):(if:(inv=headband):(say:hi)?(say:bye))?(say:i like pee)*/
+                       
             try {
-                string compare_tag = result.Split('=')[0];
+                string compare_tag = result.Split('=')[0].Split('(',2)[1]; //the tag containing what to compare to, inv, name, etc..
 
-                string condition = result.Split("=")[1].Split(";")[0];
+                string condition = result.Split("=")[1].Split(")",2)[0]; // the string that denotes the condition to be met by the compare tag
+
+
+                string without_if_and_condition = result.Split(':',2)[1]; //just the results of the action
                 
-                string if_true = result.Split(";")[1].Split('/')[0];
+                
+                string if_true =  without_if_and_condition.Split('(',2)[1];
+               
 
-                string if_false = result.Split('/')[1];
+                for(int i = 0; i < if_true.Length; i ++) {
+                    if (if_true[i] == '(') {
+                        while (if_true[i] != ')') {
+                            i ++;
+                        }
+                        i ++;
+                    }
+                    if (if_true[i] == ')') {
+                        if_true = split_at(if_true, i)[0];
+                    }
+                }
+                
+
+                string minue_true = split_at(without_if_and_condition,if_true.Length + 2)[1];
+                
+
+                string if_false = minue_true.Split('(',2)[1];
+
+                for(int i = 0; i < if_false.Length; i ++) {
+                    if (if_false[i] == '(') {
+                        while (if_false[i] != ')') {
+                            i ++;
+                        }
+                        i ++;
+                    }
+                    if (if_false[i] == ')') {
+                        if_false = split_at(if_false, i)[0];
+                    }
+                }
+                
 
 
                 switch(compare_tag) {
                     
                     case "inv":
 
-                        if(player.inv.player_inventory.Contains(env.get_item_from_tag(result.Split("=")[1].Split(";")[0]))) {
+                        if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
 
-                            Do(result.Split(';')[1].Split(':')[0], result.Split(';')[1].Split(':')[1].Split('/')[0]);
+                            Do(if_true);
 
                         }
                         else {
-                            Do(result.Split('/')[1].Split(':')[0], result.Split('/')[1].Split(':')[1]);
+                            Do(if_false);
                         }
 
                     break;
@@ -165,20 +215,20 @@ public class GManager {
                     case "name":
                         
                         if(player.name == condition) {
-                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                            Do(if_true);
                         }
                         else {
-                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                            Do(if_false);
                         }
 
                     break;
 
                     case "room":
                         if(env.current_tag == condition) {
-                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                            Do(if_true);
                         }
                         else {
-                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                            Do(if_false);
                         }
                     break;
 
@@ -192,19 +242,33 @@ public class GManager {
                         }
 
                         if(player.is_operator == tf) {
-                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                            Do(if_true);
                         }
                         else {
-                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                            Do(if_false);
                         }
                     break;
 
                     case "tag":
                         if(player.player_tags.Contains(condition)) {
-                            Do(if_true.Split(':')[0], if_true.Split(':')[1]);
+                            Do(if_true);
                         }
                         else {
-                            Do(if_false.Split(':')[0], if_false.Split(':')[1]);
+                            Do(if_false);
+                        }
+                    break;
+
+                    case "resp":
+                    case "player_in":
+                    case "response":
+                        box.Print("{Cyan}Input >");
+                        box.nl();
+                        box.print_screen();
+                        if(System.Console.ReadLine() == condition) {
+                            Do(if_true);
+                        }
+                        else {
+                            Do(if_false);
                         }
                     break;
 
@@ -224,7 +288,7 @@ public class GManager {
             break;
 
             default:
-                box.Print("Fatal 'Do' Internal Error occurred ERR_07");
+                box.Print("Fatal 'Do' Internal Error occurred ERR_07.");
             break;
         }
     }
@@ -265,6 +329,17 @@ public class GManager {
 
         }
 
+    }
+
+    string[] split_at(string to_split, int index) {
+        string[] to_return = new string[2];
+        for (int i = 0; i < index; i ++) {
+            to_return[0] += to_split[i];
+        }
+        for (int i = index; i < to_split.Length; i ++) {
+            to_return[1] += to_split[i];
+        }
+        return to_return;
     }
 
     public enum change_types {

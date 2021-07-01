@@ -167,7 +167,21 @@
         <name>Table</name>
 
         <verbs>gen/touch/greet/kick/bash</verbs>
-        <action>if:op=true;say:haxxxx/say:he's legit</action>
+        <action>
+        if:(name=no_name)
+        :
+            (
+                if:(inv=headband)
+                :
+                    (say:hi)
+                ?
+                    (say:bye)
+            )
+        ?
+            (
+                say:i like pee
+            )
+        </action>
         <action_dia>The table imparts it's wisdom upon you, saying:</action_dia>
 
         <item_req></item_req>
