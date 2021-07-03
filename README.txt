@@ -73,6 +73,28 @@ Admin commands:
     
     finally, if no match is found for the command, the message 'Unknown command!" is displayed.
 
+Escape sequences:
+    To print something to the screen in colour the system the display uses is very smilar to the one used in HTML, so it's a bunch of tags.
+    For example, say i wanted to print this: 'Hello World!' in red:
+        <action>print:{Red}Hello World!{end}</action>
+                        ^                ^
+                The colour you want  sequence marking
+                    to use.*          the end of a 
+                                        colour**
+    * All colours have to start with a capital letter
+
+    ** the 'end' tag restored the foreground colour to white, and the background to black, so be careful with formatting.
+
+    This system also lets you highlight things, e.g.
+        /name {Blue,Yellow}xxX_Epic_Gamer_Xxx{end}
+                 ^     ^
+              fg col bg col
+
+    The previous command will set the player's name to the enclosed text written in blue on a yellow background. (This is the peak of graphic design)
+
+    When printing cutscenes, you may want a pause of a few seconds, thats why the '$' sequence exists. It makes a pause of one second, then continues printing. These characters are not 
+    displayed onscreen, and don't affect regular speed printing.
+
 Cutscenes:
     Cutscenes are stored in the 'cutscene folder', and can be loaded either with interactables or commands. Two custscenes are loaded at the start of the game, 'intro.txt', and 'start_cutscene.txt'.
     To run a custom cutscene, you can either edit the cutscenes, while keeping the same name, or use interactables, e.g.
