@@ -73,6 +73,14 @@ Admin commands:
     
     finally, if no match is found for the command, the message 'Unknown command!" is displayed.
 
+Cutscenes:
+    Cutscenes are stored in the 'cutscene folder', and can be loaded either with interactables or commands. Two custscenes are loaded at the start of the game, 'intro.txt', and 'start_cutscene.txt'.
+    To run a custom cutscene, you can either edit the cutscenes, while keeping the same name, or use interactables, e.g.
+
+        cutscene:custom_cutscene.txt
+    
+    Further support may be added to display a cutscene at the start of a room.
+
 Environments:
     Environments are made up of three xml files, one containing the interactables in the room, one containing the items, and one detailing the rooms. in the folder env_01 there exists a template for each of these
     commented out at the bottom of each file.
@@ -109,11 +117,23 @@ Environments:
         
         Finally, there's a tag called the 'action' tag, this is the most stupidly overengineered one of all of them, so buckle in. This tag allows you to perform simple actions such as,
             go: [room tag]
-            say: [words to be printed on the screen in cyan double quotes]
+            say: [words to be printed on the screen in cyan double quotes] *
             give: [item tag to be given to the player]
             take: [all/random/ or the item tag to take from the player] (note: if the player doesn't posess the item, nothing happens.)
             print: [any text to be printed raw to the screen]
+            cutscene: [intro/game_over/custome cutscene file name] (runs the cutscene specified, if it doesnt match any premade types, run one made in a custom file.)
+            env: [environment file name] (loads the environment file given)
+            clear: (clears the screen)
+            addtag: [tag to be added] (adds the tag said to the player)
+            removetag: [all/rand/specific tag] (similar to the take command, only with tags as opposed to items)
             null: [do nothing]
+
+        say*: the say command contains a few special tags, for example writing: say:hello #name#! how are you?, will print the text replacing '#name#' with the player's name.
+        Currently the tags include:
+            - #name#: the player's name
+            - #bio#: the player's bio 
+            - #room#: the current room
+            - #fun#: the player's fun
 
         To chain multiple tags together, simply place a '+' sign in between them, as follows:
             say:hello, how are you?+give:hundred_pounds

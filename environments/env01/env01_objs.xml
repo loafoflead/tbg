@@ -52,7 +52,7 @@
         <name>Magic Portal</name>
 
         <verbs>use/examine/approach/enter/punch</verbs>
-        <action>go:vault_hallway</action>
+        <action>say:hi #name#, you stinky lol</action>
         <action_dia>you move through the magic portal</action_dia>
 
         <item_req>magic_wand</item_req>
@@ -193,28 +193,7 @@
 
     </obj>
 
-    <obj>
-
-        <tag></tag>
-        <name></name>
-
-        <verbs></verbs>
-        <action></action>
-        <action_dia></action_dia>
-
-        <item_req></item_req>
-        <item_dia></item_dia>
-        <tag_req></tag_req>
-        <tag_dia></tag_dia>
-
-        <tag_given></tag_given>
-        
-        <one_time_use>1/0</one_time_use>
-        <used_dialogue></used_dialogue>
-
-        <aliases></aliases>
-
-    </obj>
+    
 
 
 </env01obj>

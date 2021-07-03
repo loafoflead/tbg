@@ -9,14 +9,17 @@ public class Player {
     public bool is_operator = false;
     public string name = "no_name";
     public string bio ="bio_empty";
+    public int fun = 0;
 
 
     public List<string> player_tags; //hard limit on player tags for safety
     public int tag_index;
 
     public Player(GManager gManager) {
+        System.Random r = new System.Random();
         player_tags = new List<string>();
         tag_index = 0;
+        fun = r.Next(1,11);
         gM = gManager;
         inv = new PlayerInventory(this);
     }

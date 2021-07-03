@@ -164,6 +164,9 @@ public class GManager {
                 }
             break;
 
+            case "null":
+                break;
+
             case "take":
                 switch(result) {
                     case "all":
@@ -364,8 +367,8 @@ public class GManager {
 
             case "say":
                 g = "";
-                //check_tag(result);
-                box.Print("{Cyan}- \"" + result + "{Cyan}\"");
+                check_tag(result);
+                box.Print("{Cyan}- \"" + g + "{Cyan}\"");
             break;
 
             default:
@@ -398,6 +401,12 @@ public class GManager {
                     break;
                     case "bio":
                         g += player.bio;
+                    break;
+                    case "room":
+                        g += env.current_name;
+                    break;
+                    case "fun":
+                        g += player.fun;
                     break;
                     default:
                         g += "invalid tag ERR_011";
