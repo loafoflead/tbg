@@ -86,7 +86,18 @@ public class Environment {
         load_env_interactables(filename);
         all_items = new List<Item>();
         load_env_items(filename);
+
+        string cutscene_name = "";
+        if(System.IO.File.Exists(filename + "_cutscene.xml")) {
+            cutscene_name = filename + "_cutscene.xml";
+            gm.cutscene(GManager.cutscene_types.custom_txt, cutscene_name);
+        }
+        else {
+            gm.cutscene(GManager.cutscene_types.empty);
+        }
         
+        
+
     }
 
     public void load_rooms() {
@@ -556,6 +567,13 @@ public class Environment {
     //to be tested
     public int Go(string room_tag) {
         try {
+
+            if(room_tag.Contains(":")) {
+                string env_name = room_tag.Split(":")[0];
+                gm.Do("env", room_tag.Split(":")[1]);
+                return 1;
+            }
+
             room_short r = get_room_via_tag(room_tag);
             if (r != null) {
                 previous_room = current_room;

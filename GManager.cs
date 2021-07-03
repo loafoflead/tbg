@@ -83,7 +83,8 @@ public class GManager {
         item_pickup,
         custom_txt,
         custom_xml,
-        custom_string
+        custom_string,
+        empty,
     }
 
 
@@ -454,6 +455,9 @@ public class GManager {
                 }
                 box.print_screen_del();
             break;
+
+            case cutscene_types.empty:
+                break;
 
             case cutscene_types.game_over:
                 box.Print(fm.readTxtFileAtLine(folder_path + "game_over.txt", fm.getRan(1,8)));

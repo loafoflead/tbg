@@ -101,7 +101,16 @@ Cutscenes:
 
         cutscene:custom_cutscene.txt
     
-    Further support may be added to display a cutscene at the start of a room.
+    Further support may be added to display a cutscene at the start of a room, and they exist at the beginning of environments, when the environment is loaded.
+    The file name is the same as the other files contained in the environment folder, so '[environment name]_cutscene.txt', and placed in the environment folder.
+    e.g 
+        env01 > 
+            env01_cutscenes.txt
+            env01_items.xml
+            env01_objs.xml
+            env01_room.xml
+
+    If the cutscene folder isn't included, the file called 'empty.txt' in the cutscene folder is player. It's empty by default.
 
 Environments:
     Environments are made up of three xml files, one containing the interactables in the room, one containing the items, and one detailing the rooms. in the folder env_01 there exists a template for each of these
