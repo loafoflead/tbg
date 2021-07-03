@@ -191,6 +191,37 @@ public class GManager {
                 }
             break;
 
+            case "cutscene":
+                switch(result) {
+
+                    case "intro":
+                        cutscene(cutscene_types.intro);
+                    break;
+                    case "game_over":
+                    case "gameover":
+                        cutscene(cutscene_types.game_over);
+                    break;
+                    default:
+                        cutscene(cutscene_types.custom_txt, result);
+                    break;
+
+                }
+            break;
+
+            case "env":
+                try {
+                    env.load_env(result);
+                    situ_change(change_types.change_env, result);
+                } catch {
+                    box.Print("Invalid environment file was requested to be loaded, or is missing key files in order to be loaded.");
+                }
+            break;
+
+            case "clear":
+                box.clr_buffer();
+                box.clr();
+            break;
+
             case "if": //example of syntax: if:inv=headband;go:vault_lobby/say:get headband
                        // new syntax: if:(inv=headband):(go:vault)?(say:get headband)
                        // if:(name=hi):(if:(op=true):(say:no)?(say:pee))?(say:bye)
@@ -441,7 +472,7 @@ public class GManager {
         move_to,
         missing_item,
         drop_all,
-
+        change_env,
     }
 
 
@@ -478,6 +509,11 @@ public class GManager {
                 box.nl();
             break;
 
+            case change_types.change_env:
+                box.nl();
+                box.Print("{Cyan}>\t{end}<{DarkRed}-{Gray}-{DarkRed}>>{end}> ({DarkRed}" + result + "{end})");
+                box.nl();
+            break;
 
             default:
                 box.nl();

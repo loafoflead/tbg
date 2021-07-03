@@ -121,8 +121,8 @@
         <name>{Green}Help {DarkRed}Bot!{end}</name>
 
         <verbs>examine/chat with/talk up/flirt with/kick/bully</verbs>
-        <action>say:Hello! The ship is currently on crash course with planet 11-BI, otherwise known as 'TBG', or 'Terre Bande Grandiose', it is reccommended you evacuuate the ship.</action>
-        <action_dia>You blink at the droid in surprise, and try and ask it a question. The computer stays silent, then bursts out:</action_dia>
+        <action>say:Hello! The ship is currently on crash course with planet {Red}11-BI{Cyan}, otherwise known as '{Red}TBG{Cyan}', or 'Terre Bande Grandiose', it is reccommended you evacuuate the ship.</action>
+        <action_dia>You try and ask it a question. The computer stays silent, then bursts out:</action_dia>
 
         <item_req></item_req>
         <item_dia></item_dia>
@@ -167,7 +167,16 @@
         <name>Table</name>
 
         <verbs>gen/touch/greet/kick/bash</verbs>
-        <action>if:(name=no_name):(if:(inv=headband):(say:You are crafty, and you've found my headband, here, take this as a token of my gratitude,+give:staff_key)?(say:Sometimes, your vision can be clouded by unimportant things, it is {DarkRed}vital{Cyan} to stay careful.))?(say:#player_name#, what a nice name.+addtag:nice_name)</action>
+
+        <action>if:(name=no_name):
+        (if:(inv=headband):
+            (say:You are crafty, and you've found my headband, here, take this as a token of my gratitude,+give:staff_key)
+        ?
+            (say:Sometimes, your vision can be clouded by unimportant things, it is {DarkRed}vital{Cyan} to stay careful.))
+        ?
+        (say:#player_name#, what a nice name.+addtag:nice_name)
+        </action>
+
         <action_dia>The table imparts it's wisdom upon you, saying:</action_dia>
 
         <item_req></item_req>
@@ -181,6 +190,29 @@
         <used_dialogue>The table has grown silent, no more wise words will come from it again.</used_dialogue>
 
         <aliases>table/tab/ble</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag></tag>
+        <name></name>
+
+        <verbs></verbs>
+        <action></action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1/0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases></aliases>
 
     </obj>
 

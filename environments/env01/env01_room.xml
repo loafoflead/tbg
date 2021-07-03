@@ -412,6 +412,65 @@
 
     </room>
 
+    <room> 
+
+        <id>5</id>
+
+        <tag>pilot_chamber</tag>
+        <name>{DarkRed}Pilot's chamber{end}</name>
+
+        <desc>A small room with the pilot's chair at it's center, and a control panel at it's end looking out into space. The view was shocking, the only windows in the place were screens displaying slightly moving images of seaside places. Seeing the pilot's chair abandoned shook you a little.</desc>
+        
+        <directions>
+            <left>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs></objs>
+        <items></items>
+
+    </room>
+
 
 </env01>
 
