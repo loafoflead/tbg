@@ -115,6 +115,9 @@ Environments:
             print: [any text to be printed raw to the screen]
             null: [do nothing]
 
+        To chain multiple tags together, simply place a '+' sign in between them, as follows:
+            say:hello, how are you?+give:hundred_pounds
+
         But there is also a tag called 'if'. The general syntax of the 'if' tag is as follows:
             
             <action>if:(name=loafoflead):(say:hello bread)?(take:all)</action>

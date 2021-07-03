@@ -133,7 +133,7 @@ public class Environment {
                 tag = nod.ChildNodes.Item(0).InnerText,
                 name = nod.ChildNodes.Item(1).InnerText,
                 verbs = new List<string>(nod.ChildNodes.Item(2).InnerText.Split('/')),
-                full_action = nod.ChildNodes.Item(3).InnerText.Replace("\r","").Replace("\n","").Replace(" ",""),
+                full_action = nod.ChildNodes.Item(3).InnerText.Replace("\r","").Replace("\n","").Replace("\t",""),
                 action_dia = nod.ChildNodes.Item(4).InnerText,
                 item_req = nod.ChildNodes.Item(5).InnerText,
                 item_lock_dia = nod.ChildNodes.Item(6).InnerText,

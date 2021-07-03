@@ -39,4 +39,12 @@ public class Player {
         player_tags = new List<string>();
     }
 
+    public void remove_rand_tag() {
+        System.Random r = new System.Random();
+        int g = r.Next(1,player_tags.Count);
+        for (int i = 0; i < g; i ++) {
+            player_tags.RemoveAt(i);
+        }
+    }
+
 }

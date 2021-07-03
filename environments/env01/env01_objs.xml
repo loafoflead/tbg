@@ -167,21 +167,7 @@
         <name>Table</name>
 
         <verbs>gen/touch/greet/kick/bash</verbs>
-        <action>
-        if:(name=no_name)
-        :
-            (
-                if:(inv=headband)
-                :
-                    (say:hi)
-                ?
-                    (say:bye)
-            )
-        ?
-            (
-                say:i like pee
-            )
-        </action>
+        <action>if:(name=no_name):(if:(inv=headband):(say:You are crafty, and you've found my headband, here, take this as a token of my gratitude,+give:staff_key)?(say:Sometimes, your vision can be clouded by unimportant things, it is {DarkRed}vital{Cyan} to stay careful.))?(say:#player_name#, what a nice name.+addtag:nice_name)</action>
         <action_dia>The table imparts it's wisdom upon you, saying:</action_dia>
 
         <item_req></item_req>
