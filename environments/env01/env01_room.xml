@@ -454,8 +454,8 @@
                 <lock_tag_req></lock_tag_req>
             </forward>
             <back>
-                <leads>You clamber through the heavy door.</leads>
-                <dia></dia>
+                <leads>staff_room</leads>
+                <dia>You clamber back through the heavy door.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
@@ -467,6 +467,65 @@
         </directions>
 
         <objs>pilot_control_panel/pilot_chair/window</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>6</id>
+
+        <tag>escape_pod</tag>
+        <name>Escape pod room</name>
+
+        <desc>A steel walled room. There's a few windows leading out onto space, and one door appears to lead to an intact escape pod. It's straight ahead of you.</desc>
+        
+        <directions>
+            <left>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </left>
+
+            <right>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </right>
+            <forward>
+                <leads>pod</leads>
+                <dia>You walk up to the pod, and the door opens. You walk in.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </forward>
+            <back>
+                <leads>pilot_chamber</leads>
+                <dia>You back back into the pilot's chamber.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <lock_tag_req></lock_tag_req>
+            </back>
+
+        </directions>
+
+        <objs>magic_portal</objs>
         <items></items>
 
     </room>
