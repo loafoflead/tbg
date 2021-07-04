@@ -419,7 +419,7 @@
         <tag>pilot_chamber</tag>
         <name>{DarkRed}Pilot's chamber{end}</name>
 
-        <desc>A small room with the pilot's chair at it's center, and a control panel at it's end looking out into space. The view was shocking, the only windows in the place were screens displaying slightly moving images of seaside places. Seeing the pilot's chair abandoned shook you a little.</desc>
+        <desc>A small room with the pilot's chair at it's center, and a control panel at it's end looking out into space. The view is shocking, the only windows you've seen so far are screens displaying slightly moving images of seaside places. Seeing the pilot's chair abandoned shakes you a little. There's a bulkhead door to your right, and behind you is the door you entered from.</desc>
         
         <directions>
             <left>
@@ -434,8 +434,8 @@
             </left>
 
             <right>
-                <leads></leads>
-                <dia></dia>
+                <leads>escape_pod</leads>
+                <dia>With a massive effort you unscrew the bulkhead door and hold it open long enough to squeeze through.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
@@ -454,7 +454,7 @@
                 <lock_tag_req></lock_tag_req>
             </forward>
             <back>
-                <leads></leads>
+                <leads>You clamber through the heavy door.</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
@@ -466,7 +466,7 @@
 
         </directions>
 
-        <objs></objs>
+        <objs>pilot_control_panel/pilot_chair/window</objs>
         <items></items>
 
     </room>

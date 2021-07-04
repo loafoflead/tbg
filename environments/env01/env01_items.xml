@@ -77,6 +77,17 @@
 
     </item>
 
+    <item>
+
+        <tag>pilot_keycard</tag>
+        <name>Pilot's Keycard</name>
+
+        <desc>A plain grey card, it's lacking in texture.</desc>
+
+        <aliases>pilot card/pilot's keycard/grey card/keycard grey</aliases>
+
+    </item>
+
 </env01item>
 
 <!--  TEMPLATE

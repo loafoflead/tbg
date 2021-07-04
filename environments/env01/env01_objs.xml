@@ -193,7 +193,97 @@
 
     </obj>
 
-    
+    <obj>
+
+        <tag>pilot_chair</tag>
+        <name>Pilot's chair</name>
+
+        <verbs>gen/sit on/sit in/sit at/rest on/lie on/rest at</verbs>
+        <action>
+            if:(inv=pilot_keycard):
+                (print:The chair chimes as you sit down on it, and the doors around you both {Red}seal{end} audibly. You begin to panick, you try and leave the seat, but an automated seatbelt clamps you to the chair.+env:space_walk)
+            ?
+                (print:The chair doesn't react. You sit in it for a while, admiring the view, then stand back up.)
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>sat_down</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You don't feel like sitting down again.</used_dialogue>
+
+        <aliases>chair/pilot's chair/pilot chair/pilot/chaise</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>pilot_control_panel</tag>
+        <name>Pilot's {Gray}Control panel{end}</name>
+
+        <verbs>gen/use/tap on/press on/utilise</verbs>
+        <action>
+            if:(op=1):
+                (if:(name=no_name):
+                    (print:The panel says,+say:Oh, it's you. I'm sure you'll be able to deal with this then,+env:hell)
+                ?
+                    (print:The panel says,+say:How did you do that???+print:You hear the ship tremble.+cutscene:game_over+print:{DarkRed}Sorryy!!!)
+                )
+            ?
+                (print:The panel bleeps, and the screen at it's center folds in two to reveal a grey keycard. You pocket it.+give:pilot_keycard)
+        </action> 
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>The panel has shut down.</used_dialogue>
+
+        <aliases>panel/control panel/pilot panel/pilot's panel/control panel</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>window</tag>
+        <name>Cockpit window</name>
+
+        <verbs>gen/look at/look out/peek through/look through/look/approach/smash</verbs>
+        <action>
+            if:(ask=Do you want to smash the window?):
+                (
+                    print:You touch the window and find yourself in a dark void. You look up, you can make out a white rectangle far up in the sky with some blurry text on it and a few faint specks of colour. The text is writing itself.+cutscene:game_over
+                )
+            ?
+                (
+                    print:You admire the view.+givetag:looked_window
+                )
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You don't feel like looking through the window anymore.</used_dialogue>
+
+        <aliases></aliases>
+
+    </obj>
 
 
 </env01obj>
