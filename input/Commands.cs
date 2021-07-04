@@ -136,7 +136,7 @@ public class Commands {
                             int index = 1;
                             foreach(Item it in gm.player.inv.player_inventory) {
                                 gm.box.Print(index + ": " + it.name);
-                                return;
+                                index ++;
                             }
                             if (gm.player.inv.player_inventory.Count < 1) {
                                 gm.box.Print("Inventory empty!");

@@ -134,7 +134,7 @@ Environments:
     Now, onto the new stuff;
         -Verbs 
             Each interactable has it's own '/' seperated list of verbs, which can be used to interface with it. Avoid naming these verbs the same as any of the commands listed above, as it it can
-            cause unexpected issues.
+            cause unexpected issues. A special tag called 'gen' adds default verbs, such as 'examine', and 'exa'.
         -Action Dia (Action dialogue)
             The dialogue the interactable displays when it is used by the player.
         -Item required & Item dialogue

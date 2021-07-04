@@ -130,6 +130,10 @@ public class GManager {
                     situ_change(change_types.gain_item, env.get_item_from_tag(result).name);
                 }
             break;
+
+            case "end":
+                is_running = false;
+            break;
             
             case "go":
                 int b = env.Go(result);
@@ -212,12 +216,41 @@ public class GManager {
                 }
             break;
 
+            case "use":
+                if (env.all_interactables.Contains(env.get_interactable_tag(result))) {
+                    env.UseF(env.get_interactable_tag(result));
+                }
+                else {
+                    box.Print("Internal error 'Do' command, 'use' tag invalid.");
+                }
+            break;
+
             case "env":
                 try {
                     env.load_env(result);
                     situ_change(change_types.change_env, result);
                 } catch {
                     box.Print("Invalid environment file was requested to be loaded, or is missing key files in order to be loaded.");
+                }
+            break;
+
+            case "op":
+                switch (result) {
+                    case "true":
+                    case "1":
+                    case "t":
+                        player.is_operator = true;
+                    break;
+
+                    case "false":
+                    case "f":
+                    case "0":
+                        player.is_operator = false;
+                    break;
+
+                    default:
+                        box.PrintD("Internal error 'Do' command, 'op' tag invalid.");
+                    break;
                 }
             break;
 
@@ -281,8 +314,39 @@ public class GManager {
 
 
                 switch(compare_tag.Replace(" ", "")) {
+
+                    case "fun":
+
+                        if(player.fun == int.Parse(condition)) {
+
+                            checkDo(if_true);
+
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "ask":
+                        if(cm.YN(condition)) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
                     
                     case "inv":
+
+                        if(condition == "empty" || condition == "0" || condition == "null") {
+                            if (player.inv.player_inventory.Count == 0) {
+                                checkDo(if_true);
+                            }
+                            else {
+                                checkDo(if_false);
+                            }
+                            return;
+                        }
 
                         if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
 
@@ -431,10 +495,18 @@ public class GManager {
 
 
 
-    public void cutscene(cutscene_types ct, string file_name = "") {
+    public void cutscene(cutscene_types ct, string filename = "") {
+
+        string file_name = filename;
 
         string folder_path = "cutscenes\\"; //gets the cutscene folder
         box.clr();
+
+        if (ct == cutscene_types.custom_txt) {
+            if (file_name.Contains(".txt")) {
+                file_name += ".txt";
+            }
+        }
 
         switch (ct) {
 
