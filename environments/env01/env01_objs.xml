@@ -232,7 +232,7 @@
                 (if:(name=no_name):
                     (print:The panel says,+say:Oh, it's you. I'm sure you'll be able to deal with this then,+env:hell)
                 ?
-                    (print:The panel says,+say:How did you do that???+print:You hear the ship tremble.+cutscene:game_over+print:{DarkRed}Sorryy!!!)
+                    (print:The panel says,+say:How did you do that??? #name# +print:You hear the ship tremble.+cutscene:game_over+print:{DarkRed}Sorryy!!!)
                 )
             ?
                 (print:The panel bleeps, and the screen at it's center folds in two to reveal a grey keycard. You pocket it.+give:pilot_keycard)

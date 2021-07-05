@@ -132,5 +132,13 @@ public class FileManager {
 
     }
 
+    public bool null_or_empt(string str) {
+        if (str == "" || str == null) {
+            return true;
+        }
+        return false;
+    }
+    
+
 
 }

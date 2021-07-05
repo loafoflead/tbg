@@ -134,6 +134,24 @@ public class GManager {
             case "end":
                 is_running = false;
             break;
+
+            case "name":
+                if(!fm.null_or_empt(result)) {
+                    player.name = result;
+                }
+                else {
+                    box.Print("Internal error 'Do', name empty ERR_09 (143)");
+                }
+            break;
+
+            case "bio":
+                if(!fm.null_or_empt(result)) {
+                    player.bio = result;
+                }
+                else {
+                    box.Print("Internal error 'Do', bio empty ERR_09 (143)");
+                }
+            break;
             
             case "go":
                 int b = env.Go(result);
@@ -445,18 +463,12 @@ public class GManager {
     void check_tag(string t) {
 
         if (!t.Contains("#")) {
-            System.Console.WriteLine("piizszs");
-            System.Console.ReadKey();
             g = t;
             return;
         }
 
         string[] hashes = t.Split("#");
 
-        foreach(string f in hashes) {
-            System.Console.WriteLine(f);
-        }
-        System.Console.ReadKey();
 
         for(int i= 0; i < hashes.Length; i ++) {
             if (i % 2 != 0) {

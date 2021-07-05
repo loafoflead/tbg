@@ -559,6 +559,14 @@ public class Commands {
                     gm.box.PrintD("Interactable not found.");
                 }
             break;
+
+            case "name":
+                gm.Do("name", arguments[1]);
+            break;
+
+            case "bio":
+                gm.Do("bio", arguments[1]);
+            break;
             
             case "l":
             case "ls":
