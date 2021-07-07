@@ -200,6 +200,7 @@
 
         <verbs>gen/sit on/sit in/sit at/rest on/lie on/rest at</verbs>
         <action>
+            print:You sit down in the chair.+
             if:(inv=pilot_keycard):
                 (print:The chair chimes as you sit down on it, and the doors around you both {Red}seal{end} audibly. You begin to panick, you try and leave the seat, but an automated seatbelt clamps you to the chair.+env:space_walk)
             ?
@@ -228,6 +229,7 @@
 
         <verbs>gen/use/tap on/press on/utilise</verbs>
         <action>
+            print:You tap on the control panel's surface,+
             if:(op=1):
                 (if:(name=no_name):
                     (print:The panel says,+say:Oh, it's you. I'm sure you'll be able to deal with this then,+env:hell)

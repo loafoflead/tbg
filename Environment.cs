@@ -560,7 +560,7 @@ public class Environment {
     //may work
     void effect_obj(Interactable obk) {
         gm.box.Print(obk.action_dia);
-        if(obk.tag_given != "") gm.player.add_tag(obk.tag_given);
+        //if(!gm.fm.null_or_empt(obk.tag_given)) gm.player.add_tag(obk.tag_given);
         gm.Do(obk.action_prefix, obk.action_result);
     }
 
