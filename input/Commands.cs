@@ -149,10 +149,9 @@ public class Commands {
                         break;
 
                     }
-                    gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items''.");
 
                 } catch {
-                    gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items''.");
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}list 'items'{end}'.");
                 }
             break;
 
@@ -206,6 +205,9 @@ public class Commands {
             case "insp":
 
                 Item prt = gm.env.get_item_from_alias(arguments[1]);
+                if(!gm.player.inv.player_inventory.Contains(prt)) {
+                    gm.box.Print("Item not found.");
+                }
                 if (prt == null) {
                     gm.box.Print("Incorrect usage of '{Cyan}examine{end}', usage: 'examine [item]', where item is an item in your inventory. You can type 'list' to list these items.");
                 }else {
