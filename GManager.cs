@@ -96,22 +96,29 @@ public class GManager {
         Do(full_act.Split(':',2)[0], full_act.Split(':',2)[1]);
     }
 
+
     public void Do(string action, string result) {
         if (result.Contains("+") ) {
-            if (result.Contains("(") || result.Contains(")")) {
+
+            string[] a = result.Split("+",2); //the input will be: e.g. 'go' <- action, 'print:hi+if:(inv=headband):(say:bye+give:knife)?(say:hi)'
+                                            //next stage: 'if' <- action, '(inv=headband):(say:bye+give:knife)?(say:hi)'
+                                            //then: if_true -> say:bye+give:knife
+                                            //then: if_true -> say:hi
+
+
+            if (a[0].Contains("(") || a[0].Contains(")")) {
                 goto resume;
             }
-            
-            string[] a = result.Split("+");
+
             Do(action, a[0]);
+
+            Do(a[1].Split(":",2)[0], a[1].Split(":",2)[1]);
             
-            for(int j = 1; j < a.Length; j ++) {
-                Do(a[j]);
-            }
             return;
+
         }
-        
-        resume :
+
+        resume:
 
         switch (action.Replace(" ", "")) {
             case "give":
