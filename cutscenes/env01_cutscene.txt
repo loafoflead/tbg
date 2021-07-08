@@ -1,0 +1,8 @@
+You wake up.$
+You see an opaque plastic plate in front of you, and notice the room you're in is slowly filling up with {Red}smoke{end}.
+For a second, your lethargic mind doesn't process this. $$Then, you start to panic.
+You frantically pound against the plastic door, {Red}smoke{end} slowly filling up the tiny cubicle you're in.
+The door bends a little when you hit it, but your tired muscles prevent you from doing any more than that.
+$You bash the door further, finally feeling it buckle and swing outwards. 
+The {Red}smoke{end} escaped into the chamber you were now in, dissapearing into a nearby ventilation shaft high above your head.
+You pause a moment,$ and begin to take account of your surroundings.

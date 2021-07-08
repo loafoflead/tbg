@@ -522,6 +522,10 @@ public class Commands {
             break;
 
             case "do":
+                if (gm.fm.null_or_empt(arguments[1]) || gm.fm.null_or_empt(arguments[2]) ) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/do [command tag] [result tag]{end}'");
+                    return;
+                }
                 gm.Do(arguments[1], arguments[2]);
                 break;
 

@@ -13,7 +13,8 @@ public class GManager {
 
     public bool is_running = true;
 
-    public bool intro = false;
+    private bool intro = false;
+    public bool fast_cutscenes = false;
 
 
     public bool show_old_msgs = true;
@@ -21,6 +22,7 @@ public class GManager {
 
     public string log_file = "";
 
+    private string cutscene_file = "";
 
     public GManager() {
         box = new Box();
@@ -35,32 +37,28 @@ public class GManager {
             box.flush();
         }*/
 
-        env.load_env("env01");
+        load_config_file("config.txt");
+        
         if (intro == true) {
         cutscene(cutscene_types.intro);
         box.waitf(1);
         box.clr_buffer();
-        cutscene(cutscene_types.custom_txt, "start_cutscene.txt");
+        cutscene(cutscene_types.custom_txt, "env01_cutscene");
         box.waitf(1);
         box.clr_buffer();
         box.refresh_box();
         box.clr_text();
+        }
 
-        if (cm.YN("Do you want to read a log file?") == true) {
+        /*if (cm.YN("Do you want to read a log file?") == true) {
             loadsave(System.Console.ReadLine());
         }
-        else {
+        else {*/
             box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
             box.nl();
             box.Print(env.current_room.desc);
             box.print_screen();
-        }
-        }
-
-        box.clr_buffer();
-        box.refresh_box();
-        box.clr_text();
-        box.print_screen();
+     
 
         while (is_running == true) {
             cm.getInput();
@@ -75,6 +73,32 @@ public class GManager {
         //box.print_screen();
 
         
+    }
+
+
+    void load_config_file(string filename) {
+        string[] lines = fm.readall(filename);
+        player.name = lines[0].Split('=')[1];
+        player.bio = lines[1].Split('=')[1];
+
+        player.player_tags.Add(lines[4].Split('=')[1]);
+
+        player.is_operator = get_bool(lines[5].Split('=')[1]);
+
+        cutscene_file = lines[6].Split('=')[1];
+        intro = get_bool(lines[7].Split('=')[1]);
+
+        env.load_env(lines[2].Split('=')[1]);
+
+        player.inv.add_to_inv(env.get_item_from_tag(lines[3].Split('=')[1]));
+
+    }
+
+    bool get_bool(string bl) {
+        if (bl == "true" || bl == "t" || bl == "1") {
+            return true;
+        }
+        return false;
     }
 
     public enum cutscene_types {
@@ -98,6 +122,12 @@ public class GManager {
 
 
     public void Do(string action, string result) {
+
+        if (fm.null_or_empt(result)) {
+            box.Print("Internal error, incomplete command requested; ERR_013");
+            return;
+        }
+
         if (result.Contains("+") ) {
 
             string[] a = result.Split("+",2); //the input will be: e.g. 'go' <- action, 'print:hi+if:(inv=headband):(say:bye+give:knife)?(say:hi)'
@@ -545,7 +575,7 @@ public class GManager {
         box.clr();
 
         if (ct == cutscene_types.custom_txt) {
-            if (file_name.Contains(".txt")) {
+            if (!file_name.Contains(".txt")) {
                 file_name += ".txt";
             }
         }
@@ -556,10 +586,11 @@ public class GManager {
 
             case cutscene_types.intro:
                 
-                box.Print(fm.readTxtFileAtLine(folder_path + "intro.txt", 1));
-                box.Print(fm.readTxtFileAtLine(folder_path + "intro.txt", 2));
-                box.Print(fm.readTxtFileAtLine(folder_path + "intro.txt", 3));
-                box.print_screen_del();
+                box.Print(fm.readTxtFileAtLine(folder_path + cutscene_file, 1));
+                box.Print(fm.readTxtFileAtLine(folder_path + cutscene_file, 2));
+                box.Print(fm.readTxtFileAtLine(folder_path + cutscene_file, 3));
+                if (fast_cutscenes == false) box.print_screen_del();
+                else box.print_screen();
 
             break;
 
@@ -569,7 +600,8 @@ public class GManager {
                 foreach(string g in str) {
                     box.Print(g);
                 }
-                box.print_screen_del();
+                if (fast_cutscenes == false) box.print_screen_del();
+                else box.print_screen();
             break;
 
             case cutscene_types.empty:
@@ -577,7 +609,8 @@ public class GManager {
 
             case cutscene_types.game_over:
                 box.Print(fm.readTxtFileAtLine(folder_path + "game_over.txt", fm.getRan(1,8)));
-                box.print_screen_del();
+                if (fast_cutscenes == false) box.print_screen_del();
+                else box.print_screen();
             break;
 
         }

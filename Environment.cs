@@ -88,8 +88,8 @@ public class Environment {
         load_env_items(filename);
 
         string cutscene_name = "";
-        if(System.IO.File.Exists(filename + "_cutscene.xml")) {
-            cutscene_name = filename + "_cutscene.xml";
+        if(System.IO.File.Exists(filename + "_cutscene.txt")) {
+            cutscene_name = filename + "_cutscene.txt";
             gm.cutscene(GManager.cutscene_types.custom_txt, cutscene_name);
         }
         else {
