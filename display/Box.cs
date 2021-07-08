@@ -50,6 +50,12 @@ public class Box {
         height = Console.WindowHeight;
         width = Console.WindowWidth;
 
+        if (to_print.Contains("\n")) {
+            Print(to_print.Split("\n",2)[0], fo);
+            Print(to_print.Split("\n",2)[1], fo);
+            return;
+        }
+
         if (buffer.Count > height - 8) {
             for (int i = 0; i <  buffer.Count -(height - 15); i ++) {
                 buffer.Remove(buffer[i]);

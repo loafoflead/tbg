@@ -13,7 +13,7 @@ public class GManager {
 
     public bool is_running = true;
 
-    bool intro = false;
+    public bool intro = false;
 
 
     public bool show_old_msgs = true;
@@ -526,6 +526,8 @@ public class GManager {
                 file_name += ".txt";
             }
         }
+
+        box.clr();
 
         switch (ct) {
 
