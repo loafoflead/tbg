@@ -38,6 +38,7 @@ public class GManager {
         }*/
 
         load_config_file("config.txt");
+        load_custom_commands("macros.txt");
         
         if (intro == true) {
         cutscene(cutscene_types.intro);
@@ -73,6 +74,27 @@ public class GManager {
         //box.print_screen();
 
         
+    }
+
+    void load_custom_commands(string fl) {
+
+        string[] lines = fm.readall(fl);
+
+        List<string> adm_com = new List<string>();
+        List<string> reg_com = new List<string>();
+
+        foreach(string gh in lines) {
+            if(gh[0] == '/') {
+                adm_com.Add(gh);
+            }
+            else {
+                reg_com.Add(gh);
+            }
+        }
+
+        cm.custom_admin_commands = adm_com.ToArray();
+        cm.custom_commands = reg_com.ToArray();
+
     }
 
 

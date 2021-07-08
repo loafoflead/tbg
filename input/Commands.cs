@@ -11,6 +11,9 @@ public class Commands {
         arguments = new string[10];
     }
 
+    public string[] custom_commands;
+    public string[] custom_admin_commands;
+
     public string h = "";
     public bool succeeded = false;
     public void getInput() {
@@ -61,12 +64,12 @@ public class Commands {
 
     public void emulate(string command) {
         arguments = new string[10];
-        if (h.Contains(" ")) arguments = command.Split(" ");
+        if (command.Contains(" ")) arguments = command.Split(" ");
         else arguments[0] = command;
-        //gm.box.Print("'" + get_string(arguments) + "' '" + h + "'");
+        
 
         if (arguments[0].Length > 1) { 
-            if(arguments[0][0] == '/') {
+            if(arguments[0].Contains("/")) {
                 admin_commands();
             }
             else {
@@ -74,7 +77,7 @@ public class Commands {
             }
         }
         else {
-            if(arguments[0] == "/") {
+            if(arguments[0].Contains("/")) {
                 admin_commands();
             }
             else {
@@ -260,6 +263,13 @@ public class Commands {
                 break;
 
             default:
+
+                foreach(string comma in custom_commands) {
+                    if (arguments[0] == comma.Split('=')[0]) {
+                        gm.Do(comma.Split('=')[1]);
+                        return;
+                    } 
+                }
 
                 try {
 
@@ -511,6 +521,27 @@ public class Commands {
                             gm.box.Print("{Magenta}" + arguments[2] + " unlocked.");
                         break;
 
+                        case "dirs":
+                            foreach(direction dir in gm.env.current_room.room_directions) {
+                                dir.is_locked = false;
+                            }
+                            gm.box.PrintD("Directions unlocked.");
+                        break;
+
+                        case "objs":
+                            foreach(Interactable it in gm.env.get_room_interactables()) {
+                                it.item_req= "";
+                            }
+                            gm.box.PrintD("Objects unlocked.");
+                        break;
+
+                        case "objs_all":
+                            foreach(Interactable itr in gm.env.all_interactables) {
+                                itr.item_req = "";
+                            }
+                            gm.box.PrintD("Objects unlocked.");
+                        break;
+
                         default:
                             gm.box.Print("Incorrect syntax: usage: '{Cyan}unlock [obj/direction] [object name/direction]'.");
                         break;
@@ -675,7 +706,15 @@ public class Commands {
             break;
 
             default:
-                gm.box.Print("Unkown command, type '{Yellow}/help{end}' or '{Yellow}/?{end}' for help.");
+
+                foreach(string comma in custom_admin_commands) {
+                    if (arguments[0] == comma.Replace("/", "").Split('=')[0]) {
+                        gm.Do(comma.Split('=')[1].Split(":")[0], comma.Split("=")[1].Split(":")[1]);
+                        return;
+                    } 
+                }
+
+                gm.box.Print("Unknown command '{Cyan}" + get_string(arguments) + "{end}', type '{Yellow}/help{end}' or '{Yellow}/?{end}' for help.");
                 break;
 
         }
