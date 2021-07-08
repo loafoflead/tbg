@@ -505,7 +505,9 @@ public class GManager {
             break;
 
             case "print":
-                box.Print(result);
+                g = "";
+                check_tag(result);
+                box.Print(g);
             break;
 
             case "say":
@@ -544,6 +546,10 @@ public class GManager {
                     break;
                     case "fun":
                         g += player.fun;
+                    break;
+                    case "room_desc":
+                    case "desc":
+                        g += env.current_room.desc;
                     break;
                     default:
                         g += "invalid tag ERR_011";
