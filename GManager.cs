@@ -153,12 +153,12 @@ public class GManager {
             case "emu":
             case "em":
             case "emulate":
-                List<string> buff_temp = box.copy_buffer();
-                bool old_op = player.is_operator;
+                List<string> tem = box.copy_buffer();
+                bool ol = player.is_operator;
                 player.is_operator = true;
                 cm.emulate(result);
-                box.replace_buffer(buff_temp);
-                player.is_operator = old_op;
+                box.replace_buffer(tem);
+                player.is_operator = ol;
             break;
 
             case "end":
