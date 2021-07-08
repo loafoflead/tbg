@@ -138,6 +138,29 @@ public class GManager {
                 }
             break;
 
+            case "unlock":
+                List<string> buff_temp = box.copy_buffer();
+                bool old_op = player.is_operator;
+                player.is_operator = true;
+                cm.arguments = new string[] {
+                    "/unlock", result
+                };
+                cm.admin_commands();
+                box.replace_buffer(buff_temp);
+                player.is_operator = old_op;
+            break;
+
+            case "emu":
+            case "em":
+            case "emulate":
+                List<string> buff_temp = box.copy_buffer();
+                bool old_op = player.is_operator;
+                player.is_operator = true;
+                cm.emulate(result);
+                box.replace_buffer(buff_temp);
+                player.is_operator = old_op;
+            break;
+
             case "end":
                 is_running = false;
             break;

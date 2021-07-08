@@ -59,7 +59,33 @@ public class Commands {
         return to_ret;
     }
 
-    void regular_commands() {
+    public void emulate(string command) {
+        arguments = new string[10];
+        if (h.Contains(" ")) arguments = command.Split(" ");
+        else arguments[0] = command;
+        //gm.box.Print("'" + get_string(arguments) + "' '" + h + "'");
+
+        if (arguments[0].Length > 1) { 
+            if(arguments[0][0] == '/') {
+                admin_commands();
+            }
+            else {
+                regular_commands();
+            }
+        }
+        else {
+            if(arguments[0] == "/") {
+                admin_commands();
+            }
+            else {
+                regular_commands();
+            }
+            
+            //gm.box.Print("{Gray}>\tUnkown Command!\t'" + h + "'");
+        }
+    }
+
+    public void regular_commands() {
 
         switch (arguments[0]) {
 
@@ -302,7 +328,7 @@ public class Commands {
     }
 
 
-    void admin_commands() {
+    public void admin_commands() {
 
         if(gm.player.is_operator == false) {
             gm.box.Print("{Red}>[WARNING]: You do not have permission to execute {DarkRed}operator{Red} commands.");
