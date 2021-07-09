@@ -276,7 +276,7 @@ public class GManager {
                 switch(result) {
                     case "all":
                         player.inv.reset_inv();
-                        situ_change(change_types.lose_item, "{DarkRed}INVENTORY DELETED!{end}");
+                        situ_change(change_types.drop_all, "");
                     break;
 
                     case "rand":
@@ -671,43 +671,43 @@ public class GManager {
         switch (ct) {
             case change_types.gain_item:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{Green}+{end}> ({DarkGreen}" + result + "{end})");
+                box.Print("{White}<{Green}Gained Item{end} {DarkYellow}-->{end} {DarkGreen}" + result + "{end}>");
                 box.nl();
             break;
 
             case change_types.move_to:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{DarkYellow}→{end}> ({DarkCyan}" + result + "{end})");
+                box.Print("{end}<{DarkYellow}Moved to{end} {DarkYellow}-->{end} {DarkCyan}" + result + "{end}>");
                 box.nl();
             break;
 
             case change_types.lose_item:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{Red}-{end}> ({DarkYellow}" + result + "{end})");
+                box.Print("{end}<{Red}Item Dropped{end} {DarkYellow}-->{end} {Red}" + result + "{end}>");
                 box.nl();
             break;
 
             case change_types.missing_item:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{Red}X{end}> ({DarkRed}" + result + "{end})");
+                box.Print("{end}<{DarkRed}Item Required{end} {DarkYellow}-->{end} {DarkRed}" + result + "{end}>");
                 box.nl();
-            break;
+            break;     
 
             case change_types.drop_all:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{Red}--{end}> ({DarkRed}" + result + "{end})");
+                box.Print("{end}<{DarkRed}Inventory Dropped{end}>");
                 box.nl();
             break;
 
             case change_types.change_env:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{DarkRed}-{Gray}-{DarkRed}>>{end}> ({DarkRed}" + result + "{end})");
+                box.Print("{end}<{DarkGray}Moved to {DarkYellow}Environment{end} {DarkYellow}-->{end}  {DarkRed}" + result + "{end}>");
                 box.nl();
             break;
 
             default:
                 box.nl();
-                box.Print("{Cyan}>\t{end}<{Gray}?{end}> ({DarkRed}" + "Internal error, argument missing: 'situ_change'." + "{end})");
+                box.Print("{end}<{Gray}?{end} {DarkRed}" + "Internal error, argument missing: 'situ_change'." + "{end}>");
                 box.nl();
             break;
         }
