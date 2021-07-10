@@ -77,7 +77,7 @@ public class GManager {
         
     }
 
-    void load_custom_commands(string fl) {
+    public void load_custom_commands(string fl = "macros.txt") {
 
         string[] lines = fm.readall(fl);
 
@@ -113,7 +113,7 @@ public class GManager {
 
         env.load_env(lines[2].Split('=')[1]);
 
-        player.inv.add_to_inv(env.get_item_from_tag(lines[3].Split('=')[1]));
+        if(!fm.null_or_empt(lines[3].Split('=')[1])) player.inv.add_to_inv(env.get_item_from_tag(lines[3].Split('=')[1]));
 
     }
 
@@ -671,45 +671,45 @@ public class GManager {
 
         switch (ct) {
             case change_types.gain_item:
-                box.nl();
-                box.Print("{White}<{Green}Gained Item{end} {DarkYellow}-->{end} {DarkGreen}" + result + "{end}>");
-                box.nl();
+
+                box.Print("{White}<{Green}Gained Item{end} {DarkYellow}-->{end} {Gray}" + result + "{end}>");
+                
             break;
 
             case change_types.move_to:
-                box.nl();
-                box.Print("{end}<{DarkYellow}Moved to{end} {DarkYellow}-->{end} {DarkCyan}" + result + "{end}>");
-                box.nl();
+
+                box.Print("{end}<{DarkYellow}Moved to{end} {DarkYellow}-->{end} {Gray}" + result + "{end}>");
+                
             break;
 
             case change_types.lose_item:
-                box.nl();
-                box.Print("{end}<{Red}Item Dropped{end} {DarkYellow}-->{end} {Red}" + result + "{end}>");
-                box.nl();
+
+                box.Print("{end}<{Red}Item Dropped{end} {DarkYellow}-->{end} {Gray}" + result + "{end}>");
+                
             break;
 
             case change_types.missing_item:
-                box.nl();
-                box.Print("{end}<{DarkRed}Item Required{end} {DarkYellow}-->{end} {DarkRed}" + result + "{end}>");
-                box.nl();
+
+                box.Print("{end}<{DarkRed}Item Required{end} {DarkYellow}-->{end} {Gray}" + result + "{end}>");
+                
             break;     
 
             case change_types.drop_all:
-                box.nl();
+
                 box.Print("{end}<{DarkRed}Inventory Dropped{end}>");
-                box.nl();
+                
             break;
 
             case change_types.change_env:
-                box.nl();
-                box.Print("{end}<{DarkGray}Moved to {DarkYellow}Environment{end} {DarkYellow}-->{end}  {DarkRed}" + result + "{end}>");
-                box.nl();
+
+                box.Print("{end}<{DarkGray}Moved to {DarkYellow}Environment{end} {DarkYellow}-->{end}  {DarkGray}" + result + "{end}>");
+                
             break;
 
             default:
-                box.nl();
+
                 box.Print("{end}<{Gray}?{end} {DarkRed}" + "Internal error, argument missing: 'situ_change'." + "{end}>");
-                box.nl();
+                
             break;
         }
         

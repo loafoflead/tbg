@@ -108,6 +108,7 @@ public class Commands {
 
             case "back":
                 gm.env.loadRoom_ind(gm.env.previous_room);
+                gm.situ_change(GManager.change_types.move_to, gm.env.current_room.name);
             break;
 
             case "clear":
@@ -373,14 +374,31 @@ public class Commands {
                 else {
                     gm.box.Print("Incorrect syntax, '{Cyan}give [item_tag]{end}'. type '{Cyan}/list items all{end}' for the items in the room.");
                 }
-                break;
+            break;
+
+            case "reload":
+                if (arguments[1] == null){
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/reload [env/macros]'.");
+                    return;
+                }
+                switch(arguments[1]) {
+                    case "env":
+                        gm.env.load_env(gm.env.current_env_name);
+                        gm.box.PrintD("Environment reloaded.");
+                    break;
+                    case "macros":
+                        gm.load_custom_commands();
+                        gm.box.PrintD("Macros reloaded.");
+                    break;
+                }
+            break;
 
             case "goto":
             case "g":
             case "go":
                 int g = gm.env.Go(arguments[1]);
                 if (g == 1) {
-                    gm.situ_change(GManager.change_types.move_to, gm.env.current_name);
+                    gm.situ_change(GManager.change_types.move_to, gm.env.current_room.name);
                 }
                 else {
                     gm.box.Print("{Gray}Location not found, ({Red}" + arguments[1] + "{end})");

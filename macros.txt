@@ -1,2 +1,6 @@
 /unlock_all_dirs=emu:/unlock dirs
 lk=emu:look
+left=emu:go left
+right=emu:go right
+forw=emu:go f
+bck=emu:go b

@@ -66,7 +66,7 @@
         <tag>vault_hallway</tag>
         <name>Vault Hallway</name>
 
-        <desc>A long steel hallway with flickering LED lights across it's length. There's a {Yellow}vent{end} to your left, and it looks like it's {Yellow}screwed{end} on tight. Ahead of you is another door with a {Blue}blue{end} strip across it. Behind you is the door you entered from.</desc>
+        <desc>A long steel hallway with flickering LED lights across it's length. There's a {Gray}vent{end} to your left, and it looks like it's {Gray}screwed{end} on tight. Ahead of you is another door with a blue strip across it. Behind you is the door you entered from.</desc>
         
         <directions>
             <left>

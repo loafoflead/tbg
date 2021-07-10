@@ -58,8 +58,11 @@ public class Environment {
         rooms = new List<room_short>();
     }
 
+    public string current_env_name;
+
     public void load_env(string filenam) {
         string filename = "environments\\" + filenam + "\\" + filenam;
+        current_env_name = filenam;
         rooms = new List<room_short>();
         room_file_name = filename + "_room.xml";
         current_doc = new XmlDocument();
