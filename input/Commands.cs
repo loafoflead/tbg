@@ -47,19 +47,33 @@ public class Commands {
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
         if (succeeded == true && gm.show_old_msgs == true) {
             //gm.fm.write_next(get_string(arguments), gm.log_file); BIG BROKEN !!!!!!!
-            gm.box.Print("{DarkGray}" + get_string(arguments));
+            gm.box.PrintLn(" ", 100);
+            gm.box.PrintLn("{Gray}" + get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", {DarkGray}" + get_back_str(previous_msgs.ToArray()), 100);
+            previous_msgs.Add(get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", ");
         }
 
         gm.box.k.startListener();
 
     }
 
-    string get_string(string[] str) {
+    public System.Collections.Generic.List<string> previous_msgs = new System.Collections.Generic.List<string>();
+
+    string get_string(string[] str, char seperator_character = ' ') {
         string to_ret = "";
         foreach(string h in str) {
-            to_ret += h + " ";
+            if (gm.fm.null_or_empt(h)) to_ret += "";
+            else to_ret += h + seperator_character.ToString();
         }
         return to_ret;
+    }
+
+    string get_back_str(string[] str) {
+        string to_return = "";
+        for (int i = str.Length - 1; i > -1; i --) {
+            if (gm.fm.null_or_empt(str[i])) to_return += "";
+            else to_return += str[i] + " ";
+        }
+        return to_return;
     }
 
     public void emulate(string command) {
@@ -100,6 +114,7 @@ public class Commands {
             case "clr":
             case "cls":
                 gm.box.clr_buffer();
+                previous_msgs = new System.Collections.Generic.List<string>();
             break;
 
             case "take":

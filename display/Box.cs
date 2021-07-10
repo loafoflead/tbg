@@ -11,6 +11,7 @@ public class Box {
     public int height;
     public int width;
 
+
     public KeyHandler k;
 
     public ConsoleColor default_foreground = ConsoleColor.White;
@@ -20,6 +21,7 @@ public class Box {
 
     public Box() {
         buffer = new List<string>();
+        lines = new List<buffer_element>();
         k = new KeyHandler();
         k.startAsyncKeyListener();
     }
@@ -44,7 +46,22 @@ public class Box {
         Print("{Purple}##" + to_print);
     }
 
+    public void PrintLn(string to_print, int line) {
+        string top = to_print;
+        if (to_print.Length > width - 4) {
+            top = split_at(to_print, width - 4)[0];
+        }
 
+        lines.Add(new buffer_element{content = top, line = line});
+
+    }
+
+    private List<buffer_element> lines;
+
+    private struct buffer_element {
+        public string content;
+        public int line;
+    }
 
     public void Print(string to_print, format_options fo = format_options.left) {
         height = Console.WindowHeight;
@@ -56,8 +73,8 @@ public class Box {
             return;
         }
 
-        if (buffer.Count > height - 8) {
-            for (int i = 0; i <  buffer.Count -(height - 15); i ++) {
+        if (buffer.Count > height - 10) {
+            for (int i = 0; i <  buffer.Count - (height - 10); i ++) {
                 buffer.Remove(buffer[i]);
             }
         }
@@ -140,8 +157,10 @@ public class Box {
     public void clr() {
         Console.Clear();
     }
-    public void nl() {
-        buffer.Add(" ");
+    public void nl(int lines = 1) {
+        for (int i = 0; i < lines; i ++) {
+            buffer.Add(" ");
+        }
     }
 
     public void setCursor() {
@@ -195,6 +214,26 @@ public class Box {
                 default_col();
             }
             line_index ++;
+        }
+        foreach(buffer_element bo in lines) {
+            List<sub_string> strings = get_colours(bo.content);
+            int lin = bo.line;
+            if (bo.line > height - 2) {
+                lin = height - 2;
+            }
+            Console.SetCursorPosition(2, lin);
+            foreach(sub_string str in strings) {
+                Console.ForegroundColor = str.fg_color;
+                Console.BackgroundColor = str.bg_color;
+                Console.SetCursorPosition(Console.CursorLeft, lin);
+                foreach(char ch in str.content.Replace("$", "")) {
+                    if (Console.CursorLeft > width - 3) {
+                        Console.SetCursorPosition(2, lin);
+                    }
+                    Console.Write(ch);
+                }
+                default_col();
+            }
         }
         
         
@@ -255,6 +294,7 @@ public class Box {
 
     public void clr_buffer() {
         buffer = new List<string>();
+        lines = new List<buffer_element>();
     }
 
     void default_col() {

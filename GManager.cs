@@ -63,6 +63,7 @@ public class GManager {
 
         while (is_running == true) {
             cm.getInput();
+            box.nl();
             box.print_screen();
         }
 
