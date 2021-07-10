@@ -18,22 +18,28 @@ public class Commands {
     public bool succeeded = false;
     public void getInput() {
         gm.box.k.stopListener();
-        succeeded = true;
-        h = Console.ReadLine();
-        arguments = new string[10];
-        if (h.Contains(" ")) arguments = h.Split(" ");
-        else arguments[0] = h;
-        //gm.box.Print("'" + get_string(arguments) + "' '" + h + "'");
 
-        if (arguments[0].Length > 1) { 
-            if(arguments[0][0] == '/') {
+        succeeded = true; //set the printing out of the most recent to true;
+
+        h = Console.ReadLine(); //read a line from the console as input
+
+        arguments = new string[1]; //reset the arguments array
+
+        if (h.Contains(" ")) arguments = h.Split(" "); //if the command is longer than one word split it into spaces
+        else arguments[0] = h; // if not set the first item to the arguments string
+
+        if (arguments[0].Length > 1) {  // if the first word is longer than one character check if it's an admin command or a regular one
+
+            if(arguments[0][0] == '/') { //if the first character is a / check for admin commands
                 admin_commands();
             }
-            else {
+            else { //if not check for a regular command
                 regular_commands();
             }
+
         }
-        else {
+        else { //idk why i added this but im scared to remove it
+
             if(arguments[0] == "/") {
                 admin_commands();
             }
@@ -41,7 +47,6 @@ public class Commands {
                 regular_commands();
             }
             
-            //gm.box.Print("{Gray}>\tUnkown Command!\t'" + h + "'");
         }
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
