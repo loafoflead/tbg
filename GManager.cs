@@ -81,15 +81,23 @@ public class GManager {
         box.clr_text();
         }
 
-        /*if (cm.YN("Do you want to read a log file?") == true) {
-            loadsave(System.Console.ReadLine());
+        if (cm.YN("Do you want to read a log file?") == true) {
+            int g = loadsave(System.Console.ReadLine());
+            if (g == 0) {
+                box.Print("Save file is either corrupted or does not exist, do you want to try inputting the name again?");
+                box.flush();
+            }
+            else {
+                box.Print(env.current_room.desc);
+                box.print_screen();
+            }
         }
-        else {*/
+        else {
             box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
             box.nl();
             box.Print(env.current_room.desc);
             box.print_screen();
-     
+        }
 
         while (is_running == true) {
             cm.getInput();
@@ -159,7 +167,47 @@ public class GManager {
     }
 
 
-    void loadsave(string filename) {
+    int loadsave(string filename) {
+
+        string[] save_file = fm.readall("logs\\" + filename);
+        
+        if (fm.null_or_empt(save_file[0])) {
+            return 0;
+        }
+
+        player.name = save_file[0];
+        player.bio = save_file[1];
+
+        try {
+            env.load_env(save_file[2]);
+        } catch {
+            return 0;
+        }
+
+        if (save_file[3].Contains('/')) {
+            foreach(string hi in save_file[3].Split('/')) {
+                if (!fm.null_or_empt(hi)) player.inv.player_inventory.Add(env.get_item_from_tag(hi));
+            }
+        }
+        else {
+            if (!fm.null_or_empt(save_file[3])) player.inv.player_inventory.Add(env.get_item_from_tag(save_file[3]));
+        }
+
+        if (!fm.null_or_empt(save_file[4])) {
+            if (save_file[4].Contains('/')) {
+                foreach(string h in save_file[4].Split('/')) {
+                    player.player_tags.Add(h);
+                }
+            }
+            else {
+                player.player_tags.Add(save_file[4]);
+            }
+        }
+
+        player.is_operator = get_bool(save_file[5]);
+        env.current_room = env.rooms.Find(room_short => room_short.tag == save_file[6]);
+
+        return 1;
 
     }
 
