@@ -50,19 +50,29 @@ public class Commands {
         }
 
         //whahahahaa what was i gonna do cummy wummy hole man >:))))))))]]]]]]]]]] help
-        if (succeeded == true && gm.show_old_msgs == true) {
-            //gm.fm.write_next(get_string(arguments), gm.log_file); BIG BROKEN !!!!!!!
-            gm.box.PrintLn(" ", 100);
-            gm.box.PrintLn("{Gray}" + get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", {DarkGray}" + get_back_str(previous_msgs.ToArray()), 100);
-            previous_msgs.Add(get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", ");
+
+        if (succeeded == true && gm.show_old_msgs == true) { /* If the command was found, print it to the old command reel */
+
+            gm.box.PrintLn(" ", 100); //empty the line
+            gm.box.PrintLn(
+                "{Gray}" + get_string(arguments).Remove(get_string(arguments).Length - 1, 1) /* Add the most recent command in Grey, */ + 
+                ", {DarkGray}" + get_back_str(previous_msgs.ToArray()) /* then the previous ones in DarkGray */, 100
+            );
+            previous_msgs.Add(get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", "); /* add the most recent message to the previous message list */
+
         }
 
         gm.box.k.startListener();
 
     }
 
-    public System.Collections.Generic.List<string> previous_msgs = new System.Collections.Generic.List<string>();
+    public System.Collections.Generic.List<string> previous_msgs = new System.Collections.Generic.List<string>(); /* list of previous commands */
 
+
+    /*
+        get_string 
+        returns: a string composed of the elements of an array
+    */
     string get_string(string[] str, char seperator_character = ' ') {
         string to_ret = "";
         foreach(string h in str) {
