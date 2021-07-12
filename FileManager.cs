@@ -16,11 +16,17 @@ public class FileManager {
     public int write_at(string content, int line, string file) {
         try {
 
+            string[] old = readall(file);
+
             StreamWriter str_wr = new StreamWriter(file);
 
-            for (int i = 0; i < line; i ++) {
-                str_wr.WriteLine(content);
+            foreach (string gd in old) {
+                
+                str_wr.WriteLine(gd);
+               
             }
+            str_wr.WriteLine(content);
+
 
             str_wr.Close();
             return 1;
@@ -131,6 +137,23 @@ public class FileManager {
         return "Error";
 
     }
+
+    public string newFile(string filename) {        
+
+        if (File.Exists(filename)) {
+            return filename;
+        }
+        else {
+
+            StreamWriter write = File.CreateText(filename);
+            write.Close();
+            return filename;
+
+        }
+
+
+    }
+
 
     public bool null_or_empt(string str) {
         if (str == "" || str == null) {

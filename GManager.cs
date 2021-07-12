@@ -37,7 +37,37 @@ public class GManager {
             box.flush();
         }*/
 
-        load_config_file("config.txt");
+
+        try {
+
+            load_config_file("config.txt");
+
+        } catch {
+
+            box.Print("Config file missing or incomplete, please restore it for the game to function correctly.");
+
+            if (cm.YN("Do you want to restore the config file automatically or quit the game and do it yourself? \n{DarkRed}[WARNING]{Gray}: Make sure to write a space before your answer, ' yes'.")) {
+                string config_file = fm.newFile("config.txt");
+                int i = fm.write_at("name=no_name", 1, "config.txt");
+                fm.write_at("bio=no_bio", 2, "config.txt");
+                fm.write_at("env=env01", 3, "config.txt");
+                fm.write_at("inv=", 4, "config.txt");
+                fm.write_at("tags=", 5, "config.txt");
+                fm.write_at("op=false", 6, "config.txt");
+                fm.write_at("intro=intro.txt", 7, "config.txt");
+                fm.write_at("intro=true", 8, "config.txt");
+                fm.write_at("fast cutscenes=false", 9, "config.txt");
+                System.Console.WriteLine(i);
+                System.Console.ReadKey();
+                load_config_file("config.txt");
+            }
+            else {
+                return;
+            }
+
+        }
+        box.clr_buffer();
+
         load_custom_commands("macros.txt");
         
         if (intro == true) {
@@ -63,16 +93,10 @@ public class GManager {
 
         while (is_running == true) {
             cm.getInput();
-            box.nl();
+            //box.nl();
             box.print_screen();
         }
 
-        box.k.stopListener();
-        
-        //env.Unlock_enum(Environment.direction_enum.left);
-        //env.Move(Environment.direction_enum.left);
-
-        //box.print_screen();
 
         
     }
