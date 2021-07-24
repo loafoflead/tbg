@@ -58,6 +58,15 @@ public class FileManager {
 
     }
 
+    public int clear_file(string filename) {
+        if (!File.Exists(filename)) {
+            return 0;
+        }
+
+        File.Delete(filename);
+        return 1;
+    }
+
     public string readTxtFileAtLine(string file,int line) {
         string ToBeReturned = "pipi";
         //creates a return string

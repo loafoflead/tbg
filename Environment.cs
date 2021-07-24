@@ -17,9 +17,6 @@ public class Environment {
     public List<Item> all_items;
     public List<Interactable> all_interactables;
 
-    public string current_tag;
-    public string current_name;
-    public int id;
     public room_short current_room;
     public room_short previous_room;
 

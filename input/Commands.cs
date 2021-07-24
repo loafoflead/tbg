@@ -54,15 +54,18 @@ public class Commands {
         if (succeeded == true && gm.show_old_msgs == true) { /* If the command was found, print it to the old command reel */
 
             gm.box.PrintLn(" ", 100); //empty the line
+            if (get_string(arguments).Remove(get_string(arguments).Length - 1, 1) == "quit"){
+                arguments[0] = "{DarkRed}quit{DarkGray}";
+            }
             gm.box.PrintLn(
                 "{Gray}" + get_string(arguments).Remove(get_string(arguments).Length - 1, 1) /* Add the most recent command in Grey, */ + 
-                ", {DarkGray}" + get_back_str(previous_msgs.ToArray()) /* then the previous ones in DarkGray */, 100
+                "{DarkGray}, " + get_back_str(previous_msgs.ToArray()) /* then the previous ones in DarkGray */, 100
             );
             previous_msgs.Add(get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", "); /* add the most recent message to the previous message list */
 
         }
 
-        gm.box.k.startListener();
+        //gm.box.k.startListener();
 
     }
 
@@ -73,7 +76,7 @@ public class Commands {
         get_string 
         returns: a string composed of the elements of an array
     */
-    string get_string(string[] str, char seperator_character = ' ') {
+    public string get_string(string[] str, char seperator_character = ' ') {
         string to_ret = "";
         foreach(string h in str) {
             if (gm.fm.null_or_empt(h)) to_ret += "";
@@ -131,6 +134,11 @@ public class Commands {
             case "cls":
                 gm.box.clr_buffer();
                 previous_msgs = new System.Collections.Generic.List<string>();
+            break;
+
+            case "save":
+            case "s":
+                gm.save_game();
             break;
 
             case "take":
@@ -291,6 +299,11 @@ public class Commands {
             case "q":
             case "quit":
                 gm.is_running = false;
+                if (arguments.Length > 1) {
+                    if (arguments[1] == "s" || arguments[1] == "save") {
+                        gm.save_game();
+                    }
+                }
                 break;
 
             default:
@@ -392,7 +405,7 @@ public class Commands {
             break;
 
             case "reload":
-                if (arguments[1] == null){
+                if (arguments.Length < 2) {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}/reload [env/macros]'.");
                     return;
                 }
@@ -411,6 +424,10 @@ public class Commands {
             case "goto":
             case "g":
             case "go":
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/go [room tag]{end}'.");
+                    return;
+                }
                 int g = gm.env.Go(arguments[1]);
                 if (g == 1) {
                     gm.situ_change(GManager.change_types.move_to, gm.env.current_room.name);
@@ -418,7 +435,11 @@ public class Commands {
                 else {
                     gm.box.Print("{Gray}Location not found, ({Red}" + arguments[1] + "{end})");
                 }
-                break;
+            break;
+
+            case "log":
+                gm.box.Print("Log file name: {Gray}" + gm.log_file);
+            break;
 
             case "border":
                 if (arguments[1] == null || arguments[1].Length > 1){
@@ -434,7 +455,7 @@ public class Commands {
 
             case "disp":
             case "display":
-                if (arguments[1] == null) {
+                if (arguments.Length < 2) {
                     gm.box.Print("Incorrect syntax, usage is: '{Cyan}display [msg/display element]{end}'");
                     return;
                 }
@@ -509,6 +530,12 @@ public class Commands {
             break;
 
             case "status":
+
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax: usage: '{Cyan}status [obj/direction] [object name/direction]'.");
+                    return;
+                }
+
                 try {
                     switch (arguments[1]) {
 
@@ -601,7 +628,7 @@ public class Commands {
             break;
 
             case "do":
-                if (gm.fm.null_or_empt(arguments[1]) || gm.fm.null_or_empt(arguments[2]) ) {
+                if (arguments.Length < 2) {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}/do [command tag] [result tag]{end}'");
                     return;
                 }
@@ -663,6 +690,10 @@ public class Commands {
             break;
 
             case "use":
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/use [interactable tag]{end}'");
+                    return;
+                }
                 if (gm.env.all_interactables.Contains(gm.env.get_interactable_tag(arguments[1]))) {
                     gm.env.UseF(gm.env.get_interactable_tag(arguments[1]));
                 }
@@ -672,10 +703,18 @@ public class Commands {
             break;
 
             case "name":
-                gm.Do("name", arguments[1]);
+                if (arguments.Length < 2) {
+                    gm.box.Print("{Magenta}Player name: " + gm.player.name);
+                    return;
+                }
+                else gm.Do("name", arguments[1]);
             break;
 
             case "bio":
+                if (arguments.Length < 2) {
+                    gm.box.Print("{Magenta}Player bio: " + gm.player.bio);
+                    return;
+                }
                 gm.Do("bio", arguments[1]);
             break;
             

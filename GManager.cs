@@ -81,23 +81,7 @@ public class GManager {
         box.clr_text();
         }
 
-        if (cm.YN("Do you want to read a log file?") == true) {
-            int g = loadsave(System.Console.ReadLine());
-            if (g == 0) {
-                box.Print("Save file is either corrupted or does not exist, do you want to try inputting the name again?");
-                box.flush();
-            }
-            else {
-                box.Print(env.current_room.desc);
-                box.print_screen();
-            }
-        }
-        else {
-            box.Print("[{Red}SIMULATING COMMAND: {end}'{Cyan,White}look{end,end}' {Red}...{end}]");
-            box.nl();
-            box.Print(env.current_room.desc);
-            box.print_screen();
-        }
+        ask_for_save();
 
         while (is_running == true) {
             cm.getInput();
@@ -107,6 +91,67 @@ public class GManager {
 
 
         
+    }
+
+    public void save_game() {
+
+        fm.clear_file(log_file);
+        box.waitf(0.1f);
+
+        int exists_question_mark = fm.write_at(player.name,1,log_file);
+        if (exists_question_mark == 0) {
+            box.Print("{DarkRed}The game failed to save, this could be an error concerning the save file, make sure the file in the 'log' folder. If that isn't the problem make note of the error and contact the developer.");
+            box.flush();
+            return;
+        }
+        fm.write_at(player.bio, 2, log_file);
+        fm.write_at(env.current_env_name, 3, log_file);
+        fm.write_at(cm.get_string(player.inv.player_inventory_tags.ToArray(), '/'), 4, log_file);
+
+        fm.write_at(cm.get_string(player.player_tags.ToArray(), '/'), 5, log_file);
+
+        fm.write_at(player.is_operator.ToString().ToLower(), 6, log_file);
+
+        fm.write_at(env.current_room.tag, 7, log_file);
+
+        box.Print("{Magenta}Game saved!");
+
+    }
+
+    void ask_for_save() {
+
+        if (cm.YN("Do you want to read a log file?") == true) { /* If the player wants to load a save file, */
+            file_is_asked:
+            box.clr();
+            box.Print("Input save file name: ");
+            box.flush();
+            int g = loadsave(System.Console.ReadLine());
+            if (g == 0) { /* if the save file is missing important elements; */
+                box.Print("Save file is either corrupted or missing some elements, try repairing it using the template specified in the README file, or create a new one.");
+                box.flush();
+                is_running = false;
+            }
+            else if (g == 3) { /* If the file doesn't exist or can't be found; */
+                box.Print("Save file not found, try inputting the name again.");
+                box.flush();
+                goto file_is_asked;
+            }
+            else { /* If the save can be loaded; */
+                box.clr_buffer();
+                box.Print("Save file successfully loaded!");
+                box.flush();
+                box.waitf(0.5f);
+                box.clr_buffer();
+                box.Print(env.current_room.desc);
+                box.print_screen();
+            }
+        }
+        else { /* If the player doesn't want a new file, load a fresh one at the start positions specified in the config file */
+            box.nl();
+            box.Print(env.current_room.desc);
+            box.print_screen();
+        }
+
     }
 
     public void load_custom_commands(string fl = "macros.txt") {
@@ -150,7 +195,7 @@ public class GManager {
     }
 
     bool get_bool(string bl) {
-        if (bl == "true" || bl == "t" || bl == "1") {
+        if (bl == "True" || bl == "true" || bl == "t" || bl == "1") {
             return true;
         }
         return false;
@@ -169,9 +214,17 @@ public class GManager {
 
     int loadsave(string filename) {
 
+        if (!filename.Contains(".txt")) {
+            return loadsave(filename + ".txt");
+        }
+
+        if (!System.IO.File.Exists("logs\\" + filename)) {
+            return 3;
+        }
+
         string[] save_file = fm.readall("logs\\" + filename);
         
-        if (fm.null_or_empt(save_file[0])) {
+        if (save_file.Length < 1) {
             return 0;
         }
 
@@ -186,11 +239,11 @@ public class GManager {
 
         if (save_file[3].Contains('/')) {
             foreach(string hi in save_file[3].Split('/')) {
-                if (!fm.null_or_empt(hi)) player.inv.player_inventory.Add(env.get_item_from_tag(hi));
+                if (!fm.null_or_empt(hi)) player.inv.add_to_inv(env.get_item_from_tag(hi));
             }
         }
         else {
-            if (!fm.null_or_empt(save_file[3])) player.inv.player_inventory.Add(env.get_item_from_tag(save_file[3]));
+            if (!fm.null_or_empt(save_file[3])) player.inv.add_to_inv(env.get_item_from_tag(save_file[3]));
         }
 
         if (!fm.null_or_empt(save_file[4])) {
@@ -206,6 +259,8 @@ public class GManager {
 
         player.is_operator = get_bool(save_file[5]);
         env.current_room = env.rooms.Find(room_short => room_short.tag == save_file[6]);
+
+        log_file = "logs\\" + filename;
 
         return 1;
 
@@ -544,7 +599,7 @@ public class GManager {
                     break;
 
                     case "room":
-                        if(env.current_tag == condition) {
+                        if(env.current_room.tag == condition) {
                             checkDo(if_true);
                         }
                         else {
@@ -637,7 +692,7 @@ public class GManager {
                         g += player.bio;
                     break;
                     case "room":
-                        g += env.current_name;
+                        g += env.current_room.name;
                     break;
                     case "fun":
                         g += player.fun;
@@ -669,6 +724,8 @@ public class GManager {
 
 
     public void cutscene(cutscene_types ct, string filename = "") {
+
+        //kh.startListener();
 
         string file_name = filename;
 
@@ -715,6 +772,8 @@ public class GManager {
             break;
 
         }
+
+        //kh.stopListener();
 
     }
 
