@@ -63,7 +63,7 @@ public class FileManager {
             return 0;
         }
 
-        File.Delete(filename);
+        File.CreateText(filename).Close();
         return 1;
     }
 

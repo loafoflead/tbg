@@ -179,7 +179,7 @@ public class Commands {
                     foreach(Item it in gm.player.inv.player_inventory) {
                         if (it.aliases.Contains(arguments[1])) {
                             gm.situ_change(GManager.change_types.lose_item, it.name);
-                            gm.player.inv.player_inventory.Remove(it);
+                            gm.player.inv.remov(it);
                             return;
                         }
                     }

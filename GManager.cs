@@ -96,7 +96,6 @@ public class GManager {
     public void save_game() {
 
         fm.clear_file(log_file);
-        box.waitf(0.1f);
 
         int exists_question_mark = fm.write_at(player.name,1,log_file);
         if (exists_question_mark == 0) {
