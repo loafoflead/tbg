@@ -7,7 +7,7 @@
         <tag>stasis_vault</tag>
         <name>Stasis Vault</name>
 
-        <desc>A room containing your crew's stasis chambers. The window of the other chambers are foggy and dark. There's a {Yellow}Cupboard{end} on the right wall, next to a drink dispenser with a sign saying 'Out of commission' on it. On the floor you can see a {Yellow}headband{end}, and ahead of you something that looks like a {Yellow}control panel{end}. To your left is a {Yellow}vault door{end}.</desc>
+        <desc>A room containing your crew's stasis chambers. The window of the other chambers are foggy and dark. There's a {Gray}Cupboard{end} on the right wall, next to a drink dispenser with a sign saying 'Out of commission' on it. On the floor you can see a {Gray}headband{end}, and ahead of you something that looks like a {Gray}control panel{end}. To your left is a {Gray}vault door{end}.</desc>
         
         <directions>
             <left>
@@ -73,7 +73,7 @@
                 <leads>vent</leads>
                 <dia>You clamber into the vent hatch.</dia>
                 <lock>1</lock>
-                <lock_dia>You struggle with the vent hatch, but it's {Yellow}screwed{end} shut.</lock_dia>
+                <lock_dia>You struggle with the vent hatch, but it's {Gray}screwed{end} shut.</lock_dia>
                 <unlock_dia>You unscrew the screws holding the vent together, and remove the panel covering.</unlock_dia>
                 <lock_reqs>screwdriver</lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
@@ -124,7 +124,7 @@
         <tag>vault_lobby</tag>
         <name>Vault lobby</name>
 
-        <desc>A small, slightly underwhelming lobby, there's some worn blue couches around the room, and a table in the center of the room. Straight ahead is another door with a blue stripe on it, and behind you is the door you entered from. There's an alarming lack of {Red}people{end} about the place. You notice also an informational droid in the corner of the room.</desc>
+        <desc>A small, slightly underwhelming lobby, there's some worn blue couches around the room, and a {Gray}table{end} in the center of the room. Straight ahead is another door with a blue stripe on it, and behind you is the door you entered from. There's an alarming lack of {DarkGray}people{end} about the place. You notice also an {Gray}informational droid{end} in the corner of the room.</desc>
         
         <directions>
             <left>
@@ -183,7 +183,7 @@
         <tag>cafeteria</tag>
         <name>Cafeteria</name>
 
-        <desc>A large room filled with tables. The tables are empty, and there isn't a soul in sight. You are starting to really feel the loneliness of the place get to you. There's a door to your left with 'Staff only!' written on it, and a door to your right with: 'Docking bay and Airlock' engraved on it. Aside from that, you can see a small mechanical cleaning droid malfunctioning on the floor.</desc>
+        <desc>A large room filled with tables. The tables are empty, and there isn't a soul in sight. You are starting to really feel the loneliness of the place get to you. There's a door to your left with 'Staff only!' written on it, and a door to your right with: 'Docking bay and Airlock' engraved on it. Aside from that, you can see a small {Gray}mechanical cleaning droid{end} malfunctioning on the floor.</desc>
         
         <directions>
             <left>
@@ -301,7 +301,7 @@
         <tag>janitors_closet</tag>
         <name>Janitory Closet</name>
 
-        <desc>A tiny cramped room. There's a {Yellow}mop{end} on the ground, and some kind of {Yellow}dispenser{end} on the wall. There's a door ahead of you, but it looks {Yellow}locked{end}.</desc>
+        <desc>A tiny cramped room. There's a {Gray}mop{end} on the ground, and some kind of {Gray}dispenser{end} on the wall. There's a door ahead of you, but it looks {Gray}locked{end}.</desc>
         
         <directions>
             <left>
@@ -419,7 +419,7 @@
         <tag>pilot_chamber</tag>
         <name>{DarkRed}Pilot's chamber{end}</name>
 
-        <desc>A small room with the pilot's chair at it's center, and a control panel at it's end looking out into space. The view is shocking, the only windows you've seen so far are screens displaying slightly moving images of seaside places. Seeing the pilot's chair abandoned shakes you a little. There's a bulkhead door to your right, and behind you is the door you entered from.</desc>
+        <desc>A small room with the pilot's chair at it's center, and a {Gray}control panel{end} at it's end looking out into space. The view is shocking, the only windows you've seen so far are screens displaying slightly moving images of seaside places. Seeing the pilot's chair abandoned shakes you a little. There's a {Gray}bulkhead door{end} to your right, and behind you is the door you entered from.</desc>
         
         <directions>
             <left>

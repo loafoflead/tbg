@@ -57,6 +57,12 @@ public class Commands {
             if (get_string(arguments).Remove(get_string(arguments).Length - 1, 1) == "quit"){
                 arguments[0] = "{DarkRed}quit{DarkGray}";
             }
+            if (get_string(arguments).Remove(get_string(arguments).Length - 1, 1) == "q"){
+                arguments[0] = "{DarkRed}q{DarkGray}";
+            }
+            if (get_string(arguments).Remove(get_string(arguments).Length - 1, 1) == "_<"){
+                arguments[0] = "{Yellow}>_<{DarkGray}";
+            }
             gm.box.PrintLn(
                 "{Gray}" + get_string(arguments).Remove(get_string(arguments).Length - 1, 1) /* Add the most recent command in Grey, */ + 
                 "{DarkGray}, " + get_back_str(previous_msgs.ToArray()) /* then the previous ones in DarkGray */, 100
@@ -303,6 +309,15 @@ public class Commands {
                     if (arguments[1] == "s" || arguments[1] == "save") {
                         gm.save_game();
                     }
+                    else if (arguments[1] == "f" || arguments[1] == "unsaved") {
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                }
+                else {
+                    gm.save_game();
                 }
                 break;
 

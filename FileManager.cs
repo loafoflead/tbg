@@ -133,7 +133,7 @@ public class FileManager {
 
         if (File.Exists(file)) {
             string f = filename + "_" + DateTime.Now.Minute.ToString().Replace(@"\", "/");
-            newFile(f, path);
+            return newFile(f, path);
         }
         else {
 
@@ -142,8 +142,6 @@ public class FileManager {
             return file;
 
         }
-
-        return "Error";
 
     }
 

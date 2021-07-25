@@ -119,21 +119,55 @@ public class GManager {
 
     void ask_for_save() {
 
+        box.Print("SAVE FILES:");
+        string[] save_files = System.IO.Directory.GetFiles("logs\\");
+        int number = 1;
+        foreach(string g in save_files) {
+            box.Print("{Yellow}> {Black,White}" + number.ToString() + ": " + g.Replace("logs\\", ""));
+            number ++;
+        }
+        box.flush();
+
         if (cm.YN("Do you want to read a log file?") == true) { /* If the player wants to load a save file, */
             file_is_asked:
             box.clr();
-            box.Print("Input save file name: ");
+            box.Print("Input save file name or number: ");
             box.flush();
-            int g = loadsave(System.Console.ReadLine());
+            string inp = System.Console.ReadLine();
+            int g = loadsave(inp);
             if (g == 0) { /* if the save file is missing important elements; */
+
                 box.Print("Save file is either corrupted or missing some elements, try repairing it using the template specified in the README file, or create a new one.");
                 box.flush();
                 is_running = false;
+                
             }
             else if (g == 3) { /* If the file doesn't exist or can't be found; */
-                box.Print("Save file not found, try inputting the name again.");
-                box.flush();
-                goto file_is_asked;
+                try {
+                    int save_number = int.Parse(inp);
+                    if (save_number > save_files.Length || save_number < 1) {
+                        box.Print("Out of range number, files are in range: 1-" + save_files.Length);
+                        goto file_is_asked;
+                    }
+                    else {
+                        
+                        loadsave(save_files[save_number - 1].Replace("logs\\", ""));
+                        box.clr_buffer();
+                        box.Print("Save file successfully loaded!");
+                        box.flush();
+                        box.waitf(0.5f);
+                        box.clr_buffer();
+                        box.Print(env.current_room.desc);
+                        box.print_screen();
+
+                    }
+
+                } catch {   
+                    box.Print("Save file not found: " + inp + ", try inputting the name again.");
+                    box.flush();
+                    goto file_is_asked;
+                }
+                
             }
             else { /* If the save can be loaded; */
                 box.clr_buffer();
@@ -146,6 +180,9 @@ public class GManager {
             }
         }
         else { /* If the player doesn't want a new file, load a fresh one at the start positions specified in the config file */
+            fm.newFile("logs\\save_file.txt");
+            log_file = "logs\\save_file.txt";
+            save_game();
             box.nl();
             box.Print(env.current_room.desc);
             box.print_screen();
