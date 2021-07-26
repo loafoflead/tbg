@@ -22,8 +22,8 @@ public class Box {
     public Box() {
         buffer = new List<string>();
         lines = new List<buffer_element>();
-        k = new KeyHandler();
-        k.startAsyncKeyListener();
+        //k = new KeyHandler();
+        //k.startAsyncKeyListener();
     }
 
     public void print_screen() {
@@ -241,6 +241,9 @@ public class Box {
     }
 
     public void flush_del(int del = 50) {
+
+
+        
         //k.startAsyncKeyListener();
         height = Console.WindowHeight;
         width = Console.WindowWidth;
@@ -255,13 +258,13 @@ public class Box {
                 Console.BackgroundColor = str.bg_color;
                 Console.SetCursorPosition(Console.CursorLeft, line_index);
                 foreach(char b in str.content) {
-                    if (k.recently_pressed == true) {
+                    /*if (recently_pressed == true) {
                         //k.stopListener();
                         flush();
+                        is_listening = false;
                         return;
-                    }
+                    }*/
                     if (b == '$') {
-                        Console.Write("");
                         waitf(1); 
                         continue;
                     }

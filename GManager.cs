@@ -6,7 +6,6 @@ public class GManager {
 
     public Box box;
     public FileManager fm;
-    public KeyHandler kh;
     public Environment env;
     public Player player;
     public Commands cm;
@@ -222,6 +221,7 @@ public class GManager {
         player.is_operator = get_bool(lines[5].Split('=')[1]);
 
         cutscene_file = lines[6].Split('=')[1];
+        fast_cutscenes = get_bool(lines[8].Split('=')[1]);
         intro = get_bool(lines[7].Split('=')[1]);
 
         env.load_env(lines[2].Split('=')[1]);
