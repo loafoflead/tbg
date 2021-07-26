@@ -121,13 +121,13 @@ public class GManager {
         box.Print("SAVE FILES:");
         string[] save_files = System.IO.Directory.GetFiles("logs\\");
         int number = 1;
-        foreach(string g in save_files) {
-            box.Print("{Yellow}> {Black,White}" + number.ToString() + ": " + g.Replace("logs\\", ""));
+        foreach(string jk in save_files) {
+            box.Print("{Yellow}> {Black,White}" + number.ToString() + ": " + jk.Replace("logs\\", "") + " -> {Red,White}" + fm.readTxtFileAtLine(jk, 1));
             number ++;
         }
         box.flush();
 
-        if (cm.YN("Do you want to read a log file?") == true) { /* If the player wants to load a save file, */
+        //if (cm.YN("Do you want to read a log file?") == true) { /* If the player wants to load a save file, */
             file_is_asked:
             box.clr();
             box.Print("Input save file name or number: ");
@@ -150,6 +150,8 @@ public class GManager {
                     }
                     else {
                         
+                        log_file = save_files[save_number - 1];
+                        save_game();
                         loadsave(save_files[save_number - 1].Replace("logs\\", ""));
                         box.clr_buffer();
                         box.Print("Save file successfully loaded!");
@@ -177,15 +179,15 @@ public class GManager {
                 box.Print(env.current_room.desc);
                 box.print_screen();
             }
-        }
-        else { /* If the player doesn't want a new file, load a fresh one at the start positions specified in the config file */
-            fm.newFile("logs\\save_file.txt");
-            log_file = "logs\\save_file.txt";
+        /*}
+        else {  If the player doesn't want a new file, load a fresh one at the start positions specified in the config file 
+            fm.newFile("logs\\save_file_" + save_files.Length.ToString() + ".txt");
+            log_file = "logs\\save_file_" + save_files.Length.ToString() + ".txt";
             save_game();
             box.nl();
             box.Print(env.current_room.desc);
             box.print_screen();
-        }
+        }*/
 
     }
 
@@ -248,7 +250,7 @@ public class GManager {
     }
 
 
-    int loadsave(string filename) {
+    public int loadsave(string filename) {
 
         if (!filename.Contains(".txt")) {
             return loadsave(filename + ".txt");

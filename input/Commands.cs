@@ -455,6 +455,31 @@ public class Commands {
             case "log":
                 gm.box.Print("Log file name: {Gray}" + gm.log_file);
             break;
+            case "loadsave":
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/loadsave [save file name].");
+                    return;
+                }
+                
+                int y = gm.loadsave(arguments[1]);
+                if (y == 1) {
+                    gm.box.Print("Game successfully loaded!");
+                }
+                else if (y == 3) {
+                    gm.box.Print("Save file not found!");
+                }
+                else {
+                    gm.box.Print("Save file corrupt!");
+                }
+            break;
+            case "listsaves":
+                string[] save_files = System.IO.Directory.GetFiles("logs\\");
+                int number = 1;
+                foreach(string jk in save_files) {
+                    gm.box.Print("{Magenta}> {Black,Magenta}" + number.ToString() + ": " + jk.Replace("logs\\", "") + " -> {Red,Magenta}" + gm.fm.readTxtFileAtLine(jk, 1));
+                    number ++;
+                }
+            break;
 
             case "border":
                 if (arguments[1] == null || arguments[1].Length > 1){
@@ -793,9 +818,14 @@ public class Commands {
                         } 
                     break;
 
-                    case "clr":
-                        gm.box.clr_text();
-                        gm.box.clr_buffer();
+                    case "saves":
+                    case "save":
+                        string[] sflies = System.IO.Directory.GetFiles("logs\\");
+                        int nul = 1;
+                        foreach(string jk in sflies) {
+                            gm.box.Print("{Magenta}> {Black,Magenta}" + nul.ToString() + ": " + jk.Replace("logs\\", "") + " -> {Red,Magenta}" + gm.fm.readTxtFileAtLine(jk, 1));
+                            nul ++;
+                        }
                     break;
 
                     default:
@@ -805,6 +835,11 @@ public class Commands {
                 } catch {
                     gm.box.Print("Incorrect syntax, usage is: '{Cyan}list [element]{end}', where element is rooms, interactables, or items.");
                 }
+            break;
+
+            case "clr":
+                gm.box.clr_text();
+                gm.box.clr_buffer();
             break;
 
             default:

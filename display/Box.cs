@@ -22,7 +22,7 @@ public class Box {
     public Box() {
         buffer = new List<string>();
         lines = new List<buffer_element>();
-        //k = new KeyHandler();
+        k = new KeyHandler();
         //k.startAsyncKeyListener();
     }
 
