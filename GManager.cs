@@ -426,6 +426,9 @@ public class GManager {
             break;
 
             case "addtag":
+            case "givetag":
+            case "gt":
+            case "givet":
                 player.player_tags.Add(result);
             break;
 

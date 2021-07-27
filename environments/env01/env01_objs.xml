@@ -287,6 +287,43 @@
 
     </obj>
 
+    <obj>
+
+        <tag>glass_breaker</tag>
+        <name>Emergency Glass Breaker</name>
+
+        <verbs>gen/break/smash/open/grab/utilise/kick/punch</verbs>
+        <action>
+            print:You approach the emergency glass breaker. You see a key dangling there in place of a hammer.+
+            if:(tag=broke_case):(print:The red casing is empty, and the glass face shatterred.)? <!-- If the player has already broken the case, display that message -->
+            (
+                if:(inv=crowbar):
+                    (
+                        print:You swing your crowbar into the glass, shatterring it, and pull out of it a small {Grey}steel key{end}.+give:staff_key+givetag:broke_case
+                    )
+                ?
+                    (
+                        print:You punch the glass repeatedly, but your recently unfrozen muscles prevent you from doing any real damage.
+                    )
+            )
+            
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>glass breaker/emergency hammer/breaker/glass</aliases>
+
+    </obj>
+
 
 </env01obj>
 

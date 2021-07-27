@@ -525,7 +525,7 @@
 
         </directions>
 
-        <objs>magic_portal</objs>
+        <objs>magic_portal/glass_breaker</objs>
         <items></items>
 
     </room>
