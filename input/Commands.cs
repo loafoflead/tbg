@@ -789,23 +789,54 @@ public class Commands {
             case "inspect":
 
                 if (arguments.Length < 2) {
-                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag]{end}'.");
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag/interactable tag] + (optional) [v/verbose]{end}'.");
                     return;
                 }
 
-                Item prt = gm.env.get_item_from_tag(arguments[1]);
-                if (prt.description == null) {
-                    gm.box.Print("{Magenta}Item not found.");
-                    return;
+                if (gm.env.all_items.Contains(gm.env.get_item_from_tag(arguments[1]))) {
+
+                    Item prt = gm.env.get_item_from_tag(arguments[1]);
+                    if (prt.description == null) {
+                        gm.box.Print("{Magenta}Item not found.");
+                        return;
+                    }
+                    if (prt == null) {
+                        gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag/interactable tag] + (optional) [v/verbose]{end}'. Use the '{Cyan}/list items{end}' or '{Cyan}/list objs{end}' command to get all the items in an environment.");
+                    }else {
+                        gm.box.Print("{Magenta}name: " +prt.name);
+                        gm.box.Print("{Magenta}tag: " +prt.tag);
+                        gm.box.Print("{Magenta}description: " +prt.description);
+                        gm.box.Print("{Magenta}aliases: " + get_string(prt.aliases.ToArray(), '/'));
+                    }
+
+                } else if (gm.env.all_interactables.Contains(gm.env.get_interactable_tag(arguments[1]))) {
+
+                    Interactable temp_obj = gm.env.get_interactable_tag(arguments[1]);
+                    if (temp_obj.tag == null) {
+                        gm.box.Print("{Magenta}Interactable not found.");
+                        return;
+                    }
+                    if (temp_obj == null) {
+                        gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag/interactable tag] + (optional) [v/verbose]{end}'. Use the '{Cyan}/list items{end}' or '{Cyan}/list objs{end}' command to get all the items in an environment.");
+                    }else {
+                        gm.box.Print("{Magenta}name: {Grey}" +temp_obj.name);
+                        gm.box.Print("{Magenta}tag: {Grey}" +temp_obj.tag);
+                        gm.box.Print("{Magenta}tag_given: {Grey}" +temp_obj.tag_given);
+                        gm.box.Print("{Magenta}action_dialogue: {Grey}" + temp_obj.action_dia);
+                        gm.box.Print("{Magenta}has_been_used: {Grey}" + temp_obj.has_been_used.ToString());
+                        gm.box.Print("{Magenta}one_time_use: {Grey}" + temp_obj.one_time_use.ToString());
+                        gm.box.Print("{Magenta}used_dialogue: {Grey}" + temp_obj.used_dialogue);
+                        if (arguments.Length > 2) {
+                            if (arguments[2] == "v" || arguments[2] == "verbose") gm.box.Print("{Magenta}full_action: " + temp_obj.full_action);
+                        }
+                        gm.box.Print("{Magenta}aliases: {Grey}" + get_string(temp_obj.aliases.ToArray(), '/'));
+                    }
+
                 }
-                if (prt == null) {
-                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag]{end}'. Use the '{Cyan}/list items{end}' command to get all the items in an environment.");
-                }else {
-                    gm.box.Print("{Magenta}name: " +prt.name);
-                    gm.box.Print("{Magenta}tag: " +prt.tag);
-                    gm.box.Print("{Magenta}description: " +prt.description);
-                    gm.box.Print("{Magenta}aliases: " + get_string(prt.aliases.ToArray(), '/'));
+                else {
+                    gm.box.Print("No such item or interactable tag was found, the syntax is: '{Cyan}/inspect [item tag/interactable tag] + (optional) [v/verbose]{end}'. Use the '{Cyan}/list items{end}' or '{Cyan}/list objs{end}' command to get all the items in an environment.");
                 }
+
 
             break;
             
