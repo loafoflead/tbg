@@ -279,16 +279,44 @@ public class Commands {
             case "insp":
 
                 Item prt = gm.env.get_item_from_alias(arguments[1]);
-                if(!gm.player.inv.player_inventory.Contains(prt)) {
-                    gm.box.Print("Item not found.");
+                if(!gm.player.inv.player_inventory_tags.Contains(prt.tag)) {
+
+                    if (arguments.Length > 2) { prt = gm.env.get_item_from_alias(arguments[1] + " " + arguments[2]); }
+
+                    if(!gm.player.inv.player_inventory_tags.Contains(prt.tag)) {
+
+                        gm.box.Print("Item not found.");
+                        return;
+                    }
+
+                }
+                if (prt.description == null) {
+
+                    if (arguments.Length > 2) { prt = gm.env.get_item_from_alias(arguments[1] + " " + arguments[2]); }
+
+                    if (prt.description == null) {
+
+                        gm.box.Print("Item not found. (alias)");
+                        return;
+                        
+                    }
+
                 }
                 if (prt == null) {
-                    gm.box.Print("Incorrect usage of '{Cyan}examine{end}', usage: 'examine [item]', where item is an item in your inventory. You can type 'list' to list these items.");
+
+                    if (arguments.Length > 2) {
+                    prt = gm.env.get_item_from_alias(arguments[1] + " " + arguments[2]);
+                    if (prt.description == null) {
+                        gm.box.Print("Incorrect usage of '{Cyan}inspect{end}', usage: 'inspect [item]', where item is an item in your inventory. You can type 'list' to list these items.");
+                        return;
+                    }
+                    }
+
+                    gm.box.Print("Incorrect usage of '{Cyan}inspect{end}', usage: 'inspect [item]', where item is an item in your inventory. You can type 'list' to list these items.");
                 }else {
                     gm.box.Print(prt.description);
                 }
                 
-
             break;
 
             case "explore":
@@ -756,6 +784,29 @@ public class Commands {
                     return;
                 }
                 gm.Do("bio", arguments[1]);
+            break;
+
+            case "inspect":
+
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag]{end}'.");
+                    return;
+                }
+
+                Item prt = gm.env.get_item_from_tag(arguments[1]);
+                if (prt.description == null) {
+                    gm.box.Print("{Magenta}Item not found.");
+                    return;
+                }
+                if (prt == null) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag]{end}'. Use the '{Cyan}/list items{end}' command to get all the items in an environment.");
+                }else {
+                    gm.box.Print("{Magenta}name: " +prt.name);
+                    gm.box.Print("{Magenta}tag: " +prt.tag);
+                    gm.box.Print("{Magenta}description: " +prt.description);
+                    gm.box.Print("{Magenta}aliases: " + get_string(prt.aliases.ToArray(), '/'));
+                }
+
             break;
             
             case "l":

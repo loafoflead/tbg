@@ -150,16 +150,29 @@ public class GManager {
                     }
                     else {
                         
-                        log_file = save_files[save_number - 1];
-                        save_game();
-                        loadsave(save_files[save_number - 1].Replace("logs\\", ""));
-                        box.clr_buffer();
-                        box.Print("Save file successfully loaded!");
-                        box.flush();
-                        box.waitf(0.5f);
-                        box.clr_buffer();
-                        box.Print(env.current_room.desc);
-                        box.print_screen();
+                        if (fm.null_or_empt(fm.readTxtFileAtLine(save_files[save_number - 1], 1))) {
+
+                            log_file = save_files[save_number - 1];
+                            save_game();
+                            loadsave(save_files[save_number - 1].Replace("logs\\", ""));
+                            box.clr_buffer();
+                            box.Print("Save file successfully loaded!");
+                            box.flush();
+                            box.waitf(0.5f);
+                            box.clr_buffer();
+                            box.Print(env.current_room.desc);
+                            box.print_screen();
+                        }
+                        else {
+                            loadsave(save_files[save_number - 1].Replace("logs\\", ""));
+                            box.clr_buffer();
+                            box.Print("Save file successfully loaded!");
+                            box.flush();
+                            box.waitf(0.5f);
+                            box.clr_buffer();
+                            box.Print(env.current_room.desc);
+                            box.print_screen();
+                        }
 
                     }
 
