@@ -241,6 +241,8 @@ public class GManager {
 
         env.load_env(lines[2].Split('=')[1]);
 
+        box.debug_print = get_bool(lines[9].Split('=')[1]);
+
         if(!fm.null_or_empt(lines[3].Split('=')[1])) player.inv.add_to_inv(env.get_item_from_tag(lines[3].Split('=')[1]));
 
     }
@@ -318,6 +320,10 @@ public class GManager {
     }
 
     public void Do(string full_act) {
+        if (!full_act.Contains(':')) {
+            box.Print("Internal error, incomplete command requested; ERR_013");
+            return;
+        }
         Do(full_act.Split(':',2)[0], full_act.Split(':',2)[1]);
     }
 
@@ -354,18 +360,18 @@ public class GManager {
         switch (action.Replace(" ", "")) {
             case "give":
                 
-                Item it = env.get_item_from_tag(result);
+                Item it = env.get_item_from_tag(result.Replace(" ", ""));
                 int res = 0;
                 if (it.tag != null) res = player.inv.add_to_inv(it);
                 else {
-                    box.Print("{DarkRed}Item not found: " + it.name);
+                    box.Print("{DarkRed}Item not found: '" + result.Replace(" ", "") + "'");
                     return;
                 }
                 if (res == 2) {
                     box.Print("Inventory full!");
                 }
                 else {
-                    situ_change(change_types.gain_item, env.get_item_from_tag(result).name);
+                    situ_change(change_types.gain_item, env.get_item_from_tag(result.Replace(" ", "")).name);
                 }
             break;
 
@@ -415,13 +421,13 @@ public class GManager {
             break;
             
             case "go":
-                int b = env.Go(result);
+                int b = env.Go(result.Replace(" ", ""));
                 System.Console.WriteLine(b.ToString());
                 if (b == 0) {
-                    box.Print("Internal error 'Go', location not found ERR_09");
+                    box.Print("Internal error 'Go', location not found ERR_09: '" + result + "'");
                 }
                 else {
-                    situ_change(change_types.move_to, env.get_room_name_by_tag(result));
+                    situ_change(change_types.move_to, env.get_room_name_by_tag(result.Replace(" ", "")));
                 }
             break;
 
@@ -455,7 +461,7 @@ public class GManager {
                 break;
 
             case "take":
-                switch(result) {
+                switch(result.Replace(" ", "")) {
                     case "all":
                         player.inv.reset_inv();
                         situ_change(change_types.drop_all, "");
@@ -482,7 +488,7 @@ public class GManager {
             break;
 
             case "cutscene":
-                switch(result) {
+                switch(result.Replace(" ", "")) {
 
                     case "intro":
                         cutscene(cutscene_types.intro);
@@ -492,15 +498,15 @@ public class GManager {
                         cutscene(cutscene_types.game_over);
                     break;
                     default:
-                        cutscene(cutscene_types.custom_txt, result);
+                        cutscene(cutscene_types.custom_txt, result.Replace(" ", ""));
                     break;
 
                 }
             break;
 
             case "use":
-                if (env.all_interactables.Contains(env.get_interactable_tag(result))) {
-                    env.UseF(env.get_interactable_tag(result));
+                if (env.all_interactables.Contains(env.get_interactable_tag(result.Replace(" ", "")))) {
+                    env.UseF(env.get_interactable_tag(result.Replace(" ", "")));
                 }
                 else {
                     box.Print("Internal error 'Do' command, 'use' tag invalid.");
@@ -509,15 +515,15 @@ public class GManager {
 
             case "env":
                 try {
-                    env.load_env(result);
-                    situ_change(change_types.change_env, result);
+                    env.load_env(result.Replace(" ", ""));
+                    situ_change(change_types.change_env, result.Replace(" ", ""));
                 } catch {
                     box.Print("Invalid environment file was requested to be loaded, or is missing key files in order to be loaded.");
                 }
             break;
 
             case "op":
-                switch (result) {
+                switch (result.Replace(" ", "")) {
                     case "true":
                     case "1":
                     case "t":

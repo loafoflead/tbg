@@ -61,7 +61,7 @@ public class Environment {
         string filename = "environments\\" + filenam + "\\" + filenam;
         current_env_name = filenam;
         rooms = new List<room_short>();
-        room_file_name = filename + "_room.xml";
+        room_file_name = filename + "_rooms.xml";
         current_doc = new XmlDocument();
         current_doc.Load(room_file_name);
         room_list = current_doc.GetElementsByTagName("room");
@@ -233,26 +233,29 @@ public class Environment {
         XmlNode dirs = rs.associated_node.ChildNodes.Item(4); //this gets the 'direction' tag from the file
         rs.room_directions = new List<direction>();
 
+        gm.box.PrintD("created room directions");
+
         foreach(XmlNode child in dirs) { //runs through and loads each direction, 'left', 'right', etc...
             if (child.ChildNodes.Item(0).InnerText != "") {
             switch (child.Name) {
 
-                case "left":
+                case "north":
+                    gm.box.PrintD("north  loaded");
                     left = true;
                     load_individual_dir(direction_enum.left, child, rs);
                 break;
 
-                case "right":
+                case "east":
                     right = true;
                     load_individual_dir(direction_enum.right, child, rs);
                 break;
 
-                case "forward":
+                case "south":
                     forwards = true;
                     load_individual_dir(direction_enum.forwards, child, rs);
                 break;
 
-                case "back":
+                case "west":
                     backwards = true;
                     load_individual_dir(direction_enum.backwards, child, rs);
                 break;

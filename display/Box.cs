@@ -11,6 +11,8 @@ public class Box {
     public int height;
     public int width;
 
+    public bool debug_print = false;
+
 
     public KeyHandler k;
 
@@ -43,7 +45,7 @@ public class Box {
     }
 
     public void PrintD(string to_print) {
-        Print("{Purple}##" + to_print);
+        if (debug_print == true) Print("{Purple}##" + to_print);
     }
 
     public void PrintLn(string to_print, int line) {

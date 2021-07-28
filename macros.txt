@@ -4,3 +4,7 @@ left=emu:go left
 right=emu:go right
 forw=emu:go f
 bck=emu:go b
+north=emu:go l
+east=emu:go r
+south=emu:go f
+west=emu:go b

@@ -363,6 +363,12 @@ public class Commands {
                     foreach(string obj_tag in gm.env.current_room.room_interactable_tags) { //runs through each obj in current room
                         Interactable temp_obj = gm.env.get_interactable_tag(obj_tag); //gets the object
 
+                        if (gm.fm.null_or_empt(temp_obj.tag)) {
+                            continue;
+                        }
+
+                        gm.box.PrintD("tag evaluating: " + temp_obj.tag);
+
                         if(temp_obj.verbs.Contains(arguments[0])) {
                             if (temp_obj.aliases.Contains(arguments[1])) {
                                 gm.env.UseVerb(temp_obj, arguments[0]);
@@ -391,7 +397,7 @@ public class Commands {
                             }
                         }
 
-                        
+                        gm.box.PrintD("tag evaluated and match unfound: " + temp_obj.tag);
         
                     }
 
@@ -524,7 +530,7 @@ public class Commands {
             case "disp":
             case "display":
                 if (arguments.Length < 2) {
-                    gm.box.Print("Incorrect syntax, usage is: '{Cyan}display [msg/display element]{end}'");
+                    gm.box.Print("Incorrect syntax, usage is: '{Cyan}display [msg/show_debug/display element]{end}'");
                     return;
                 }
 
@@ -540,6 +546,22 @@ public class Commands {
                             gm.show_old_msgs = true;
                         }
                     break;
+
+                    case "show_debug":
+                    case "debug_print":
+                    case "debug":
+                    case "print_d":
+                    case "printD":
+                        if (gm.box.debug_print == true) {
+                            gm.box.debug_print = false;
+                        }
+                        else {
+                            gm.box.debug_print = true;
+                        }
+                    break;
+
+                    case "colours":
+                        break;
 
                     default:
                         gm.box.Print("Unknown display element.");
@@ -827,7 +849,7 @@ public class Commands {
                         gm.box.Print("{Magenta}one_time_use: {Grey}" + temp_obj.one_time_use.ToString());
                         gm.box.Print("{Magenta}used_dialogue: {Grey}" + temp_obj.used_dialogue);
                         if (arguments.Length > 2) {
-                            if (arguments[2] == "v" || arguments[2] == "verbose") gm.box.Print("{Magenta}full_action: " + temp_obj.full_action);
+                            if (arguments[2] == "v" || arguments[2] == "verbose") gm.box.Print("{Magenta}full_action: {Grey}" + temp_obj.full_action);
                         }
                         gm.box.Print("{Magenta}aliases: {Grey}" + get_string(temp_obj.aliases.ToArray(), '/'));
                     }
@@ -922,6 +944,10 @@ public class Commands {
             case "clr":
                 gm.box.clr_text();
                 gm.box.clr_buffer();
+            break;
+
+            case "flush":
+                gm.box.flush();
             break;
 
             default:

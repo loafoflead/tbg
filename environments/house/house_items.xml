@@ -1,0 +1,14 @@
+<house_items>
+
+    <item>
+
+        <tag>house_key</tag>
+        <name>House key</name>
+
+        <desc>Your house key. It has a faded pink tassle.</desc>
+
+        <aliases>key/house key</aliases>
+
+    </item>
+
+</house_items>

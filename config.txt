@@ -1,9 +1,10 @@
-name=no_name
-bio=no_bio
-env=env01
+name=Martin
+bio=pipi
+env=house
 inv=
 tags=
 op=false
 intro=intro.txt
 intro=true
-fast cutscenes=false
+fast cutscenes=true
+debug text is printed=false

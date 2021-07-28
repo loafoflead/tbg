@@ -1,0 +1,51 @@
+<house_objs>
+
+    <obj>
+
+        <tag>bedroom_desk</tag>
+        <name>Desk</name>
+
+        <verbs>gen/use</verbs>
+        <action>
+            print:You rummage through your desk, and find your house key.+give:house_key
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rummage through your desk again, finding nothing.</used_dialogue>
+
+        <aliases>desk/bedroom desk</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>magic_portal</tag>
+        <name>Magic Portal</name>
+
+        <verbs>use/examine/approach/enter/punch</verbs>
+        <action>say:hi #name#, you stinky lol</action>
+        <action_dia>you move through the magic portal</action_dia>
+
+        <item_req>magic_wand</item_req>
+        <item_dia>you try and go through, but it doesnt exist yet</item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>portal/magic portal</aliases>
+
+    </obj>
+
+</house_objs>
