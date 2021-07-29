@@ -12,7 +12,7 @@ public class Player {
     public int fun = 0;
 
 
-    public List<string> player_tags; //hard limit on player tags for safety
+    public List<string> player_tags; //hard limit on player tags for safety haha jk not
     public int tag_index;
 
     public Player(GManager gManager) {
@@ -25,8 +25,7 @@ public class Player {
     }
 
     public void add_tag(string tag) {
-        player_tags[tag_index] = tag;
-        tag_index ++;
+        player_tags.Add(tag);
     }
 
     public bool tags_contains(string ind_tag) {
