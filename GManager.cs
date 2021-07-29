@@ -408,6 +408,16 @@ public class GManager {
                 is_running = false;
             break;
 
+            case "wait":
+            case "wt":
+                try {
+                    box.waitf(int.Parse(result.Replace(" ", "")));
+                }
+                catch {
+                    box.waitf(1f);
+                }
+            break;
+
             case "name":
                 if(!fm.null_or_empt(result)) {
                     player.name = result;
@@ -415,6 +425,12 @@ public class GManager {
                 else {
                     box.Print("Internal error 'Do', name empty ERR_09 (143)");
                 }
+            break;
+
+            case "flush":
+            case "flsh":
+            case "fl":
+                box.flush();
             break;
 
             case "bio":

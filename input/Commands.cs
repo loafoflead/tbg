@@ -700,6 +700,18 @@ public class Commands {
                             gm.box.PrintD("Objects unlocked.");
                         break;
 
+                        case "player":
+                            gm.box.PrintD("name: " + gm.player.name);
+                            gm.box.PrintD("bio: " + gm.player.bio);
+                            gm.box.PrintD("fun: " + gm.player.fun);
+                            gm.box.PrintD("inv: " + get_string(gm.player.inv.player_inventory_tags.ToArray()));
+                            gm.box.PrintD("tags: " + get_string(gm.player.player_tags.ToArray()));
+                        break;
+
+                        case "fun":
+                            gm.player.fun = int.Parse(arguments[2]);
+                        break;
+
                         case "objs_all":
                             foreach(Interactable itr in gm.env.all_interactables) {
                                 itr.item_req = "";

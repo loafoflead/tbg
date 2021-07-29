@@ -1,0 +1,14 @@
+<dream_house_items>
+
+    <item>
+
+        <tag>dream_house_key</tag>
+        <name>Dream house key</name>
+
+        <desc>Your house key. It has a faded gray tassle.</desc>
+
+        <aliases>key/house key/dream key</aliases>
+
+    </item>
+
+</dream_house_items>

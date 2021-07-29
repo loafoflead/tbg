@@ -27,6 +27,63 @@
 
     <obj>
 
+        <tag>cupboard</tag>
+        <name>Cupboard</name>
+
+        <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
+        <action>
+            givetag:red_hat_equipped+print:&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;
+        </action>
+        <action_dia>You open the creaky door of your cupboard, and find your old red hat. You don the hat, feeling more at home already.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rummage through your cupboard again, finding nothing.</used_dialogue>
+
+        <aliases>cupboard/the cupboard/my cupboard</aliases>
+
+    </obj>
+
+    <obj>
+
+        <tag>bed</tag>
+        <name>Bed</name>
+
+        <verbs>gen/lie on/sit on/rest on/rest/lie upon/sleep on</verbs>
+        <action>
+            if:(fun=1):
+            (
+                print:You lie on your bed, you feel a little sleepy. You start to drift off.+flush:sdkjsk+wait:1.5 +cutscene:enter_dream.txt+env:dream_house
+            )
+                ?
+            (
+                print:You lie on your bed for a minute. You don't feel very sleepy. You get up again.
+            )
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>bed/the bed/my bed</aliases>
+
+    </obj>
+
+    <obj>
+
         <tag>magic_portal</tag>
         <name>Magic Portal</name>
 
