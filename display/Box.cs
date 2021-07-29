@@ -353,11 +353,12 @@ public class Box {
                 }
 
                 if (fg_col == "end" || fg_col == "def") {
-                    fg_col = "15";
+                    int gf = (int)pre_previous_colour_fg;
+                    fg_col = gf.ToString();
                     bg_col = "0";
                 }
                 
-
+                
 
                 try { //try and add the int value of the colour to the sub string
                     to_return.Add(new sub_string {
@@ -365,21 +366,29 @@ public class Box {
                         fg_color = (ConsoleColor)int.Parse(fg_col),
                         bg_color = (ConsoleColor)int.Parse(bg_col),
                     });
+                    pre_previous_colour_fg = previous_colour_fg;
+                    previous_colour_fg = (ConsoleColor)int.Parse(fg_col);
                 } catch { //if it fails, try to use the color string
                     try {
                         to_return.Add(new sub_string {
-                        content = sstring,
-                        fg_color = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), fg_col),
-                        bg_color = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), bg_col),
-                    });
+                            content = sstring,
+                            fg_color = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), fg_col),
+                            bg_color = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), bg_col),
+                        });
+                        pre_previous_colour_fg = previous_colour_fg;
+                        previous_colour_fg = (ConsoleColor) Enum.Parse(typeof(ConsoleColor), fg_col);
                     } catch { //if that fails, set the color to the default
                         to_return.Add(new sub_string {
                             content = sstring,
                             fg_color = default_foreground,
                             bg_color = default_background,
                         });
+                        pre_previous_colour_fg = previous_colour_fg;
+                        previous_colour_fg = default_foreground;
                     }
                 }
+
+                
 
                 }
             }
@@ -389,11 +398,16 @@ public class Box {
                     fg_color = default_foreground,
                     bg_color = default_background,
                 });
+                pre_previous_colour_fg = previous_colour_fg;
+                previous_colour_fg = default_foreground;
             }
 
         return to_return;
 
     }
+
+    private ConsoleColor previous_colour_fg;
+    private ConsoleColor pre_previous_colour_fg;
 
     public void wait(int milliseconds) {
         Thread.Sleep(milliseconds);

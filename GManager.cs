@@ -72,9 +72,11 @@ public class GManager {
         if (intro == true) {
         cutscene(cutscene_types.intro);
         box.waitf(1);
+        box.k.waitAnyKey();
         box.clr_buffer();
         cutscene(cutscene_types.custom_txt, "env01_cutscene");
         box.waitf(1);
+        box.k.waitAnyKey();
         box.clr_buffer();
         box.refresh_box();
         box.clr_text();
@@ -133,6 +135,10 @@ public class GManager {
             box.Print("Input save file name or number: ");
             box.flush();
             string inp = System.Console.ReadLine();
+            if (inp == "q" || inp == "quit") {
+                is_running = false;
+                return;
+            }
             int g = loadsave(inp);
             if (g == 0) { /* if the save file is missing important elements; */
 
