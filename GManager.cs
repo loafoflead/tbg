@@ -256,7 +256,14 @@ public class GManager {
         fast_cutscenes = get_bool(lines[8].Split('=')[1]);
         intro = get_bool(lines[7].Split('=')[1]);
 
-        env.load_env(lines[2].Split('=')[1]);
+        try {
+            env.load_env(lines[2].Split('=')[1]);
+        }
+        catch {
+            box.Print("{Red}**WARNING**", Box.format_options.middle);
+            box.Print("{Grey}It seems that the environment specified in the config file is causing issues and the game is unable to load it. Check the file name 'config.txt'", Box.format_options.middle);
+            box.Print("{Grey}to attempt to rectify the issue.", Box.format_options.middle);
+        }
 
         box.debug_print = get_bool(lines[9].Split('=')[1]);
 
