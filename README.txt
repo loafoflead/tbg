@@ -23,6 +23,8 @@ Here's a quick rundown of the commands;
         tells the player the name of the room they are in.
     'quit' or 'q'
         quits the game.
+    'save'
+        saves the game
     
     If the player doesn't input a command, but inputs a verb such as 'examine', or 'use' and then the name of an interactable in the room, the interactable will be used. 
     E.G:
@@ -38,20 +40,54 @@ Here's a quick rundown of the commands;
 Admin commands: 
     the admin commands include:
 
+
+        (INVENTORY):
+
+
     'give [item tag]':
         Gives the player the item tag they requested.
+
+
+        (ENVIRONMENT):
+
+
+    'env [env folder name]'
+        loads an environment folder with the specified name. More information on environments can be found further down in the readme.
+
     'goto [room tag]':
         changes the player's room to be the room tag specified.
-    'border [character]'
-        changes the screen border to the specified character. It is by default set to ascii 219, or █. (press alt and then the number 219)
-    'display [display element]'
-        toggles or edits the display element specified. Elements are: 'show_previous_message', to toggle on and off displaying the most recent message in grey on the screen.
-    'colour [foreground/highlight/border] [colour]'
-        chnages the foreground, background, or border colour to the specified colour. (note, colour names must start with a capital letter.)
+
     'status [obj/objs/dir/dirs] [optionally specify the object or the direction you're searching for]'
         get the status of a specific object or direction, (obj and dir) or the status of every object and direction in the room [objs/dirs]. to find the objects use '/list'
+    
     'unlock [dir/obj] [north,east,etc/interactable tag]'
         unlocks the direction of object specific, does nothing if it is already unlocked or doesn't exist. You can find interactables using the '/list' command.
+    
+
+        (DISPLAY):
+
+
+    'border [character]'
+        changes the screen border to the specified character. It is by default set to ascii 219, or █. (press alt and then the number 219)
+
+    'display [display element]'
+        toggles or edits the display element specified. Elements are: 'show_previous_message', to toggle on and off displaying the most recent message in grey on the screen, 'debug'
+        toggles whether debug messages are printed to the screen. This is also a togglable option in the 'config.txt' file.
+
+    'colour [foreground/highlight/border] [colour]'
+        chnages the foreground, background, or border colour to the specified colour. (note, colour names must start with a capital letter.)
+
+    'flush'
+        flushes the text buffer prematurely.
+
+
+        (MISCELLANEOUS):
+
+
+    'inspect [object tag/item tag] optional: [v/verbose]'
+        gives a detailed set of information about the specified item or interactable, all the information they contain, and when used on an interactable, adding 'v', or 'verbose', 
+        will show the full action string as well.
+    
     'do [tag] [result]':
         interfaces directly with the 'Do' function. Tags include, go/say/if/print/take/give, and result can be any corresponding information. 
         E.G: 
@@ -60,18 +96,79 @@ Admin commands:
             >/do say this message is being printed to the screen in double quotes!
             or 
             >/do take [all/random/item tag] headband (note, if the player does not posess a headband, nothing happens)
-    'env [env folder name]'
-        loads an environment folder with the specified name. More information on environments can be found further down in the readme.
+
+    'reload [env/macros]'
+        reloads the macro folder or the current environment.
+
     'tag [add/remove/reset/list]'
         resets, adds, removes, or lists tags, where tags are pieces of information attached to the player to enrich gameplay.
+
     'use [interactable tag]'
         forces the use of the specified interactable, does not affect the 'has_been_used' tag.
+
     'list [tags/rooms/objs/items] [all/room]'
         lists every one of the specified thing either in the scope of the room or the scope of the environment. 
+
     'help'
         displays a help page.
+
+
+        (SAVES):
+
+
+    'log'
+        shows the name of the current log file
+    'listsaves'
+        lists all files in 'logs' folder.
+    'loadsave'
+        loads the save specified. Does not if the save can't be loaded or doesn't exist.
+    'name' / 'name [new name]'
+        when no arguments are specified, displays the current player's name. If a second argument is specified set the player's name to the argument.
+    'bio' / 'bio [new bio]'
+        same as previous command just with the player's bio.
     
-    finally, if no match is found for the command, the message 'Unknown command!" is displayed.
+    
+
+    finally, if no match is found for the command, it will search through the '/' command macros, and if no match is still found,
+    the message 'Unknown command!" is displayed.
+
+Config file:
+    the config file, 'config.txt' is read from at the start of the game to set some baseline conditions. Some of them are ovverrided by the save file, some are not. 
+    The conditions include:
+        -name: the player's name
+        -bio: the player's bio
+        -env: the environment to start the player in. (note: the player will always begin in the first room in the environment.)
+        -inv: a '/' seperated list of the items the player should spawn with.
+        -tags: a '/' seperated list of the tags the player should spawn with.
+        -op: true/false whether the player starts with operator status or not.
+        -intro: the text file to play at the start of the game.
+        -play_intro: true/false whether or not the play the intro cutscene specified at the beginning of each game.
+        -fast cutscenes: whether or not to instantly play a cutscene.
+        -debug text is printed: true/false on whether printouts entered with the 'PrintD()' function are printed.
+
+Macros file:
+    A file specifying commands shortcuts. The list is expanded by writing a new command on a new line, and the syntax is like this:
+        >[name of macro]=[action tag]
+        e.g.
+            >north=emu:go north
+        or,
+            >/room=go:bedroom
+        or,
+            >/rname_poop=name:poop
+    
+    It essentially take the command name, the first argument, then after the = sign is an action tag. If you wanted to then emulate a command, you would use the 
+    'emulate', or 'emu' tag to emulate a command. Preceding the command by a '/' automatically makes it into a slash command, although regular commands 
+    can emulate operator commands without any issues. 
+    For example, this command:
+            >give_cake=emu:/give:cake
+    Is valid.
+    Macros are reloaded at the start of every game, or can be reloaded using the '/reload macros' command.
+
+Log file:
+    A log file is a save file, there's no other way to say it. It basically stores a bunch of data about the player in a text file. At the start of the game the player must choose between three save files.
+    Save files must be placed in the 'logs' folder to be recognized by the system. The files can have any name, and if no file can be found, a new one is generated.
+    Note that save files don't store any data about environments yet, and if a player collects an item in one environment then moves to another, the items will be written into the save file,
+    but won't be loaded if not in their native environment. This will be fixed later. 
 
 Escape sequences:
     To print something to the screen in colour the system the display uses is very smilar to the one used in HTML, so it's a bunch of tags.
@@ -83,7 +180,7 @@ Escape sequences:
                                         colour**
     * All colours have to start with a capital letter
 
-    ** the 'end' tag restored the foreground colour to white, and the background to black, so be careful with formatting.
+    ** the 'end' tag restored the foreground colour to the colour that was being used before the colour was changed, and the background to black, so be careful with formatting.
 
     This system also lets you highlight things, e.g.
         /name {Blue,Yellow}xxX_Epic_Gamer_Xxx{end}
@@ -159,11 +256,25 @@ Environments:
             removetag: [all/rand/specific tag] (similar to the take command, only with tags as opposed to items)
             null: [do nothing]
 
+            **NEW**
+
+            unlock: [dir/obj] (note: this tag essentially emulates the '/unlock' command and so retains the syntax from that command.)
+            emulate: [command] (any command the player can type can be emulated using this tag)
+            end: (ends the game)
+            wait: [Whole number] waits the specified number of seconds.
+            name: [new name] changes the player's name to specified new name
+            bio: [new bio] chnages the player's bio to specified new bio
+            flush: prints all text to the screen prematurely
+            use: [interactable tag] (similar to the '/use' command)
+            op: [true/false] changes whether or not the player is an operator
+
+
         say*: the say command contains a few special tags, for example writing: say:hello #name#! how are you?, will print the text replacing '#name#' with the player's name.
         Currently the tags include:
             - #name#: the player's name
             - #bio#: the player's bio 
             - #room#: the current room
+            - #desc#: the current room's description
             - #fun#: the player's fun
 
         To chain multiple tags together, simply place a '+' sign in between them, as follows:
@@ -181,6 +292,13 @@ Environments:
                 -room (the current room's tag)
                 -op (whether or not the player has operator status)
                 -tag (searches the player's tags for a specific tag)
+
+                **NEW**
+
+                -ask (asks a yes/no question, runs the else bracket if the player replies 'no') ((note: syntax puts the question after the '=': >if:(ask=Will you do thing?):))
+                -fun (compares against the player's current fun value)
+                -resp (compares against what the player next inputs)
+
             After the condition is an '=' sign, and what is written behind the '=' symbol is the condition to be met,
                 E.G:
                     if:(name=Derek) 
