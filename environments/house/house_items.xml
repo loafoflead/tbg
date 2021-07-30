@@ -11,4 +11,15 @@
 
     </item>
 
+    <item>
+
+        <tag>parent_key</tag>
+        <name>Parent's room key</name>
+
+        <desc>The key to your parent's room. It's big and heavy with two rough teeth carved into it.</desc>
+
+        <aliases>key/parent's key/room key</aliases>
+
+    </item>
+
 </house_items>
