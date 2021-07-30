@@ -54,8 +54,9 @@ public class GManager {
                 fm.write_at("tags=", 5, "config.txt");
                 fm.write_at("op=false", 6, "config.txt");
                 fm.write_at("intro=intro.txt", 7, "config.txt");
-                fm.write_at("intro=true", 8, "config.txt");
+                fm.write_at("play_intro=true", 8, "config.txt");
                 fm.write_at("fast cutscenes=false", 9, "config.txt");
+                fm.write_at("debug_text_is_printed=false", 10, "config.txt");
                 System.Console.WriteLine(i);
                 System.Console.ReadKey();
                 load_config_file("config.txt");
@@ -106,7 +107,17 @@ public class GManager {
         }
         fm.write_at(player.bio, 2, log_file);
         fm.write_at(env.current_env_name, 3, log_file);
-        fm.write_at(cm.get_string(player.inv.player_inventory_tags.ToArray(), '/'), 4, log_file);
+
+        //write the player's inventory
+        string to_write_to_save = "";
+        foreach(Item it in player.inv.player_inventory) {
+            to_write_to_save += it.environment_owned;
+            to_write_to_save += ':';
+            to_write_to_save += it.tag;
+            to_write_to_save += '/';
+        }
+        if (to_write_to_save.Length > 2) to_write_to_save = to_write_to_save.Remove(to_write_to_save.Length - 1);
+        fm.write_at(to_write_to_save, 4, log_file);
 
         fm.write_at(cm.get_string(player.player_tags.ToArray(), '/'), 5, log_file);
 
@@ -297,12 +308,24 @@ public class GManager {
         }
 
         if (save_file[3].Contains('/')) {
+
             foreach(string hi in save_file[3].Split('/')) {
-                if (!fm.null_or_empt(hi)) player.inv.add_to_inv(env.get_item_from_tag(hi));
+
+                List<Item> temporary_items = env.load_items_from_env(hi.Split(':')[0]);
+                player.inv.add_to_inv(temporary_items.Find(Item => Item.tag == hi.Split(':')[1]));
+
             }
+
         }
         else {
-            if (!fm.null_or_empt(save_file[3])) player.inv.add_to_inv(env.get_item_from_tag(save_file[3]));
+
+
+            if (!fm.null_or_empt(save_file[3])) {
+                List<Item> temporary_items = env.load_items_from_env(save_file[3].Split(':')[0]);
+                player.inv.add_to_inv(temporary_items.Find(Item => Item.tag == save_file[3].Split(':')[1]));
+            }
+
+
         }
 
         if (!fm.null_or_empt(save_file[4])) {

@@ -837,10 +837,11 @@ public class Commands {
                     if (prt == null) {
                         gm.box.Print("Incorrect syntax, usage is '{Cyan}/inspect [item tag/interactable tag] + (optional) [v/verbose]{end}'. Use the '{Cyan}/list items{end}' or '{Cyan}/list objs{end}' command to get all the items in an environment.");
                     }else {
-                        gm.box.Print("{Magenta}name: " +prt.name);
-                        gm.box.Print("{Magenta}tag: " +prt.tag);
-                        gm.box.Print("{Magenta}description: " +prt.description);
-                        gm.box.Print("{Magenta}aliases: " + get_string(prt.aliases.ToArray(), '/'));
+                        gm.box.Print("{Magenta}name: {Grey}" +prt.name);
+                        gm.box.Print("{Magenta}tag: {Grey}" +prt.tag);
+                        gm.box.Print("{Magenta}description: {Grey}" +prt.description);
+                        gm.box.Print("{Magenta}aliases: {Grey}" + get_string(prt.aliases.ToArray(), '/'));
+                        gm.box.Print("{Magenta}environment_owned: {Grey}" + prt.environment_owned);
                     }
 
                 } else if (gm.env.all_interactables.Contains(gm.env.get_interactable_tag(arguments[1]))) {
@@ -927,9 +928,7 @@ public class Commands {
                                 }
                             }
                             else {
-                                foreach(Item it in gm.env.all_items) {
-                                    gm.box.Print(it.name + " - " + it.tag);
-                                }
+                                gm.box.Print("Incorrect syntax, usage is: '{Cyan}list [element]{end}', where element is rooms, interactables, or items.");
                             }
                         } 
                     break;

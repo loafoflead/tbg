@@ -53,6 +53,7 @@ public class Environment {
     public Environment(GManager g) {
         gm = g;
         rooms = new List<room_short>();
+        all_items = new List<Item>();
     }
 
     public string current_env_name;
@@ -84,7 +85,7 @@ public class Environment {
 
         all_interactables = new List<Interactable>();
         load_env_interactables(filename);
-        all_items = new List<Item>();
+        //
         load_env_items(filename);
 
         string cutscene_name = "";
@@ -109,7 +110,15 @@ public class Environment {
     }
 
 
-
+    public List<Item> load_items_from_env(string filename) {
+        string temp_current_env = current_env_name;
+        load_env_items(filename);
+        System.Console.WriteLine("loaded new, old: " + temp_current_env);
+        System.Console.ReadKey();
+        List<Item> items_to_return = all_items;
+        load_env_items("environments\\" + temp_current_env + "\\" + temp_current_env);
+        return items_to_return;
+    }
 
     //works
     void load_env_items(string filename) {
@@ -123,6 +132,7 @@ public class Environment {
                 description = nod.ChildNodes.Item(2).InnerText,
                 tag = nod.ChildNodes.Item(0).InnerText,
                 aliases = new List<string>(nod.ChildNodes.Item(3).InnerText.Split('/')),
+                environment_owned = filename,
             });
         }
     }
@@ -693,6 +703,8 @@ public class Item {
     public string tag;
 
     public List<string> aliases;
+
+    public string environment_owned;
 
 }
 
