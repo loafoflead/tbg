@@ -25,6 +25,10 @@ public class Commands {
 
         arguments = new string[1]; //reset the arguments array
 
+        if (gm.fm.null_or_empt(h)) {
+            return;
+        }
+
         if (h.Contains(" ")) arguments = h.Split(" "); //if the command is longer than one word split it into spaces
         else arguments[0] = h; // if not set the first item to the arguments string
 
