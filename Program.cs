@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace warm_things
+namespace local_git
 {
     class Program
     {

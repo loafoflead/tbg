@@ -128,6 +128,36 @@ public class Commands {
 
     public void regular_commands() {
 
+        foreach(string interactable_tag in gm.env.current_room.room_interactable_tags) {
+
+            Interactable temp_obj = gm.env.get_interactable_tag(interactable_tag); //foreach interactable in the room, make a temporary object here,
+
+            if (temp_obj.tag == null) continue;
+
+            foreach(string verb in temp_obj.verbs) {
+                if (h.Contains(verb)) { /* If the verb used to interface with the object is found in the input string; */
+
+                    foreach(string alias in temp_obj.aliases) {
+                        if (h.Contains(alias)) { /* If the alias and the verb are found in the input string; */
+
+                            gm.env.UseVerb(temp_obj);
+                            return;
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        regular_commandss();
+
+
+    }
+
+    public void regular_commandss() {
+    
         switch (arguments[0]) {
 
             case "back":
@@ -358,54 +388,6 @@ public class Commands {
                     } 
                 }
 
-                try {
-
-                    foreach(string obj_tag in gm.env.current_room.room_interactable_tags) { //runs through each obj in current room
-                        Interactable temp_obj = gm.env.get_interactable_tag(obj_tag); //gets the object
-
-                        if (gm.fm.null_or_empt(temp_obj.tag)) {
-                            continue;
-                        }
-
-                        gm.box.PrintD("tag evaluating: " + temp_obj.tag);
-
-                        if(temp_obj.verbs.Contains(arguments[0])) {
-                            if (temp_obj.aliases.Contains(arguments[1])) {
-                                gm.env.UseVerb(temp_obj, arguments[0]);
-                                return;
-                            }
-                        }
-
-                        if(temp_obj.verbs.Contains(arguments[0] +  " " + arguments[1])) {
-                            if (temp_obj.aliases.Contains(arguments[2])) {
-                                gm.env.UseVerb(temp_obj, arguments[0] +  " " + arguments[1]);
-                                return;
-                            }
-                        }
-
-                        if(temp_obj.verbs.Contains(arguments[0] +  " " + arguments[1])) {
-                            if (temp_obj.aliases.Contains(arguments[2] +  " " + arguments[3])) {
-                                gm.env.UseVerb(temp_obj, arguments[0] +  " " + arguments[1]);
-                                return;
-                            }
-                        }
-
-                        if(temp_obj.verbs.Contains(arguments[0])) {
-                            if (temp_obj.aliases.Contains(arguments[1] + " " + arguments[2])) {
-                                gm.env.UseVerb(temp_obj, arguments[0]);
-                                return;
-                            }
-                        }
-
-                        gm.box.PrintD("tag evaluated and match unfound: " + temp_obj.tag);
-        
-                    }
-
-                    succeeded = false;
-                    gm.box.Print("{DarkGray}<{Yellow}@{DarkGray}> Unknown Command!'" + get_string(arguments) + "'");
-                } catch {
-                    gm.box.Print("Unexpected error searching for interactable.");
-                }
 
                 //do thing to sift through every interctable to check if any of the args correspond to the verb or the object k cool bye
                 //thanks!
@@ -424,6 +406,7 @@ public class Commands {
             break;
 
         }
+    
     }
 
     void unlock_menu() {

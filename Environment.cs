@@ -540,7 +540,7 @@ public class Environment {
     public void UseAl(string alias, string verb) {
         foreach(Interactable it in all_interactables) {
             if (it.aliases.Contains(alias) && current_room.room_interactable_tags.Contains(it.tag)) {
-                UseVerb(it, verb);
+                UseVerb(it);
             }
         }
         gm.box.Print("Object not found, try checking the name for spelling errors.");
@@ -548,15 +548,16 @@ public class Environment {
 
     //may work
     public void UseVerbWithTag(string tag, string verb) {
-        UseVerb(get_interactable_tag(tag), verb);
+        UseVerb(get_interactable_tag(tag));
     }
-    public int UseVerb(Interactable obj, string verb) { //to rework with locking mechanics
+
+    public int UseVerb(Interactable obj) { //to rework with locking mechanics
         if (obj.tag == "") {
             return 0;
         }
 
         obj.add_gm(gm);
-        int try_time = obj.try_use(verb);
+        int try_time = obj.try_use();
 
         switch (try_time) {
             case 0:
@@ -778,9 +779,9 @@ public class Interactable {
 
     public bool has_been_used = false;
 
-    public int try_use(string verb) {
-        foreach(string ver in verbs) {
-            if (ver == verb) {
+    public int try_use() {
+        /*foreach(string ver in verbs) {
+            if (ver == verb) {*/
 
                 if (has_been_used == true && one_time_use == true) {
 
@@ -806,11 +807,11 @@ public class Interactable {
 
                     }
 
-                }
+             /*   }
 
-            }
+            }*/
         }
-        return 0; //if not match is found for the verb, return a 0 for failiure
+        //return 0; //if not match is found for the verb, return a 0 for failiure
     }
 
 }
