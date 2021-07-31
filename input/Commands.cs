@@ -648,7 +648,8 @@ public class Commands {
 
                         case "dirs":
                             foreach(direction dirt in gm.env.current_room.room_directions) {
-                                gm.box.Print("{Magenta}" + dirt.direction_str + ", is_locked: " + dirt.is_locked + ", item_required: " + dirt.item_required + ", leads: " + dirt.direction_leads);
+                                if (gm.fm.null_or_empt(dirt.direction_action)) gm.box.Print("{Magenta}" + dirt.direction_str + ", is_locked: " + dirt.is_locked + ", item_required: " + dirt.item_required + ", leads: " + dirt.direction_leads);
+                                else gm.box.Print("{Magenta}" + dirt.direction_str + ", action: " + dirt.direction_action);
                             }
                         break;
 
