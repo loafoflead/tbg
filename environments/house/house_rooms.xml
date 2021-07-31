@@ -1,5 +1,6 @@
 <house>
 
+    <!-- BEDROOM _/ -->
     <room> 
 
         <id>0</id>
@@ -59,6 +60,7 @@
 
     </room>
 
+    <!-- HALLWAY _/ -->
     <room> 
 
         <id>1</id>
@@ -118,6 +120,7 @@
 
     </room>
 
+    <!-- SIBLING ROOM _/ -->
     <room> 
 
         <id>2</id>
@@ -177,6 +180,7 @@
 
     </room>
 
+    <!-- PARENT ROOM _/ -->
     <room> 
 
         <id>2</id>
@@ -236,6 +240,7 @@
 
     </room>
 
+    <!-- ATTIC _/ -->
     <room> 
 
         <id>3</id>
@@ -290,11 +295,12 @@
 
         </directions>
 
-        <objs>magic_portal</objs>
+        <objs>attic_box</objs>
         <items></items>
 
     </room>
 
+    <!-- DOWNSTAIRS HALLWAY _/ -->
     <room> 
 
         <id>4</id>
@@ -354,6 +360,7 @@
 
     </room>
 
+    <!-- GARAGE _/ -->
     <room> 
 
         <id>5</id>
@@ -397,11 +404,12 @@
 
         </directions>
 
-        <objs>mirror/dresser</objs>
+        <objs>light_switch_garage/garage_shelves</objs>
         <items></items>
 
     </room>
 
+    <!-- KITCHEN X -->
     <room> 
 
         <id>6</id>
@@ -409,12 +417,12 @@
         <tag>kitchen</tag>
         <name>Kitchen</name>
 
-        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you, a washing machine, a dishwasher, and a jar on the counter with some kind of unkown fluid in it.</desc>
+        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you, a washing machine, a dishwasher, and a jar on the counter with some kind of unkown fluid in it. South is the door back to the hallway.</desc>
         
         <directions>
             <north>
-                <leads>garage</leads>
-                <dia>You push open the rusty garage door.</dia>
+                <leads>hallway</leads>
+                <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
@@ -422,33 +430,30 @@
                 <tag_lock_dia></tag_lock_dia>
                 <action></action>
             </north>
+        </directions>
 
-            <east>
-                <leads>bathroom</leads>
-                <dia></dia>
-                <lock></lock>
-                <lock_dia></lock_dia>
-                <unlock_dia></unlock_dia>
-                <lock_reqs></lock_reqs>
-                <tag_lock_dia></tag_lock_dia>
-                <action></action>
-            </east>
-            <south>
-                <leads>kitchen</leads>
-                <dia></dia>
-                <lock></lock>
-                <lock_dia></lock_dia>
-                <unlock_dia></unlock_dia>
-                <lock_reqs></lock_reqs>
-                <tag_lock_dia></tag_lock_dia>
-                <action></action>
-            </south>
+        <objs>kitchen_cupboard/washing_machine/dishwasher/unknown_jar.</objs>
+        <items></items>
+
+    </room>
+
+    <!-- BATHROOM _/ -->
+    <room> 
+
+        <id>7</id>
+
+        <tag>bathroom</tag>
+        <name>Bathroom</name>
+
+        <desc>A small room. The floor and walls are covered in white tiles, the ceiling is plaster, with a single bulb sticking out of it. There's a sink ahead of you with a mirror above it, and a bath to your right. West is the door back to the hallway.</desc>
+        
+        <directions>
             <west>
-                <leads>front_garden</leads>
-                <dia>You leave your house and enter the front garden.</dia>
-                <lock>house_key</lock>
-                <lock_dia>The door is locked.</lock_dia>
-                <unlock_dia>You unlock the door with the house key.</unlock_dia>
+                <leads>hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action></action>
@@ -456,7 +461,7 @@
 
         </directions>
 
-        <objs>mirror/dresser</objs>
+        <objs>bath/sink/mirror</objs>
         <items></items>
 
     </room>

@@ -160,9 +160,146 @@
 
     </obj>
 
+    <!-- BATHROOM  -->
 
+    <obj>
 
+        <tag>bath</tag>
+        <name>Bath</name>
 
+        <verbs>gen/lie in/enter/enter the</verbs>
+        <action>
+            cutscene:bath_dream+
+            clr:ksdh+
+            env:dream_house+
+            set_room:dream_bathroom
+        </action>
+        <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>dreamy_bath</tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>bath/the bath/bathroom bath</aliases>
+
+    </obj>
+    <obj>
+
+        <tag>sink</tag>
+        <name>Bathroom sink</name>
+
+        <verbs>gen/wash in/wash up/clean/clean the</verbs>
+        <action>
+            null:pipi
+        </action>
+        <action_dia>You wash your hands.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>clean_handies</tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>sink/bathroom sink/the sink</aliases>
+
+    </obj>
+
+    <!-- ATTIC  -->
+
+    <obj>
+
+        <tag>attic_box</tag>
+        <name>Open box</name>
+
+        <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
+        <action>
+            give:bath_bomb
+        </action>
+        <action_dia>You rifle through the box, and take out a bath bomb.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rifle through the box again, but nothing specific jumps out at you.</used_dialogue>
+
+        <aliases>box/the box/open box</aliases>
+
+    </obj>
+
+    <!-- GARAGE  -->
+
+    <obj>
+
+        <tag>light_switch_garage</tag>
+        <name>Door switch</name>
+
+        <verbs>gen/flick on/turn on/flick the/flick/press/press the/press on/click the/click/click on</verbs>
+        <action>
+            if:(tag=open_garage):
+                (
+                    removetag:open_garage+
+                    print:You close the garage door.
+                )
+            ?
+                (
+                    givetag:open_garage+
+                    print:You open the garage door.
+                )
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>door switch/the switch/button/light switch/door button/garage door/garage button/garage switch</aliases>
+
+    </obj>
+    <obj>
+
+        <tag>garage_shelves</tag>
+        <name>Garage shelves</name>
+
+        <verbs>gen/gen_furniture</verbs>
+        <action>
+            give:toy_gun
+        </action>
+        <action_dia>You search through the shelves, finding a tiny toy gun that fires little foam bullets. You pocket the little gun, and three foam bullets.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>three_bullets</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You search through the shelves again, finding nothing of interest.</used_dialogue>
+
+        <aliases>shelves/garage shelves/shelf/garage shelf</aliases>
+
+    </obj>
 
     <!--  **MAGIC_PORTAL**  -->
     <obj>

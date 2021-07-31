@@ -138,7 +138,13 @@ public class Environment {
     }
 
     public static string[] generic_verbs = new string[] {
-        "examine", "explore", "search"
+        "examine", "explore", "search", "approach the", "approach"
+    };
+    public static string[] generic_search_through_verbs = new string[] {
+        "search", "search through", "rummage through", "look through", "look into", "search the"
+    };
+    public static string[] generic_furniture_verbs = new string[] {
+        "sit on", "sit", "rest on", "rest", 
     };
 
     static char[] escap = { '\r', '\n' };
@@ -167,6 +173,16 @@ public class Environment {
             };
             if (new_obj.verbs.Contains("gen")) {
                 foreach(string s in generic_verbs) {
+                    new_obj.verbs.Add(s);
+                }
+            }
+            if (new_obj.verbs.Contains("gen_search")) {
+                foreach(string s in generic_search_through_verbs) {
+                    new_obj.verbs.Add(s);
+                }
+            }
+            if (new_obj.verbs.Contains("gen_furniture")) {
+                foreach(string s in generic_furniture_verbs) {
                     new_obj.verbs.Add(s);
                 }
             }
@@ -497,15 +513,22 @@ public class Environment {
         gm.box.Print(dir.action_dialogue);
     }
 
+
+    public room_short get_room_short_by_tag(string tag) {
+        foreach(room_short rs in rooms) {
+            if (rs.tag == tag) {
+                return rs;
+            }
+        }
+        return null;
+    }
     //works
     public XmlNode get_room_tag(string ta) {
         foreach(room_short rs in rooms) {
             if (rs.tag == ta) { //searches all the room tags for a match with given room tag
-                System.Console.WriteLine("found room tag: " + rs.associated_node.ChildNodes.Item(1).InnerText);
                 return rs.associated_node;
             }
         }
-        System.Console.WriteLine("failed to find room tag");
         return null;
     }
     public string get_room_name_by_tag(string tag) {

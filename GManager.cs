@@ -483,6 +483,19 @@ public class GManager {
                 }
             break;
 
+            case "setroom":
+            case "room":
+            case "st_rm":
+            case "set_room":
+                room_short temp = env.get_room_short_by_tag(result.Replace(" ", ""));
+                if (temp == null) {
+                    box.Print("Internal error 'Set Room', location not found ERR_??: '" + result + "'");
+                }
+                else {
+                    env.current_room = temp;
+                }
+            break;
+
             case "addtag":
             case "givetag":
             case "gt":
@@ -490,6 +503,8 @@ public class GManager {
                 player.player_tags.Add(result);
             break;
 
+            case "taketag":
+            case "rt":
             case "removetag":
                 switch (result) {
                     case "all":
@@ -594,6 +609,8 @@ public class GManager {
                 }
             break;
 
+            case "clr":
+            case "cls":
             case "clear":
                 box.clr_buffer();
                 box.clr();
