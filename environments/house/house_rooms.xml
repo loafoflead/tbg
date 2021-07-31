@@ -345,10 +345,10 @@
             <west>
                 <leads>front_garden</leads>
                 <dia>You leave your house and enter the front garden.</dia>
-                <lock>house_key</lock>
+                <lock>1</lock>
                 <lock_dia>The door is locked.</lock_dia>
                 <unlock_dia>You unlock the door with the house key.</unlock_dia>
-                <lock_reqs></lock_reqs>
+                <lock_reqs>house_key</lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action></action>
             </west>
@@ -417,7 +417,7 @@
         <tag>kitchen</tag>
         <name>Kitchen</name>
 
-        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you, a washing machine, a dishwasher, and a jar on the counter with some kind of unkown fluid in it. South is the door back to the hallway.</desc>
+        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you, a washing machine, a dishwasher, and a jar on the counter with some kind of unkown fluid in it. North is the door back to the hallway.</desc>
         
         <directions>
             <north>
