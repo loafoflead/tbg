@@ -779,7 +779,7 @@ public class GManager {
             break;
 
             default:
-                box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + ":" + result);
+                box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
             break;
         }
     }

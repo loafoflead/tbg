@@ -18,7 +18,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </north>
 
             <east>
@@ -29,7 +29,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </east>
             <south>
                 <leads>garden</leads>
@@ -39,7 +39,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </south>
             <west>
                 <leads></leads>
@@ -49,7 +49,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </west>
 
         </directions>
@@ -77,7 +77,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </north>
 
             <east>
@@ -88,7 +88,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </east>
             <south>
                 <leads>bedroom</leads>
@@ -98,7 +98,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </south>
             <west>
                 <leads>downstair_hallway</leads>
@@ -108,12 +108,296 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </west>
 
         </directions>
 
         <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>2</id>
+
+        <tag>sibling_room</tag>
+        <name>Sibling's room</name>
+
+        <desc>A small squat little room, almost identical to yours, only with two small windows instead of one. Your sibling's desk sits opposite their bed, both pieces of furniture are covered by an opaque plastic tarp. The only accessible piece of furniture is the cupboard on your left. South is the door back to the hallway.</desc>
+        
+        <directions>
+            <north>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads>hallway</leads>
+                <dia>You enter the hallway.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal/sibling_cupboard</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>2</id>
+
+        <tag>parents_room</tag>
+        <name>Parent's room</name>
+
+        <desc>A large room with a huge four poster bed in the center that takes up most of the available space. The rest of the furniture in the room is covered in plastic tarp. East is the ladder leading to your attic, west the door back to your hallway.</desc>
+        
+        <directions>
+            <north>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>attic</leads>
+                <dia>You clamber into the attic.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>hallway</leads>
+                <dia>You enter the hallway.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>3</id>
+
+        <tag>attic</tag>
+        <name>Attic</name>
+
+        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with an impassable wall of garbage. There's an open box to your left, and west the stairs back down to your parent's room.</desc>
+        
+        <directions>
+            <north>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>parents_room</leads>
+                <dia>You climb back down from the attic into your parent's room.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>4</id>
+
+        <tag>downstair_hallway</tag>
+        <name>Downstairs hallway</name>
+
+        <desc>A long, uninteresting hallway. There's a dark wood dresser on the wall next to you, and a mirror above it. South of you is the door to the kitchen, east the bathroom, north the door into your garage, and west the front door.</desc>
+        
+        <directions>
+            <north>
+                <leads>garage</leads>
+                <dia>You push open the rusty garage door.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>bathroom</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads>kitchen</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>front_garden</leads>
+                <dia>You leave your house and enter the front garden.</dia>
+                <lock>house_key</lock>
+                <lock_dia>The door is locked.</lock_dia>
+                <unlock_dia>You unlock the door with the house key.</unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>mirror/dresser</objs>
+        <items></items>
+
+    </room>
+
+    <room> 
+
+        <id>5</id>
+
+        <tag>garage</tag>
+        <name>Garage</name>
+
+        <desc>A grimy dark room full of rubbish and old furniture. There's a switch to your right, you remember it's used to open and shut the garage door. The only readily available piece of furniture is a cluttered row of shelves. West is the garage door, south is the door back into the hall.</desc>
+        
+        <directions>
+            <south>
+                <leads>downstair_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>poop_land</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    if:(tag=open_garage):
+                        (print:You leave your house and enter the front garden.+go:front_garden)
+                    ?
+                        (print:The garage is locked.)
+                                        <!--
+                    if:(tag=looked_into_mirror):
+                        (null:poopie)
+                    ?
+                        (givetag:looked_into_mirror) -->
+                </action>
+            </west>
+
+        </directions>
+
+        <objs>mirror/dresser</objs>
         <items></items>
 
     </room>

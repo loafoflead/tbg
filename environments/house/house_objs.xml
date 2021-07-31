@@ -1,5 +1,6 @@
 <house_objs>
 
+    <!-- **BEDROOM**  -->
     <obj>
 
         <tag>bedroom_desk</tag>
@@ -24,7 +25,6 @@
         <aliases>desk/bedroom desk</aliases>
 
     </obj>
-
     <obj>
 
         <tag>cupboard</tag>
@@ -49,7 +49,6 @@
         <aliases>cupboard/the cupboard/my cupboard</aliases>
 
     </obj>
-
     <obj>
 
         <tag>bed</tag>
@@ -82,6 +81,90 @@
 
     </obj>
 
+    <!--  **SIBLING ROOM**  -->
+    <obj>
+
+        <tag>sibling_cupboard</tag>
+        <name>Cupboard</name>
+
+        <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
+        <action>
+            givetag:sibling_cupboard_sad
+        </action>
+        <action_dia>You open the creaky door of your sibling's cupboard, and find their old green hat. You pick up the hat... and put it back. You think some things are best left forgotten.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rummage through your sibling's cupboard again, finding nothing.</used_dialogue>
+
+        <aliases>cupboard/the cupboard/their cupboard</aliases>
+
+    </obj>
+
+    <!--  **DOWNSTAIRS HALL**  -->
+    <obj>
+
+        <tag>mirror</tag>
+        <name>Mirror</name>
+
+        <verbs>gen/look into/look at/look/observe/approach the/approach</verbs>
+        <action>
+            if:(tag=looked_into_mirror):
+                (null:poopie)
+            ?
+                (givetag:looked_into_mirror)
+        </action>
+        <action_dia>You look into the mirror. It looks very dark in there.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>0</one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>mirror/the mirror/</aliases>
+
+    </obj>
+    <obj>
+
+        <tag>dresser</tag>
+        <name>Downstairs dresser</name>
+
+        <verbs>gen/approach the/approach/search/look through/search through</verbs>
+        <action>
+            give:old_photograph
+        </action>
+        <action_dia>You rummage through the dresser, you find an old photograph. You pocket it.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You rummage through the dresser again, finding nothing.</used_dialogue>
+
+        <aliases>dresser/the dresser/downstairs dresser</aliases>
+
+    </obj>
+
+
+
+
+
+    <!--  **MAGIC_PORTAL**  -->
     <obj>
 
         <tag>magic_portal</tag>

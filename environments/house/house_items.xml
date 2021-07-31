@@ -13,12 +13,12 @@
 
     <item>
 
-        <tag>parent_key</tag>
-        <name>Parent's room key</name>
+        <tag>old_photograph</tag>
+        <name>Old photograph</name>
 
-        <desc>The key to your parent's room. It's big and heavy with two rough teeth carved into it.</desc>
+        <desc>You stare intently at the photograph, but you can't make out anything more than the colours. There's vivid {Red}red {White}and {Green}green{White}, and a kind of dull {Magenta}purplish{Blue} blue{White}.</desc>
 
-        <aliases>key/parent's key/room key</aliases>
+        <aliases>photo/photograph/old photo/old photograph</aliases>
 
     </item>
 

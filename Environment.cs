@@ -323,7 +323,7 @@ public class Environment {
             item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
             tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
             item_required = direction_node.ChildNodes.Item(5).InnerText,
-            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+            direction_action = direction_node.ChildNodes.Item(7).InnerText.Replace("\r","").Replace("\n","").Replace("\t",""),
 
             };  
             room.room_directions.Add(direc);
@@ -341,7 +341,7 @@ public class Environment {
             item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
             tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
             item_required = direction_node.ChildNodes.Item(5).InnerText,
-            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+            direction_action = direction_node.ChildNodes.Item(7).InnerText.Replace("\r","").Replace("\n","").Replace("\t",""),
 
             }; 
             room.room_directions.Add(direc);
@@ -402,7 +402,7 @@ public class Environment {
             item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
             tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
             item_required = direction_node.ChildNodes.Item(5).InnerText,
-            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+            direction_action = direction_node.ChildNodes.Item(7).InnerText,
 
             };  
             room_directions.Add(direc);
@@ -420,7 +420,7 @@ public class Environment {
             item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
             tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
             item_required = direction_node.ChildNodes.Item(5).InnerText,
-            tag_required = direction_node.ChildNodes.Item(7).InnerText,
+            direction_action = direction_node.ChildNodes.Item(7).InnerText,
 
             }; 
             room_directions.Add(direc);
@@ -430,6 +430,10 @@ public class Environment {
     public int Move(direction_enum direction_Enum) {
         foreach(direction direc in current_room.room_directions) {
             if (direc.direction_int == (int) direction_Enum) {
+                if(!gm.fm.null_or_empt(direc.direction_action)) {
+                   gm.Do(direc.direction_action.Split(':',2)[0], direc.direction_action.Split(':',2)[1]);
+                   return 1;
+                }
                 if (direc.is_locked != true) {
                     effect_direction(direc);
                     return 1;
@@ -803,7 +807,7 @@ public class direction {
     public string item_unlock_dialogue;
     public string tag_locked_dialogue;
     public string item_required;
-    public string tag_required;
+    public string direction_action;
 
 }
 
