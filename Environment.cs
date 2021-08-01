@@ -138,10 +138,10 @@ public class Environment {
     }
 
     public static string[] generic_verbs = new string[] {
-        "examine", "explore", "search", "approach the", "approach"
+        "examine", "explore", "search", "approach the", "approach", "get", "pick up", "get the"
     };
     public static string[] generic_search_through_verbs = new string[] {
-        "search", "search through", "rummage through", "look through", "look into", "search the"
+        "search", "search through", "rummage through", "look through", "look into", "search the", "look", "look at", "look in", "look in the"
     };
     public static string[] generic_furniture_verbs = new string[] {
         "sit on", "sit", "rest on", "rest", 
@@ -185,6 +185,9 @@ public class Environment {
                 foreach(string s in generic_furniture_verbs) {
                     new_obj.verbs.Add(s);
                 }
+            }
+            if (gm.fm.null_or_empt(new_obj.full_action)) {
+                new_obj.full_action = "null:empty_action";
             }
             all_interactables.Add(new_obj);
         }

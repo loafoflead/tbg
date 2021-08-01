@@ -32,9 +32,16 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            givetag:red_hat_equipped+print:&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;
+            if:(tag=grey_hat_equipped): 
+                (
+                    print:You open the creaky door of your cupboard, and find your old red hat. You shut the cupboard again.
+                )
+            ?
+                (
+                    givetag:red_hat_equipped+print:&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;
+                )
         </action>
-        <action_dia>You open the creaky door of your cupboard, and find your old red hat. You don the hat, feeling more at home already.</action_dia>
+        <action_dia></action_dia>
 
         <item_req></item_req>
         <item_dia></item_dia>
@@ -44,7 +51,7 @@
         <tag_given></tag_given>
         
         <one_time_use>1</one_time_use>
-        <used_dialogue>You rummage through your cupboard again, finding nothing.</used_dialogue>
+        <used_dialogue>You don't want to look through the cupboard again, you know you won't find anything useful in there.</used_dialogue>
 
         <aliases>cupboard/the cupboard/my cupboard</aliases>
 
@@ -298,6 +305,56 @@
         <used_dialogue>You search through the shelves again, finding nothing of interest.</used_dialogue>
 
         <aliases>shelves/garage shelves/shelf/garage shelf</aliases>
+
+    </obj>
+
+
+    <!-- KITCHEN  -->
+
+    <obj>
+
+        <tag>kitchen_cupboard</tag>
+        <name>Kitchen cupboard</name>
+
+        <verbs>gen/gen_furniture</verbs>
+        <action></action>
+        <action_dia>You open the kitchen cupboard, and stacks and stacks of old, forgotten cookery fall out at you. You jump back in suprise, but not fast enough to prevent one of the plates from clipping your knee and shattering. You stand away from the cupboard, admiring the mess on the floor.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given>hurt_knee</tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You look at the mess of broken crockery on the floor, unwilling to approach the area of incident further.</used_dialogue>
+
+        <aliases>kitchen cupboard/cupboard/kitchen counter</aliases>
+
+    </obj>
+    <obj>
+
+        <tag>unknown_jar</tag>
+        <name>Weird jar</name>
+
+        <verbs>gen/pickup/gen_search/pick up/get/take</verbs>
+        <action>
+            give:weird_jar
+        </action>
+        <action_dia>You pick up the jar off the counter, and examine it, it's full of a cloudy green liquid, you can't quite make out the inside of it. You try and open it, but you can't quite manage it. You decide instead to carry it with you.</action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>The kitchen counter is empty.</used_dialogue>
+
+        <aliases>unknown jar/weird jar/kitchen counter jar/the jar/jar/kitchen jar/strange jar/unknown substance jar</aliases>
 
     </obj>
 

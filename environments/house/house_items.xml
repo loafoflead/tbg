@@ -22,4 +22,38 @@
 
     </item>
 
+    <item>
+
+        <tag>toy_gun</tag>
+        <name>Toy gun</name>
+
+        <desc>A toy gun. It's orange and grey, and looks worn from use. You remember how vividly it used to fuel your imagination, seeming almost like a real weapon in your daydreams.</desc>
+
+        <aliases>gun/toy gun/orange gun</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>bath_bomb</tag>
+        <name>Bath bomb</name>
+
+        <desc>A multicoloured bath bomb. You try and pick of the plastic wrapping, but you can't quite get it off.</desc>
+
+        <aliases>bath bomb/bomb/bath</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>weird_jar</tag>
+        <name>Weird jar</name>
+
+        <desc>A weird jar filled with an unknown cloudy green substance. There's a faded label on it, all you can make out from it is: 'bot---d dr--m wate-'.</desc>
+
+        <aliases>jar/weird jar/strange jar/the jar/green liquid jar</aliases>
+
+    </item>
+    
+
 </house_items>

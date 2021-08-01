@@ -417,7 +417,7 @@
         <tag>kitchen</tag>
         <name>Kitchen</name>
 
-        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you, a washing machine, a dishwasher, and a jar on the counter with some kind of unkown fluid in it. North is the door back to the hallway.</desc>
+        <desc>A classic looking kitchen. Most of the furnishing appears to have survived intact, there's a kitchen cupboard above you and a jar on the counter with some kind of unkown fluid in it. North is the door back to the hallway.</desc>
         
         <directions>
             <north>

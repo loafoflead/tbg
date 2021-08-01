@@ -1,5 +1,6 @@
 <dream_house_rooms>
 
+    <!-- DREAM_BEDROOM _/ -->
     <room> 
 
         <id>0</id>
@@ -11,8 +12,8 @@
         
         <directions>
             <north>
-                <leads>dream_hallway</leads>
-                <dia>You open your silent bedroom door and tentatively enter the hallway.</dia>
+                <leads>dream_garden</leads>
+                <dia>You clamber out of your window and crash into the bushes into your garden.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
@@ -32,8 +33,8 @@
                 <lock_tag_req></lock_tag_req>
             </east>
             <south>
-                <leads>dream_garden</leads>
-                <dia>You clamber out the window and crash into a prickly bush in the garden.</dia>
+                <leads>dream_hallway</leads>
+                <dia>You enter the hallway.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
@@ -59,4 +60,405 @@
 
     </room>
 
+    <!-- DREAM HALLWAY _/ -->
+    <room> 
+
+        <id>1</id>
+
+        <tag>dream_hallway</tag>
+        <name>Dream Upstairs hallway</name>
+
+        <desc>A short hallway, the gray wallpaper is peeling in places showing the plaster beneath it. The door to your parents room is west, your siblings room is south, and the stairs are east.</desc>
+        
+        <directions>
+            <north>
+                <leads>dream_bedroom</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>dream_downstairs_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads>dream_sibling_room</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>dream_parents_room</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM SIBLING ROOM _/ -->
+    <room> 
+
+        <id>2</id>
+
+        <tag>sibling_room</tag>
+        <name>Sibling's room</name>
+
+        <desc>A small squat little room, almost identical to yours, only with two small windows instead of one. Your sibling's desk sits opposite their bed, both pieces of furniture are covered by an opaque plastic tarp. The only accessible piece of furniture is the cupboard on your right. North is the door back to the hallway.</desc>
+        
+        <directions>
+            <north>
+                <leads>dream_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal/dream_sibling_cupboard</objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM PARENT ROOM _/ -->
+    <room> 
+
+        <id>2</id>
+
+        <tag>dream_parents_room</tag>
+        <name>Parent's room</name>
+
+        <desc>A large room with a huge four poster bed in the center that takes up most of the available space. The rest of the furniture in the room is covered in plastic tarp. West is the ladder leading to your attic, east the door back to your hallway.</desc>
+        
+        <directions>
+            <north>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>dream_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>dream_attic</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM ATTIC _/ -->
+    <room> 
+
+        <id>3</id>
+
+        <tag>dream_attic</tag>
+        <name>Dream attic</name>
+
+        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with an impassable wall of garbage. There's an open box to your left, and east the stairs back down to your parent's room.</desc>
+        
+        <directions>
+            <north>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>dream_parents_room</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads></leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>dream_attic_box</objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM DOWNSTAIRS HALLWAY _/ -->
+    <room> 
+
+        <id>4</id>
+
+        <tag>dream_downstairs_hallway</tag>
+        <name>Dream downstairs hallway</name>
+
+        <desc>A long, uninteresting hallway. There's a dark wood dresser on the wall next to you, and a mirror above it. North of you is the door to the kitchen, west the bathroom, south the door into your garage, and east the front door. The floor is covered in a centimetre tall layer of dark water. It sloshes around every time you take a step.</desc>
+        
+        <directions>
+            <north>
+                <leads>dream_kitchen</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>dream_front_garden</leads>
+                <dia></dia>
+                <lock>1</lock>
+                <lock_dia>The front door is locked.</lock_dia>
+                <unlock_dia>You unlock the door with the house key.</unlock_dia>
+                <lock_reqs>dream_house_key</lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <south>
+                <leads>dream_garage</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+            <west>
+                <leads>dream_bathroom</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+        </directions>
+
+        <objs>dream_mirror/dream_dresser</objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM GARAGE _/ -->
+    <room> 
+
+        <id>5</id>
+
+        <tag>dream_garage</tag>
+        <name>Dream garage</name>
+
+        <desc>A dark grimy room full of rubbish and old furniture. There's a switch to your left, you remember it's used to open and shut the garage door. It looks broken. The only readily available piece of furniture is a cluttered row of shelves. East is the garage door, North is the door back into the hall.</desc>
+        
+        <directions>
+            <north>
+                <leads>downstair_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+            <east>
+                <leads>#####</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    if:(tag=open_dream_garage):
+                        (print:You leave your house and enter the front garden.+go:front_garden)
+                    ?
+                        (print:The garage is locked.)
+                </action>
+            </east>
+        </directions>
+
+        <objs>dream_light_switch_garage/dream_garage_shelves</objs>
+        <items></items>
+
+    </room>
+
+    <!-- KITCHEN X -->
+    <room> 
+
+        <id>6</id>
+
+        <tag>dream_kitchen</tag>
+        <name>Dream kitchen</name>
+
+        <desc>A classic looking kitchen. Most of the furnishing is in disrepair, or covered in plastic tarp. There's a kitchen cupboard above you and a jar on the counter. South is the door back to the hallway.</desc>
+        
+        <directions>
+            <south>
+                <leads>hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </south>
+        </directions>
+
+        <objs>dream_kitchen_cupboard/dream_unknown_jar.</objs>
+        <items></items>
+
+    </room>
+
+    <!-- BATHROOM _/ -->
+    <room> 
+
+        <id>7</id>
+
+        <tag>dream_bathroom</tag>
+        <name>Dream bathroom</name>
+
+        <desc>A small room. The floor and walls are covered in grey-white tiles, the ceiling is plaster, with a single bulb sticking out of it. The bulb is shattered. There's a sink ahead of you with a mirror above it, and a bath to your left. East is the door back to the hallway.</desc>
+        
+        <directions>
+            <east>
+                <leads>hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+        </directions>
+
+        <objs>dream_bath/dream_sink/dream_mirror</objs>
+        <items></items>
+
+    </room>
+
+
 </dream_house_rooms>
+
