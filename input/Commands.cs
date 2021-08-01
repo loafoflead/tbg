@@ -896,6 +896,15 @@ public class Commands {
                         gm.box.PrintD(h);
                     break;
 
+                    case "values":
+                    case "vals":
+                        string b = "";
+                        foreach(Player.player_value ta in gm.player.player_Values) {
+                            b += " {Magenta}name: {Grey}" + ta.name + "{Magenta}, value: {Grey}" + ta.value + " {Black,White}#";
+                        }
+                        gm.box.Print(b);
+                    break;
+
                     case "objs":
                         if (arguments[2] != null) {
                             if (arguments[2] == "all" || arguments[2] == "a") {

@@ -509,6 +509,28 @@ public class GManager {
                 }
             break;
 
+            case "add_val":
+            case "add_value":
+            case "value":
+            case "new_val":
+            case "newval":
+            case "give_value":
+            case "give_val":
+                player.add_value(result.Split(';')[0], result.Split(';')[1]);
+            break;
+
+            case "remove_value":
+                player.remove_value_by_tag(result.Replace(" ", ""));
+            break;
+
+            case "change_value":
+            case "change_val":
+            case "edit_val":
+            case "editvalue":
+                Player.player_value temp_val = player.get_value(result.Split(';')[0]);
+                temp_val.value = result.Split(';')[1].Replace(" ", "");
+            break;
+
             case "addtag":
             case "givetag":
             case "gt":
@@ -694,6 +716,28 @@ public class GManager {
                         }
                         else {
                             checkDo(if_false);
+                        }
+                    break;
+
+                    case "value":
+                    case "val":
+                    case "value_is":
+                        if (player.get_value(condition.Split(';')[0]).value == condition.Split(';')[1]) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "value_isnt":
+                    case "!value":
+                    case "!val":
+                        if (player.get_value(condition.Split(';')[0]).value == condition.Split(';')[1]) {
+                            checkDo(if_false);
+                        }
+                        else {
+                            checkDo(if_true);
                         }
                     break;
 
