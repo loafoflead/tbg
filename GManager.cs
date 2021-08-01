@@ -516,7 +516,7 @@ public class GManager {
             case "newval":
             case "give_value":
             case "give_val":
-                player.add_value(result.Split(';')[0], result.Split(';')[1]);
+                player.add_value(result.Split(';')[0], result.Split(';')[1].Replace(" ", ""));
             break;
 
             case "remove_value":
