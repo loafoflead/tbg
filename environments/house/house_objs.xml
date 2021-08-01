@@ -290,7 +290,8 @@
 
         <verbs>gen/gen_furniture</verbs>
         <action>
-            give:toy_gun
+            give:toy_gun+
+            add_value:nerf_gun_bullets;3
         </action>
         <action_dia>You search through the shelves, finding a tiny toy gun that fires little foam bullets. You pocket the little gun, and three foam bullets.</action_dia>
 
@@ -299,7 +300,7 @@
         <tag_req></tag_req>
         <tag_dia></tag_dia>
 
-        <tag_given>three_bullets</tag_given>
+        <tag_given></tag_given>
         
         <one_time_use>1</one_time_use>
         <used_dialogue>You search through the shelves again, finding nothing of interest.</used_dialogue>
