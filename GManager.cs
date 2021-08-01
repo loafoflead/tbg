@@ -363,6 +363,7 @@ public class GManager {
         Do(full_act.Split(':',2)[0], full_act.Split(':',2)[1]);
     }
 
+    List<string> buffer_copy = new List<string>();
 
     public void Do(string action, string result) {
 
@@ -461,6 +462,18 @@ public class GManager {
             case "flsh":
             case "fl":
                 box.flush();
+            break;
+
+            case "cpy":
+            case "copy":
+            case "copy_buffer":
+                buffer_copy = box.copy_buffer();
+            break;
+
+            case "pst":
+            case "paste":
+            case "paste_buffer":
+                box.replace_buffer(buffer_copy);
             break;
 
             case "bio":

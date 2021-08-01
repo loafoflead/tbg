@@ -417,6 +417,7 @@ public class Commands {
         
     }
 
+    private System.Collections.Generic.List<string> buffer_copy;
 
     public void admin_commands() {
 
@@ -513,6 +514,18 @@ public class Commands {
                     return;
 
                 } 
+
+            case "c":
+            case "cpy":
+            case "copy":
+                buffer_copy = gm.box.copy_buffer();
+            break;
+
+            case "p":
+            case "pst":
+            case "paste":
+                gm.box.replace_buffer(buffer_copy);
+            break;
 
             case "disp":
             case "display":
@@ -718,7 +731,7 @@ public class Commands {
             break;
 
             case "do":
-                if (arguments.Length < 2) {
+                if (arguments.Length < 3) {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}/do [command tag] [result tag]{end}'");
                     return;
                 }
