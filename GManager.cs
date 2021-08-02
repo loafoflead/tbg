@@ -394,6 +394,54 @@ public class GManager {
 
         resume:
 
+        //box.Print("action: " + action + ", result: \n" + result.Replace(":", "{White}:{DarkYellow}").Replace("(", "{White}({Cyan}").Replace(")", "{White})").Replace(" ", "").Replace("+", "{Red}+\n{White}").Replace("?", "{Blue}\n?\n{White}").Replace("if:", "{Red}if{White}:\n"));
+        box.clr_buffer();
+        box.clr();
+        box.flush();
+        box.Print("action: " + action);
+        string print = "";
+        char previous_character = ' ';
+        foreach(char ch in result) {
+            switch(ch) {
+                case '?':
+                    print += "\n{Blue}?\n";
+                    continue;
+
+                case ':':
+                    print += "{White}:{DarkYellow}";
+                    continue;
+
+                case '+':
+                    print += "{Red}+\n{White}";
+                    continue;
+                
+                case '(':
+                    print += "{White}({Cyan}";
+                    continue;
+
+                case ')':
+                    print += "{White})";
+                    continue;
+
+                case ' ':
+                    if (previous_character == ' ') {
+                        continue;
+                    }
+                    else {
+                        print += ch.ToString();
+                    }
+                break;
+
+                default:
+                    print += ch.ToString();
+                break;
+            }
+            previous_character = ch;
+        }
+        box.Print(print);
+        box.flush();
+        box.k.waitAnyKey();
+
         switch (action.Replace(" ", "")) {
             case "give":
                 

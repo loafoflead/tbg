@@ -323,14 +323,34 @@
             </north>
 
             <east>
-                <leads>dream_front_garden</leads>
+                <leads>#logic#</leads>
                 <dia></dia>
-                <lock>1</lock>
-                <lock_dia>The front door is locked.</lock_dia>
-                <unlock_dia>You unlock the door with the house key.</unlock_dia>
-                <lock_reqs>dream_house_key</lock_reqs>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <action></action>
+                <action>
+                    if:(inv=dream_house_key): 
+                        (
+                            print:The front door is locked.+
+                            wait:1+
+                            print:Do you want to unlock it with-+
+                            flush:screen+
+                            print:In a flash, a dark figure snatches the key out of your hands, and runs away into the hallway.+
+                            take:dream_house_key+
+                            if:(tags=saw_beast): 
+                                (print:After recovering from your shock, you remember the thing you saw in your sibling's cupboard earlier.)
+                            ?
+                                (print:You wonder what that thing could be.)
+                            +
+                            print:You have to catch that thing.
+                        )
+                    ?
+                        (
+                            print:The front door is locked.
+                        )
+                </action>
             </east>
             <south>
                 <leads>dream_garage</leads>
@@ -372,7 +392,7 @@
         
         <directions>
             <north>
-                <leads>downstair_hallway</leads>
+                <leads>dream_downstairs_hallway</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
@@ -415,7 +435,7 @@
         
         <directions>
             <south>
-                <leads>hallway</leads>
+                <leads>dream_downstairs_hallway</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
@@ -443,7 +463,7 @@
         
         <directions>
             <east>
-                <leads>hallway</leads>
+                <leads>dream_downstairs_hallway</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
