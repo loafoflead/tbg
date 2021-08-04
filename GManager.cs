@@ -356,46 +356,81 @@ public class GManager {
     }
 
     public void Do(string full_act) {
-        if (!full_act.Contains(':')) {
-            box.Print("Internal error, incomplete command requested; ERR_013");
+        if (!full_act.Contains('(') || !full_act.Contains(')') || !full_act.Contains(';')) {
+            box.Print("Internal error, incomplete command requested; " + full_act + ", ERR_013");
             return;
         }
-        Do(full_act.Split(':',2)[0], full_act.Split(':',2)[1]);
+        Do(full_act.Split('(',2)[0].Replace(" ", ""), '(' + full_act.Split('(',2)[1]);
     }
 
     List<string> buffer_copy = new List<string>();
 
-    public void Do(string action, string result) {
+    public int count_char(string str, char character) {
+        int to_return = 0;
+        foreach(char j in str) {
+            if (j == character) {
+                to_return ++;
+            }
+        }
+        return to_return;
+    }
+
+    public void Do(string action, string resultt) {
+
+        string result = resultt;
+        string to_run_at_end = "";
+        int num_of_lines = 0;
+        box.PrintD(result + "," + action);
+
+        if (action.Replace(" ", "") != "if") {
+            num_of_lines = count_char(resultt, ';');
+
+            if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
+            else to_run_at_end = null;
+
+            if (to_run_at_end.Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
+                                                //                                  ^ this is where it gets cut
+                
+
+            }
+
+            box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end.Replace(" ", ""));
+
+            result = resultt.Split(';',2)[0];
+
+            result = result.Replace("(", "").Replace(")", "");
+        }
+
+
+
+        /*
+            SYNTAX:
+
+                <action>print(Hi!);</action>
+
+                <action>
+                    if(tag=hurt_knee):
+                        (
+                            print(bye);
+                            give(money);
+                        )
+                    ?
+                        (
+                            print(no money!!);
+                        )
+                </action>
+
+        */
 
         if (fm.null_or_empt(result)) {
             box.Print("Internal error, incomplete command requested; ERR_013");
             return;
         }
 
-        if (result.Contains("+") ) {
-
-            string[] a = result.Split("+",2); //the input will be: e.g. 'go' <- action, 'print:hi+if:(inv=headband):(say:bye+give:knife)?(say:hi)'
-                                            //next stage: 'if' <- action, '(inv=headband):(say:bye+give:knife)?(say:hi)'
-                                            //then: if_true -> say:bye+give:knife
-                                            //then: if_true -> say:hi
-
-
-            if (a[0].Contains("(") || a[0].Contains(")")) {
-                goto resume;
-            }
-
-            Do(action, a[0]);
-
-            Do(a[1].Split(":",2)[0], a[1].Split(":",2)[1]);
-            
-            return;
-
-        }
-
-        resume:
+   
 
         //box.Print("action: " + action + ", result: \n" + result.Replace(":", "{White}:{DarkYellow}").Replace("(", "{White}({Cyan}").Replace(")", "{White})").Replace(" ", "").Replace("+", "{Red}+\n{White}").Replace("?", "{Blue}\n?\n{White}").Replace("if:", "{Red}if{White}:\n"));
-        box.clr_buffer();
+        /*box.clr_buffer();
         box.clr();
         box.flush();
         box.Print("action: " + action);
@@ -441,6 +476,7 @@ public class GManager {
         box.Print(print);
         box.flush();
         box.k.waitAnyKey();
+        */
 
         switch (action.Replace(" ", "")) {
             case "give":
@@ -711,17 +747,19 @@ public class GManager {
                 string new_res = result;
 
                 string compare_tag = new_res.Split('=')[0].Split('(',2)[1]; //the tag containing what to compare to, inv, name, etc..
+                box.PrintD("Compare tag: {Yellow}" + compare_tag);
 
                 string condition = new_res.Split("=")[1].Split(")",2)[0].Replace(" ", ""); // the string that denotes the condition to be met by the compare tag
-
+                box.PrintD("Condition: {Yellow}" + condition);
 
                 string without_if_and_condition = new_res.Split(':',2)[1]; //just the results of the action
-                
+                box.PrintD("command without condition: {Yellow}" + without_if_and_condition);
                 
                 string if_true =  without_if_and_condition.Split('(',2)[1];
-               
 
-                for(int i = 0; i < if_true.Length; i ++) {
+                int i = 0;
+
+                for(i = 0; i < if_true.Length; i ++) {
                     if (if_true[i] == '(') {
                         while (if_true[i] != ')') {
                             i ++;
@@ -732,14 +770,17 @@ public class GManager {
                         if_true = split_at(if_true, i)[0];
                     }
                 }
+
+                box.PrintD("execute if true: {Yellow}" + if_true);
                 
 
-                string minue_true = split_at(without_if_and_condition,if_true.Length + 2)[1];
-                
+                string minue_true = without_if_and_condition.Replace("(" + if_true + ")", "");
+                minue_true = minue_true.Split('?',2)[1];
+                box.PrintD("command without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());
 
                 string if_false = minue_true.Split('(',2)[1];
 
-                for(int i = 0; i < if_false.Length; i ++) {
+                for(i = 0; i < if_false.Length; i ++) {
                     if (if_false[i] == '(') {
                         while (if_false[i] != ')') {
                             i ++;
@@ -751,7 +792,7 @@ public class GManager {
                     }
                 }
                 
-
+                box.PrintD("execute if false: {Yellow}" + if_false);
 
                 switch(compare_tag.Replace(" ", "")) {
 
@@ -883,7 +924,7 @@ public class GManager {
 
                 }
             } catch {
-                box.Print("Internal error in xml level folder using interactable, command was: " + action + ":" + result);
+                box.Print("Internal error in xml level folder using interactable, command was: {Blue}" + action + "{White}:{Red}" + result);
             }
 
             break;
@@ -904,6 +945,7 @@ public class GManager {
                 box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
             break;
         }
+        if (num_of_lines > 1) Do(to_run_at_end);
     }
 
     void check_tag(string t) {

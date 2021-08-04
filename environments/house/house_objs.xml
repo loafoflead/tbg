@@ -366,7 +366,20 @@
         <name>Magic Portal</name>
 
         <verbs>use/examine/approach/enter/punch</verbs>
-        <action>say:hi #name#, you stinky lol</action>
+        <action>
+            if(name=pee):
+                (
+                    print(hi);
+                    say(hello!);
+                    if(tag=peepee): 
+                        (say(poopoo);)?(say(AAA);)
+                )
+                ?
+                (
+                    print(bye);
+                    give(house_key);
+                )
+        </action>
         <action_dia>you move through the magic portal</action_dia>
 
         <item_req>magic_wand</item_req>

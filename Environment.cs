@@ -605,7 +605,7 @@ public class Environment {
     void effect_obj(Interactable obk) {
         gm.box.Print(obk.action_dia);
         //if(!gm.fm.null_or_empt(obk.tag_given)) gm.player.add_tag(obk.tag_given);
-        gm.Do(obk.action_prefix, obk.action_result);
+        gm.Do(obk.full_action);
     }
 
 
