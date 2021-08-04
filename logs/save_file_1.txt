@@ -1,0 +1,7 @@
+beni
+{Magenta}CRAZYYY BOI
+house
+environments\env01\env01:staff_key
+
+true
+bedroom

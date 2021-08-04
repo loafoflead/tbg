@@ -1,0 +1,7 @@
+Martin
+pipi
+dream_house
+environments\house\house:house_key
+red_hat_equipped/pipipoupou/
+true
+dream_bedroom
