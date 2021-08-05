@@ -127,11 +127,14 @@ public class GManager {
 
         string to_add = "";
 
+        short pl = 0;
+
         foreach(player_value pv in player.player_Values) {
-            to_add += '/';
+            if (pl != 0) to_add += '/';
             to_add += pv.name;
             to_add += ':';
             to_add += pv.value;
+            pl = 1;
         }
 
         fm.write_at(to_add, 8, log_file);

@@ -751,6 +751,7 @@ public class Commands {
             break;
 
             case "value":
+            case "values":
             case "val":
                 if (arguments.Length < 2) {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}/value [add/remove/edit/list] [value name] [value]{end}'");
@@ -758,38 +759,50 @@ public class Commands {
                 }
                 switch(arguments[1]) {
                     case "add":
+                    case "a":
                         if (arguments.Length < 4) {
                             gm.box.Print("Incorrect syntax, usage is '{Cyan}/value add [value name] [value]{end}'");
                             return;
                         }
                         gm.player.add_value(arguments[2], arguments[3]);
+                        gm.box.PrintD("Value added: " + arguments[2]);
                     break;
 
                     case "remove":
+                    case "rm":
+                    case "delete":
                         if (arguments.Length < 3) {
                             gm.box.Print("Incorrect syntax, usage is '{Cyan}/value remove [value name]{end}'");
                             return;
                         }
                         gm.player.remove_value_by_tag(arguments[2]);
+                        gm.box.PrintD("Value removed: " + arguments[2]);
+                    break;
+
+                    case "reset":
+                        gm.player.player_Values = new System.Collections.Generic.List<player_value>();
+                        gm.box.PrintD("Values reset!");
                     break;
 
                     case "edit":
+                    case "edt":
                         if (arguments.Length < 4) {
                             gm.box.Print("Incorrect syntax, usage is '{Cyan}/value edit [value name] [new value]{end}'");
                             return;
                         }
                         player_value tem_val = gm.player.get_value(arguments[2]);
                         tem_val.value = arguments[3];
+                        if (tem_val != null) gm.box.PrintD("Value " + arguments[2] + ", now contains: " + arguments[3]);
+                        else gm.box.PrintD("Value not found!");
                     break;
 
                     case "list":
-                        foreach(player_value pv in gm.player.player_Values) {
-                            string b = "";
-                            foreach(player_value ta in gm.player.player_Values) {
-                                b += " {Magenta}name: {Grey}" + ta.name + "{Magenta}, value: {Grey}" + ta.value + " {Black,White}#";
-                            }
-                            gm.box.Print(b);
+                    case "ls":
+                        string b = "";
+                        foreach(player_value ta in gm.player.player_Values) {
+                            b += " {Magenta}name: {Grey}" + ta.name + "{Magenta}, value: {Grey}" + ta.value + " {Black,White}#";
                         }
+                        gm.box.Print(b);
                     break;
 
                     default:
