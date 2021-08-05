@@ -404,24 +404,6 @@ public class GManager {
         return to_return;
     }
 
-    public int loc_of_closing_bracket(string to_locate, char bracket = '[', char close_bracket = ']', int index = 0) {
-        int loc_of_clos = 0;
-        for(loc_of_clos = index; loc_of_clos < to_locate.Length; loc_of_clos ++) {
-
-            if (to_locate[loc_of_clos] == bracket) {
-                box.PrintF(to_locate + ", current char: " + to_locate[loc_of_clos] + ", current index: " + loc_of_clos.ToString());
-                box.k.waitAnyKey();
-                loc_of_clos += loc_of_closing_bracket(to_locate, bracket, close_bracket, loc_of_clos);
-            }
-
-            if (to_locate[loc_of_clos] == close_bracket) {
-                break;
-            }
-
-        }
-        return loc_of_clos;
-    }
-
     string rest_maybe = "";
 
     public void Do(string action, string resultt) {
