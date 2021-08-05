@@ -384,6 +384,12 @@ public class GManager {
             return;
         }
         Do(full_act.Split('(',2)[0].Replace(" ", ""), '(' + full_act.Split('(',2)[1]);
+        
+        if (rest_maybe != "" || !fm.is_spaces(rest_maybe)) {
+            Do(rest_maybe.Split('(',2)[0].Replace(" ", ""), '(' + rest_maybe.Split('(',2)[1]);
+            rest_maybe = "";
+        }
+        
     }
 
     List<string> buffer_copy = new List<string>();
@@ -416,7 +422,11 @@ public class GManager {
         return loc_of_clos;
     }
 
+    string rest_maybe = "";
+
     public void Do(string action, string resultt) {
+
+        
 
         string result = resultt;
         string to_run_at_end = "";
@@ -835,12 +845,17 @@ public class GManager {
                     }
 
                     if (if_false[i] == ']') {
+                        if (!fm.is_spaces(split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", ""))) rest_maybe = split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", "");
                         if_false = split_at(if_false, i)[0];
                     }
 
                 }
                 
                 box.PrintD("execute if false: {Yellow}" + if_false);
+
+                if (rest_maybe != "" || fm.is_spaces(rest_maybe)) {
+                    box.PrintD("rest of command: {Yellow}" + rest_maybe);
+                }
 
                 switch(compare_tag.Replace(" ", "")) {
 
@@ -993,7 +1008,10 @@ public class GManager {
                 box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
             break;
         }
+
         if (num_of_lines > 1) Do(to_run_at_end);
+
+        
     }
 
     void check_tag(string t) {

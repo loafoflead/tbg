@@ -379,6 +379,7 @@
                     print(bye);
                     give(house_key);
                 ]
+            print(telekeneses);
         </action>
         <action_dia>you move through the magic portal</action_dia>
 

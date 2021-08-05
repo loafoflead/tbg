@@ -168,6 +168,13 @@ public class FileManager {
         }
         return false;
     }
+
+    public bool is_spaces(string str) {
+        if (str.Replace(" ", "") == "" || str.Replace(" ", "") == null) {
+            return true;
+        }
+        return false;
+    }
     
 
 
