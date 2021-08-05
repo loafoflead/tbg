@@ -113,8 +113,10 @@ public class Environment {
     public List<Item> load_items_from_env(string filename) {
         string temp_current_env = current_env_name;
         load_env_items(filename);
-        System.Console.WriteLine("loaded new, old: " + temp_current_env);
-        System.Console.ReadKey();
+        if (gm.box.debug_print == true) {
+            System.Console.WriteLine("loaded new, old: " + temp_current_env);
+            System.Console.ReadKey();
+        } 
         List<Item> items_to_return = all_items;
         load_env_items("environments\\" + temp_current_env + "\\" + temp_current_env);
         return items_to_return;

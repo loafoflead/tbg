@@ -65,6 +65,11 @@ public class Box {
         public int line;
     }
 
+    public void PrintF(string to_print) {
+        Print(to_print);
+        flush();
+    }
+
     public void Print(string to_print, format_options fo = format_options.left) {
         height = Console.WindowHeight;
         width = Console.WindowWidth;

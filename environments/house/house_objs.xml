@@ -368,17 +368,17 @@
         <verbs>use/examine/approach/enter/punch</verbs>
         <action>
             if(name=pee):
-                (
+                [
                     print(hi);
                     say(hello!);
                     if(tag=peepee): 
-                        (say(poopoo);)?(say(AAA);)
-                )
+                        [say(poopoo);]?[say(AAA);]
+                ]
                 ?
-                (
+                [
                     print(bye);
                     give(house_key);
-                )
+                ]
         </action>
         <action_dia>you move through the magic portal</action_dia>
 

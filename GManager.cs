@@ -375,6 +375,24 @@ public class GManager {
         return to_return;
     }
 
+    public int loc_of_closing_bracket(string to_locate, char bracket = '[', char close_bracket = ']', int index = 0) {
+        int loc_of_clos = 0;
+        for(loc_of_clos = index; loc_of_clos < to_locate.Length; loc_of_clos ++) {
+
+            if (to_locate[loc_of_clos] == bracket) {
+                box.PrintF(to_locate + ", current char: " + to_locate[loc_of_clos] + ", current index: " + loc_of_clos.ToString());
+                box.k.waitAnyKey();
+                loc_of_clos += loc_of_closing_bracket(to_locate, bracket, close_bracket, loc_of_clos);
+            }
+
+            if (to_locate[loc_of_clos] == close_bracket) {
+                break;
+            }
+
+        }
+        return loc_of_clos;
+    }
+
     public void Do(string action, string resultt) {
 
         string result = resultt;
@@ -388,20 +406,20 @@ public class GManager {
             if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
             else to_run_at_end = null;
 
-            if (to_run_at_end.Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
-                                                //                                  ^ this is where it gets cut
-                
+            if (resultt.Split(';',2)[0].Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
+                                                //                                           ^ this is where it gets cut
+                goto resume;
 
             }
 
-            box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end.Replace(" ", ""));
+            box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end);
 
             result = resultt.Split(';',2)[0];
 
             result = result.Replace("(", "").Replace(")", "");
         }
 
-
+        resume:
 
         /*
             SYNTAX:
@@ -755,41 +773,47 @@ public class GManager {
                 string without_if_and_condition = new_res.Split(':',2)[1]; //just the results of the action
                 box.PrintD("command without condition: {Yellow}" + without_if_and_condition);
                 
-                string if_true =  without_if_and_condition.Split('(',2)[1];
+                string if_true =  without_if_and_condition.Split('[',2)[1];
 
                 int i = 0;
 
                 for(i = 0; i < if_true.Length; i ++) {
-                    if (if_true[i] == '(') {
-                        while (if_true[i] != ')') {
+
+                    if (if_true[i] == '[') {
+                        while(if_true[i] != ']') {
                             i ++;
                         }
                         i ++;
                     }
-                    if (if_true[i] == ')') {
+
+                    if (if_true[i] == ']') {
                         if_true = split_at(if_true, i)[0];
                     }
+
                 }
 
                 box.PrintD("execute if true: {Yellow}" + if_true);
                 
 
-                string minue_true = without_if_and_condition.Replace("(" + if_true + ")", "");
+                string minue_true = without_if_and_condition.Replace("[" + if_true + "]", "");
                 minue_true = minue_true.Split('?',2)[1];
                 box.PrintD("command without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());
 
-                string if_false = minue_true.Split('(',2)[1];
+                string if_false = minue_true.Split('[',2)[1];
 
                 for(i = 0; i < if_false.Length; i ++) {
-                    if (if_false[i] == '(') {
-                        while (if_false[i] != ')') {
+
+                    if (if_false[i] == '[') {
+                        while(if_false[i] != ']') {
                             i ++;
                         }
                         i ++;
                     }
-                    if (if_false[i] == ')') {
+
+                    if (if_false[i] == ']') {
                         if_false = split_at(if_false, i)[0];
                     }
+
                 }
                 
                 box.PrintD("execute if false: {Yellow}" + if_false);
