@@ -125,6 +125,17 @@ public class GManager {
 
         fm.write_at(env.current_room.tag, 7, log_file);
 
+        string to_add = "";
+
+        foreach(player_value pv in player.player_Values) {
+            to_add += '/';
+            to_add += pv.name;
+            to_add += ':';
+            to_add += pv.value;
+        }
+
+        fm.write_at(to_add, 8, log_file);
+
         box.Print("{Magenta}Game saved!");
 
     }
@@ -348,6 +359,15 @@ public class GManager {
 
         player.is_operator = get_bool(save_file[5]);
         env.current_room = env.rooms.Find(room_short => room_short.tag == save_file[6]);
+
+        if (save_file[7].Contains('/')) {
+            foreach(string vals in save_file[7].Split('/')) {
+                player.add_value(vals.Split(':')[0], vals.Split(':')[1]);
+            }
+        } 
+        else {
+            player.add_value(save_file[7].Split(':')[0], save_file[7].Split(':')[1]);
+        }
 
         log_file = "logs\\" + filename;
 
@@ -613,12 +633,13 @@ public class GManager {
 
             case "add_val":
             case "add_value":
+            case "addvalue":
             case "value":
             case "new_val":
             case "newval":
             case "give_value":
             case "give_val":
-                player.add_value(result.Split(';')[0], result.Split(';')[1].Replace(" ", ""));
+                player.add_value(result.Split(':')[0], result.Split(':')[1].Replace(" ", ""));
             break;
 
             case "remove_value":
@@ -629,8 +650,8 @@ public class GManager {
             case "change_val":
             case "edit_val":
             case "editvalue":
-                Player.player_value temp_val = player.get_value(result.Split(';')[0]);
-                temp_val.value = result.Split(';')[1].Replace(" ", "");
+                player_value temp_val = player.get_value(result.Split(';')[0]);
+                temp_val.value = result.Split(':')[1].Replace(" ", "");
             break;
 
             case "addtag":
@@ -835,7 +856,7 @@ public class GManager {
                     case "value":
                     case "val":
                     case "value_is":
-                        if (player.get_value(condition.Split(';')[0]).value == condition.Split(';')[1]) {
+                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
                             checkDo(if_true);
                         }
                         else {
@@ -846,7 +867,7 @@ public class GManager {
                     case "value_isnt":
                     case "!value":
                     case "!val":
-                        if (player.get_value(condition.Split(';')[0]).value == condition.Split(';')[1]) {
+                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
                             checkDo(if_false);
                         }
                         else {

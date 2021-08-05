@@ -731,11 +731,11 @@ public class Commands {
             break;
 
             case "do":
-                if (arguments.Length < 3) {
-                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/do [command tag] [result tag]{end}'");
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/do [command tag]{end}'");
                     return;
                 }
-                gm.Do(arguments[1], arguments[2]);
+                gm.Do(arguments[1]);
                 break;
 
             case "env":
@@ -748,6 +748,56 @@ public class Commands {
                 } catch {
                     gm.box.Print("Error: either the environment file you asked for doesn't exist, or is missing key files in order to be loaded.");
                 }
+            break;
+
+            case "value":
+            case "val":
+                if (arguments.Length < 2) {
+                    gm.box.Print("Incorrect syntax, usage is '{Cyan}/value [add/remove/edit/list] [value name] [value]{end}'");
+                    return;
+                }
+                switch(arguments[1]) {
+                    case "add":
+                        if (arguments.Length < 4) {
+                            gm.box.Print("Incorrect syntax, usage is '{Cyan}/value add [value name] [value]{end}'");
+                            return;
+                        }
+                        gm.player.add_value(arguments[2], arguments[3]);
+                    break;
+
+                    case "remove":
+                        if (arguments.Length < 3) {
+                            gm.box.Print("Incorrect syntax, usage is '{Cyan}/value remove [value name]{end}'");
+                            return;
+                        }
+                        gm.player.remove_value_by_tag(arguments[2]);
+                    break;
+
+                    case "edit":
+                        if (arguments.Length < 4) {
+                            gm.box.Print("Incorrect syntax, usage is '{Cyan}/value edit [value name] [new value]{end}'");
+                            return;
+                        }
+                        player_value tem_val = gm.player.get_value(arguments[2]);
+                        tem_val.value = arguments[3];
+                    break;
+
+                    case "list":
+                        foreach(player_value pv in gm.player.player_Values) {
+                            string b = "";
+                            foreach(player_value ta in gm.player.player_Values) {
+                                b += " {Magenta}name: {Grey}" + ta.name + "{Magenta}, value: {Grey}" + ta.value + " {Black,White}#";
+                            }
+                            gm.box.Print(b);
+                        }
+                    break;
+
+                    default:
+                        gm.box.Print("Incorrect syntax, usage is '{Cyan}/value [add/remove/edit/list] [value name] [value]{end}'");
+                    break;
+
+                }
+
             break;
 
             case "tag":
@@ -899,7 +949,7 @@ public class Commands {
                     case "values":
                     case "vals":
                         string b = "";
-                        foreach(Player.player_value ta in gm.player.player_Values) {
+                        foreach(player_value ta in gm.player.player_Values) {
                             b += " {Magenta}name: {Grey}" + ta.name + "{Magenta}, value: {Grey}" + ta.value + " {Black,White}#";
                         }
                         gm.box.Print(b);

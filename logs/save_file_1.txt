@@ -1,7 +1,8 @@
-beni
+pee
 {Magenta}CRAZYYY BOI
 house
-environments\env01\env01:staff_key
-
+environments\env01\env01:staff_key/environments\house\house:house_key/environments\house\house:house_key
+peepee/
 true
 bedroom
+/poop:1/pee:2/poop:pee

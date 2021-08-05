@@ -11,10 +11,7 @@ public class Player {
     public string bio ="bio_empty";
     public int fun = 0;
 
-    public struct player_value {
-        public string value;
-        public string name;
-    }
+    
 
 
     public List<string> player_tags; //hard limit on player tags for safety haha jk not
@@ -33,6 +30,13 @@ public class Player {
 
 
     public void add_value(string new_name, string new_value) {
+        if (player_Values.Find(player_value => player_value.name == new_name) != null) {
+            player_Values.Add(new player_value {
+                value = new_value,
+                name = new_name + gM.fm.getRan(1, 11),
+            });
+            return;
+        }
         player_Values.Add(new player_value {
             value = new_value,
             name= new_name,
@@ -73,4 +77,9 @@ public class Player {
         }
     }
 
+}
+
+public class player_value {
+        public string value;
+        public string name;
 }
