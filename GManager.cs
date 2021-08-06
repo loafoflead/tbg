@@ -877,6 +877,45 @@ public class GManager {
                         }
                     break;
 
+                    case "rand5050":
+                    case "5050":
+                    case "1|2":
+                    case "rand_5050":
+                    case "random5050":
+                    case "random_5050":
+                    case "random_one_in_two":
+                        if (fm.getRan(1,101) < 50) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "rand2080":
+                    case "1|4":
+                    case "rand14":
+                    case "random_one_in_four":
+                        if (fm.getRan(1,101) < 50) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "rand100":
+                    case "random100":
+                    case "rand":
+                    case "100":
+                        if (fm.getRan(1,101) < int.Parse(condition)) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
                     case "value":
                     case "val":
                     case "value_is":
@@ -990,6 +1029,18 @@ public class GManager {
                         box.nl();
                         box.print_screen();
                         if(System.Console.ReadLine() == condition) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "YN":
+                    case "yes_or_no":
+                    case "yes_no":
+                    case "yn":
+                        if(cm.YN(condition) == true) {
                             checkDo(if_true);
                         }
                         else {

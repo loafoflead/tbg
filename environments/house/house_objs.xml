@@ -365,6 +365,40 @@
 
     </obj>
 
+    <!-- BACK GARDEN  -->
+    <obj>
+
+        <tag>birdbath</tag>
+        <name>Bird bath</name>
+
+        <verbs>gen_search/gen/gen_furniture</verbs>
+        <action>
+            print(You approach the birdbath, it's made of rough marble and covered in moss. It's empty of any water, and there's a creamy-white letter in the center of it. You pick it up.);
+            if(YN=Will you open the letter?) [
+                givetag(opened_letter);
+                print(You open the letter, inside is a blank letter.);
+                give(blank_letter);
+            ]   ?   [
+                print(You leave the letter shut and pocket it.);
+                give(creamy_letter);
+            ]
+        </action>
+        <action_dia></action_dia>
+
+        <item_req></item_req>
+        <item_dia></item_dia>
+        <tag_req></tag_req>
+        <tag_dia></tag_dia>
+
+        <tag_given></tag_given>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You walk back up to the birdbath and examine it again, but find nothing more of interest.</used_dialogue>
+
+        <aliases>birdbath/bird bath/the bird bath/garden bird bath</aliases>
+
+    </obj>
+
     <!--  **MAGIC_PORTAL**  -->
     <obj>
 

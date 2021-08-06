@@ -347,7 +347,7 @@
                                 [
                                     print(You wonder what that thing could be.);
                                 ]
-                            print(You have to catch that thing.);
+                            print(You know you're going to have to catch that monster.);
                         ]
                     ?
                         [
