@@ -786,7 +786,7 @@ public class GManager {
                 string condition = new_res.Split("=")[1].Split(")",2)[0].Replace(" ", ""); // the string that denotes the condition to be met by the compare tag
                 box.PrintD("Condition: {Yellow}" + condition);
 
-                string without_if_and_condition = new_res.Split(':',2)[1]; //just the results of the action
+                string without_if_and_condition = new_res.Split(')',2)[1]; //just the results of the action
                 box.PrintD("command without condition: {Yellow}" + without_if_and_condition);
                 
                 string if_true =  without_if_and_condition.Split('[',2)[1];

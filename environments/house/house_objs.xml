@@ -8,7 +8,8 @@
 
         <verbs>gen/use</verbs>
         <action>
-            print:You rummage through your desk, and find your house key.+give:house_key
+            print(You rummage through your desk, and find your house key.);
+            give(house_key);
         </action>
         <action_dia></action_dia>
 
@@ -32,14 +33,15 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            if:(tag=grey_hat_equipped): 
-                (
-                    print:You open the creaky door of your cupboard, and find your old red hat. You shut the cupboard again.
-                )
+            if(tag=grey_hat_equipped)
+                [
+                    print(You open the creaky door of your cupboard, and find your old red hat. You shut the cupboard again.);
+                ]
             ?
-                (
-                    givetag:red_hat_equipped+print:&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;
-                )
+                [
+                    givetag(red_hat_equipped);
+                    print(&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;);
+                ]
         </action>
         <action_dia></action_dia>
 
@@ -63,14 +65,18 @@
 
         <verbs>gen/lie on/sit on/rest on/rest/lie upon/sleep on</verbs>
         <action>
-            if:(fun=1):
-            (
-                print:You lie on your bed, you feel a little sleepy. You start to drift off.+flush:sdkjsk+wait:1.5 +cutscene:enter_dream.txt+env:dream_house
-            )
+            if(fun=1)
+            [
+                print(You lie on your bed, you feel a little sleepy. You start to drift off.);
+                flush( );
+                wait( );
+                cutscene(enter_dream.txt);
+                env(dream_house);
+            ]
                 ?
-            (
-                print:You lie on your bed for a minute. You don't feel very sleepy. You get up again.
-            )
+            [
+                print(You lie on your bed for a minute. You don't feel very sleepy. You get up again.);
+            ]
         </action>
         <action_dia></action_dia>
 
@@ -96,7 +102,7 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            givetag:sibling_cupboard_sad
+            givetag(sibling_cupboard_sad);
         </action>
         <action_dia>You open the creaky door of your sibling's cupboard, and find their old green hat. You pick up the hat... and put it back. You think some things are best left forgotten.</action_dia>
 
@@ -122,10 +128,10 @@
 
         <verbs>gen/look into/look at/look/observe/approach the/approach</verbs>
         <action>
-            if:(tag=looked_into_mirror):
-                (null:poopie)
+            if(tag=looked_into_mirror)
+                [null(poopie);]
             ?
-                (givetag:looked_into_mirror)
+                [givetag(looked_into_mirror);]
         </action>
         <action_dia>You look into the mirror. It looks very dark in there.</action_dia>
 
@@ -149,7 +155,7 @@
 
         <verbs>gen/approach the/approach/search/look through/search through</verbs>
         <action>
-            give:old_photograph
+            give(old_photograph);
         </action>
         <action_dia>You rummage through the dresser, you find an old photograph. You pocket it.</action_dia>
 
@@ -176,10 +182,10 @@
 
         <verbs>gen/lie in/enter/enter the</verbs>
         <action>
-            cutscene:bath_dream+
-            clr:ksdh+
-            env:dream_house+
-            set_room:dream_bathroom
+            cutscene(bath_dream);
+            clr( );
+            env(dream_house);
+            set_room(dream_bathroom);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 
@@ -203,7 +209,7 @@
 
         <verbs>gen/wash in/wash up/clean/clean the</verbs>
         <action>
-            null:pipi
+            null( );
         </action>
         <action_dia>You wash your hands.</action_dia>
 
@@ -230,7 +236,7 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            give:bath_bomb
+            give(bath_bomb);
         </action>
         <action_dia>You rifle through the box, and take out a bath bomb.</action_dia>
 
@@ -257,16 +263,16 @@
 
         <verbs>gen/flick on/turn on/flick the/flick/press/press the/press on/click the/click/click on</verbs>
         <action>
-            if:(tag=open_garage):
-                (
-                    removetag:open_garage+
-                    print:You close the garage door.
-                )
+            if(tag=open_garage)
+                [
+                    removetag(open_garage);
+                    print(You close the garage door.);
+                ]
             ?
-                (
-                    givetag:open_garage+
-                    print:You open the garage door.
-                )
+                [
+                    givetag(open_garage);
+                    print(You open the garage door.);
+                ]
         </action>
         <action_dia></action_dia>
 
@@ -290,8 +296,8 @@
 
         <verbs>gen/gen_furniture</verbs>
         <action>
-            give:toy_gun+
-            add_value:nerf_gun_bullets;3
+            give(toy_gun);
+            add_value(nerf_gun_bullets:3);
         </action>
         <action_dia>You search through the shelves, finding a tiny toy gun that fires little foam bullets. You pocket the little gun, and three foam bullets.</action_dia>
 
@@ -341,7 +347,7 @@
 
         <verbs>gen/pickup/gen_search/pick up/get/take</verbs>
         <action>
-            give:weird_jar
+            give(weird_jar);
         </action>
         <action_dia>You pick up the jar off the counter, and examine it, it's full of a cloudy green liquid, you can't quite make out the inside of it. You try and open it, but you can't quite manage it. You decide instead to carry it with you.</action_dia>
 
@@ -367,12 +373,11 @@
 
         <verbs>use/examine/approach/enter/punch</verbs>
         <action>
-            if(name=pee):
+            if(name=pee)
                 [
                     print(hi);
                     say(hello!);
-                    if(tag=peepee): 
-                        [say(poopoo);]?[say(AAA);]
+                    if(tag=peepee) [say(poopoo);]?[say(AAA);]
                 ]
                 ?
                 [

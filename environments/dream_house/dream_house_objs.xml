@@ -8,7 +8,7 @@
 
         <verbs>gen/gen_furniture/</verbs>
         <action>
-            give:dream_house_key
+            give(dream_house_key);
         </action>
         <action_dia>You rummage through your desk, and find your house key.</action_dia>
 
@@ -32,14 +32,15 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            if:(tag=red_hat_equipped):
-                (
-                    print:There's a grey hat in the cupboard. You don't want to touch it.
-                )
+            if(tag=red_hat_equipped)
+                [
+                    print(There's a grey hat in the cupboard. You don't want to touch it.);
+                ]
             ?
-                (
-                    givetag:grey_hat_equipped+print:&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;  
-                )
+                [
+                    givetag(grey_hat_equipped);
+                    print(&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;); 
+                ]
         </action>
         <action_dia></action_dia>
 
@@ -63,14 +64,18 @@
 
         <verbs>gen/lie on/sit on/rest on/rest/lie upon/sleep on/gen_furniture</verbs>
         <action>
-            if:(fun=1):
-            (
-                print:You lie on your bed, you feel a little sleepy. You start to drift off.+flush:sdkjsk+wait:2 +print:You wake up, everything looks bright and oversaturated.+env:house
-            )
+            if(fun=1)
+            [
+                print(You lie on your bed, you feel a little sleepy. You start to drift off.);
+                flush( );
+                wait(2);
+                print(You wake up, everything looks bright and oversaturated.);
+                env(house);
+            ]
                 ?
-            (
-                print:You lie on your bed for a minute. You don't feel very sleepy. You get up again.
-            )
+            [
+                print(You lie on your bed for a minute. You don't feel very sleepy. You get up again.);
+            ]
         </action>
         <action_dia></action_dia>
 
