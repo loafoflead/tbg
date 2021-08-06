@@ -409,7 +409,7 @@
 
     </room>
 
-    <!-- KITCHEN X -->
+    <!-- KITCHEN _/ -->
     <room> 
 
         <id>6</id>
@@ -462,6 +462,92 @@
         </directions>
 
         <objs>bath/sink/mirror</objs>
+        <items></items>
+
+    </room>
+
+    <!-- FRONT GARDEN _/ -->
+    <room> 
+
+        <id>8</id>
+
+        <tag>front_garden</tag>
+        <name>Front garden</name>
+
+        <desc>Your front garden. It's early morning, and there's still dewdrops on the grass. West is a beaten dirt path to the road to your small village, south is your front door. North is your garage door.</desc>
+        
+        <directions>
+            <west>
+                <leads>dirt_road</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+            <north>
+                <leads>#####</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    if(tag=open_garage) [
+                        go(garage);
+                    ]
+                    ? 
+                    [
+                        print(The garage is locked.);
+                    ]
+                </action>
+            </north>
+
+            <east>
+                <leads>downstair_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+        </directions>
+
+        <objs>magic_portal</objs>
+        <items></items>
+
+    </room>
+
+    <!-- BACK GARDEN _/ -->
+    <room> 
+
+        <id>9</id>
+
+        <tag>garden</tag>
+        <name>Back garden</name>
+
+        <desc>Your back garden, it's early morning and there's still dew on the grass and flowers. There's a birdbath in front of you, east is an old gate set into a brick wall.</desc>
+        
+        <directions>
+            <east>
+                <leads>hidden_garden</leads>
+                <dia>You duck through the rusted iron gate and into a hiddne garden.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+        </directions>
+
+        <objs>birdbath</objs>
         <items></items>
 
     </room>
