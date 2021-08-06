@@ -101,7 +101,7 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the/gen_furniture</verbs>
         <action>
-            givetag:saw_beast
+            givetag(saw_beast);
         </action>
         <action_dia>You open the creaky door of your sibling's cupboard... you stare in disbelief. There's a person in there, with their back to you. They look more like a shadow than a person. You slam the cupboard shut again, and stand back from it.</action_dia>
 
@@ -127,10 +127,14 @@
 
         <verbs>gen/look into/look at/look/observe/approach the/approach</verbs>
         <action>
-            if:(tag=looked_into_mirror):
-                (null:poopie)
+            if(tag=looked_into_mirror)
+                [
+                    null(poopie);
+                ]
             ?
-                (givetag:looked_into_mirror)
+                [
+                    givetag(looked_into_mirror);
+                ]
         </action>
         <action_dia>You look into the mirror. It looks painfully bright in there.</action_dia>
 
@@ -154,7 +158,7 @@
 
         <verbs>gen/approach the/approach/search/look through/search through</verbs>
         <action>
-            give:dream_old_photograph
+            give(dream_old_photograph);
         </action>
         <action_dia>You rummage through the dresser, you find an old photograph. You pocket it.</action_dia>
 
@@ -181,10 +185,10 @@
 
         <verbs>gen/lie in/enter/enter the</verbs>
         <action>
-            cutscene:bath_dream+
-            clr:ksdh+
-            env:dream_house+
-            set_room:dream_bathroom
+            cutscene(bath_dream);
+            clr();
+            env(dream_house);
+            set_room(dream_bathroom);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 
@@ -208,7 +212,7 @@
 
         <verbs>gen/wash in/wash up/clean/clean the</verbs>
         <action>
-            null:pipi
+            null();
         </action>
         <action_dia>You wash your hands.</action_dia>
 
@@ -235,7 +239,7 @@
 
         <verbs>gen/open/rummage through/look through/look into/look in/open the</verbs>
         <action>
-            give:bath_bomb
+            give(bath_bomb);
         </action>
         <action_dia>You rifle through the box, and take out a bath bomb.</action_dia>
 
@@ -262,16 +266,16 @@
 
         <verbs>gen/flick on/turn on/flick the/flick/press/press the/press on/click the/click/click on</verbs>
         <action>
-            if:(tag=open_garage):
-                (
-                    removetag:open_garage+
-                    print:You close the garage door.
-                )
+            if(tag=open_garage)
+                [
+                    removetag(open_garage);
+                    print(You close the garage door.);
+                ]
             ?
-                (
-                    givetag:open_garage+
-                    print:You open the garage door.
-                )
+                [
+                    givetag(open_garage);
+                    print(You open the garage door.);
+                ]
         </action>
         <action_dia></action_dia>
 
@@ -295,7 +299,7 @@
 
         <verbs>gen/gen_furniture</verbs>
         <action>
-            give:toy_gun
+            give(toy_gun);
         </action>
         <action_dia>You search through the shelves, finding a tiny toy gun that fires little foam bullets. You pocket the little gun, and three foam bullets.</action_dia>
 
@@ -345,7 +349,7 @@
 
         <verbs>gen/pickup/gen_search/pick up/get/take</verbs>
         <action>
-            give:weird_jar
+            give(weird_jar);
         </action>
         <action_dia>You pick up the jar off the counter, and examine it, it's full of a cloudy green liquid, you can't quite make out the inside of it. You try and open it, but you can't quite manage it. You decide instead to carry it with you.</action_dia>
 
@@ -370,7 +374,7 @@
         <name>Magic Portal</name>
 
         <verbs>use/examine/approach/enter/punch</verbs>
-        <action>say:hi #name#, you stinky lol</action>
+        <action>say(hi #name#, you stinky lol);</action>
         <action_dia>you move through the magic portal</action_dia>
 
         <item_req>magic_wand</item_req>
