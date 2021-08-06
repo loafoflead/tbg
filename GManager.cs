@@ -406,6 +406,10 @@ public class GManager {
 
     string rest_maybe = "";
 
+    private static string[] null_action_commands = new string[] {
+        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear"
+    };
+
     public void Do(string action, string resultt) {
 
         
@@ -456,11 +460,16 @@ public class GManager {
         */
 
         if (fm.null_or_empt(result)) {
+            foreach(string g in null_action_commands) {
+                if (g == action) {
+                    goto resume_null_action;
+                }
+            }
             box.Print("Internal error, incomplete command requested; ERR_013");
             return;
         }
 
-   
+        resume_null_action:
 
         //box.Print("action: " + action + ", result: \n" + result.Replace(":", "{White}:{DarkYellow}").Replace("(", "{White}({Cyan}").Replace(")", "{White})").Replace(" ", "").Replace("+", "{Red}+\n{White}").Replace("?", "{Blue}\n?\n{White}").Replace("if:", "{Red}if{White}:\n"));
         /*box.clr_buffer();
@@ -837,6 +846,13 @@ public class GManager {
 
                 if (rest_maybe != "" || fm.is_spaces(rest_maybe)) {
                     box.PrintD("rest of command: {Yellow}" + rest_maybe);
+                }
+
+                if (compare_tag.Contains('!')) {
+                    string temp_true = if_true;
+                    if_true = if_false;
+                    if_false = temp_true;
+                    compare_tag.Replace("!", "");
                 }
 
                 switch(compare_tag.Replace(" ", "")) {
