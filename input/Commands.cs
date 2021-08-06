@@ -386,8 +386,8 @@ public class Commands {
             default:
 
                 foreach(string comma in custom_commands) {
-                    if (arguments[0] == comma.Split('=')[0]) {
-                        gm.Do(comma.Split('=')[1]);
+                    if (arguments[0] == comma.Split('=',2)[0]) {
+                        gm.Do(comma.Split('=',2)[1]);
                         return;
                     } 
                 }

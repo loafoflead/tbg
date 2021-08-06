@@ -39,6 +39,7 @@
                 ]
             ?
                 [
+                    print(You open the creaky door of your cupboard, and find your old red hat. You don the hat.);
                     givetag(red_hat_equipped);
                     print(&lt;{DarkGreen}Item equipped {DarkYellow}-&gt; {Red}Red hat{White}&gt;);
                 ]
@@ -63,7 +64,7 @@
         <tag>bed</tag>
         <name>Bed</name>
 
-        <verbs>gen/lie on/sit on/rest on/rest/lie upon/sleep on</verbs>
+        <verbs>gen/lie on/lie in/sit on/rest on/rest/lie upon/sleep on</verbs>
         <action>
             if(fun=1)
             [
