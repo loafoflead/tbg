@@ -842,7 +842,9 @@ public class GManager {
                     }
 
                     if (if_false[i] == ']') {
-                        if (!fm.is_spaces(split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", ""))) rest_maybe = split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", "");
+                        try {
+                            if (!fm.is_spaces(split_at(if_false, i + 1)[1])) rest_maybe = split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", "");
+                        } catch {}
                         if_false = split_at(if_false, i)[0];
                     }
 
@@ -987,6 +989,22 @@ public class GManager {
                         else {
                             checkDo(if_false);
                         }
+                    break;
+
+                    default:
+                        foreach(player_value pv in player.player_Values) {/* foreach player value */
+                            if (pv.name == compare_tag) { 
+                                if (pv.value == condition) {
+                                    checkDo(if_true);
+                                }
+                                else {
+                                    checkDo(if_false);
+                                }
+                                goto break_label;
+                            }
+                        }
+                        box.Print("Internal error, invalid comparison tag requested; " + result);
+                        break_label:
                     break;
 
                 }
