@@ -909,6 +909,8 @@ public class GManager {
                     break;
                     
                     case "inv":
+                    case "inventory":
+                    case "inv_contains":
 
                         if(condition == "empty" || condition == "0" || condition == "null") {
                             if (player.inv.player_inventory.Count == 0) {
@@ -943,6 +945,7 @@ public class GManager {
                     break;
 
                     case "room":
+                    case "current_room":
                         if(env.current_room.tag == condition) {
                             checkDo(if_true);
                         }
@@ -952,6 +955,7 @@ public class GManager {
                     break;
 
                     case "op":
+                    case "operator":
                     bool tf = false;
                         if (condition == "true" || condition == "t" || condition == "1") {
                             tf = true;
@@ -969,6 +973,8 @@ public class GManager {
                     break;
 
                     case "tag":
+                    case "tags":
+                    case "t":
                         if(player.player_tags.Contains(condition)) {
                             checkDo(if_true);
                         }
@@ -1003,7 +1009,7 @@ public class GManager {
                                 goto break_label;
                             }
                         }
-                        box.Print("Internal error, invalid comparison tag requested; " + result);
+                        box.Print("Internal error, invalid comparison tag requested; " + compare_tag + "=" + condition);
                         break_label:
                     break;
 
