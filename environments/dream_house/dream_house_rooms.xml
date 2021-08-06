@@ -331,25 +331,28 @@
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action>
-                    if:(inv=dream_house_key): 
-                        (
-                            print:The front door is locked.+
-                            wait:1+
-                            print:Do you want to unlock it with-+
-                            flush:screen+
-                            print:In a flash, a dark figure snatches the key out of your hands, and runs away into the hallway.+
-                            take:dream_house_key+
-                            if:(tags=saw_beast): 
-                                (print:After recovering from your shock, you remember the thing you saw in your sibling's cupboard earlier.)
+                    if(inv=dream_house_key)
+                        [
+                            print(The front door is locked.);
+                            wait();
+                            print(Do you want to unlock it with-);
+                            flush();
+                            print(In a flash, a dark figure snatches the key out of your hands, and runs away into the hallway.);
+                            take(dream_house_key);
+                            if(tags=saw_beast)
+                                [
+                                    print(After recovering from your shock, you remember the thing you saw in your sibling's cupboard earlier.);
+                                ]
                             ?
-                                (print:You wonder what that thing could be.)
-                            +
-                            print:You have to catch that thing.
-                        )
+                                [
+                                    print(You wonder what that thing could be.);
+                                ]
+                            print(You have to catch that thing.);
+                        ]
                     ?
-                        (
-                            print:The front door is locked.
-                        )
+                        [
+                            print(The front door is locked.);
+                        ]
                 </action>
             </east>
             <south>
@@ -410,10 +413,7 @@
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action>
-                    if:(tag=open_dream_garage):
-                        (print:You leave your house and enter the front garden.+go:front_garden)
-                    ?
-                        (print:The garage is locked.)
+                    print(The garage door is shut.);
                 </action>
             </east>
         </directions>

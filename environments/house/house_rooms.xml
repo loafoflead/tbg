@@ -390,15 +390,15 @@
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action>
-                    if:(tag=open_garage):
-                        (print:You leave your house and enter the front garden.+go:front_garden)
-                    ?
-                        (print:The garage is locked.)
-                                        <!--
-                    if:(tag=looked_into_mirror):
-                        (null:poopie)
-                    ?
-                        (givetag:looked_into_mirror) -->
+                    if(tag=open_garage)
+                    [
+                        print(You leave your house and enter the front garden.);
+                        go(front_garden);
+                    ]
+                        ?
+                    [
+                        print(The garage is locked.);
+                    ]
                 </action>
             </west>
 
