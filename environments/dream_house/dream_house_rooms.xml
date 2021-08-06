@@ -334,7 +334,7 @@
                     if(inv=dream_house_key)
                         [
                             print(The front door is locked.);
-                            wait();
+                            <!--wait();-->
                             print(Do you want to unlock it with-);
                             flush();
                             print(In a flash, a dark figure snatches the key out of your hands, and runs away into the hallway.);

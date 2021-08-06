@@ -452,7 +452,7 @@ public class Environment {
         foreach(direction direc in current_room.room_directions) {
             if (direc.direction_int == (int) direction_Enum) {
                 if(!gm.fm.null_or_empt(direc.direction_action)) {
-                   gm.Do(direc.direction_action.Split(':',2)[0], direc.direction_action.Split(':',2)[1]);
+                   gm.Do(direc.direction_action);
                    return 1;
                 }
                 if (direc.is_locked != true) {
@@ -514,7 +514,7 @@ public class Environment {
     }
 
     void effect_direction(direction dir) {
-        gm.Do("go", dir.direction_leads);
+        gm.Do("go", "(" + dir.direction_leads + ");");
         gm.box.Print(dir.action_dialogue);
     }
 
@@ -617,7 +617,7 @@ public class Environment {
 
             if(room_tag.Contains(":")) {
                 string env_name = room_tag.Split(":")[0];
-                gm.Do("env", room_tag.Split(":")[1]);
+                gm.Do("env", "(" + room_tag.Split(":")[1] + ");");
                 return 1;
             }
 

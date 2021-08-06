@@ -434,7 +434,7 @@ public class Commands {
             case "obtain":
             case "give":
                 if (arguments.Length > 1) {
-                    gm.Do("give", arguments[1]);
+                    gm.Do("give", "(" + arguments[1] + ");");
                 }
                 else {
                     gm.box.Print("Incorrect syntax, '{Cyan}give [item_tag]{end}'. type '{Cyan}/list items all{end}' for the items in the room.");
@@ -643,7 +643,8 @@ public class Commands {
 
                         case "dir":
                             direction temp_dir = gm.env.get_direction(arguments[2]);
-                            gm.box.Print("{Magenta}" + temp_dir.direction_str + ", is_locked: " + temp_dir.is_locked + ", item_required: " + temp_dir.item_required + ", leads: " + temp_dir.direction_leads);
+                            if (gm.fm.null_or_empt(temp_dir.direction_action)) gm.box.Print("{Magenta}" + temp_dir.direction_str + ", is_locked: " + temp_dir.is_locked + ", item_required: " + temp_dir.item_required + ", leads: " + temp_dir.direction_leads);
+                            else gm.box.Print("{Magenta}" + temp_dir.direction_str + ", action: " + temp_dir.direction_action);
                         break;
 
                         case "dirs":
@@ -873,7 +874,7 @@ public class Commands {
                     gm.box.Print("{Magenta}Player name: " + gm.player.name);
                     return;
                 }
-                else gm.Do("name", arguments[1]);
+                else gm.Do("name", "(" + arguments[1] + ");");
             break;
 
             case "bio":
@@ -881,7 +882,7 @@ public class Commands {
                     gm.box.Print("{Magenta}Player bio: " + gm.player.bio);
                     return;
                 }
-                gm.Do("bio", arguments[1]);
+                gm.Do("bio", "(" + arguments[1] + ");");
             break;
 
             case "inspect":
@@ -1038,7 +1039,7 @@ public class Commands {
 
                 foreach(string comma in custom_admin_commands) {
                     if (arguments[0] == comma.Replace("/", "").Split('=')[0]) {
-                        gm.Do(comma.Split('=')[1].Split(":")[0], comma.Split("=")[1].Split(":")[1]);
+                        gm.Do(comma.Split('=')[1]);
                         return;
                     } 
                 }

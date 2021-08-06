@@ -425,20 +425,25 @@ public class GManager {
             if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
             else to_run_at_end = null;
 
-            if (resultt.Split(';',2)[0].Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
+            /*if (resultt.Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
                                                 //                                           ^ this is where it gets cut
+                result = resultt.Split(';',2)[1];
+
+                result = result.Replace("(", "").Replace(")", "");
+
                 goto resume;
 
-            }
+            }*/
 
             box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end);
+            box.PrintD("running: {Red}" + resultt.Split(';',2)[0]);
 
             result = resultt.Split(';',2)[0];
 
             result = result.Replace("(", "").Replace(")", "");
         }
 
-        resume:
+        //resume:
 
         /*
             SYNTAX:
@@ -528,7 +533,7 @@ public class GManager {
                 if (it.tag != null) res = player.inv.add_to_inv(it);
                 else {
                     box.Print("{DarkRed}Item not found: '" + result.Replace(" ", "") + "'");
-                    return;
+                    break;
                 }
                 if (res == 2) {
                     box.Print("Inventory full!");
@@ -708,10 +713,11 @@ public class GManager {
                             if (i.tag == result) {
                                 player.inv.remov(i);
                                 situ_change(change_types.lose_item, i.name);
-                                return;
+                                goto skip;
                             }
                         }
                         box.Print("Internal error 'Do' command, 'take' tag invalid.");
+                        skip:
                     break;
                 }
             break;
@@ -909,7 +915,7 @@ public class GManager {
                             else {
                                 checkDo(if_false);
                             }
-                            return;
+                            break;
                         }
 
                         if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
