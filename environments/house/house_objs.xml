@@ -73,6 +73,8 @@
                 wait( );
                 cutscene(enter_dream.txt);
                 env(dream_house);
+                replace_item(dream_gun:toy_gun);
+                replace_item(dream_bomb:bath_bomb);
             ]
                 ?
             [
@@ -204,6 +206,8 @@
             clr( );
             env(dream_house);
             set_room(dream_bathroom);
+            replace_item(dream_gun:toy_gun);
+            replace_item(dream_bomb:bath_bomb);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 

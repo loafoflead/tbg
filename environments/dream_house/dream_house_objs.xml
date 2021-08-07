@@ -1,6 +1,6 @@
 <dream_house_objs>
 
-    <!-- **BEDROOM**  -->
+    <!-- **BEDROOM**  _/ -->
     <obj>
 
         <tag>dream_bedroom_desk</tag>
@@ -67,10 +67,12 @@
             if(fun=1)
             [
                 print(You lie on your bed, you feel a little sleepy. You start to drift off.);
-                flush( );
+                flush();
                 wait(2);
                 print(You wake up, everything looks bright and oversaturated.);
                 env(house);
+                replace_item(toy_gun:dream_gun);
+                replace_item(bath_bomb:dream_bomb);
             ]
                 ?
             [
@@ -93,7 +95,7 @@
 
     </obj>
 
-    <!--  **SIBLING ROOM**  -->
+    <!--  **SIBLING ROOM** _/ -->
     <obj>
 
         <tag>dream_sibling_cupboard</tag>
@@ -119,7 +121,7 @@
 
     </obj>
 
-    <!--  **DOWNSTAIRS HALL**  -->
+    <!--  **DOWNSTAIRS HALL** _/  -->
     <obj>
 
         <tag>dream_mirror</tag>
@@ -180,15 +182,17 @@
 
     <obj>
 
-        <tag>bath</tag>
-        <name>Bath</name>
+        <tag>dream_bath</tag>
+        <name>Dream bath</name>
 
         <verbs>gen/lie in/enter/enter the</verbs>
         <action>
-            cutscene(bath_dream);
+            print(You feel the world swirl around you again.);
             clr();
             env(dream_house);
             set_room(dream_bathroom);
+            replace_item(toy_gun:dream_gun);
+            replace_item(bath_bomb:dream_bomb);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 

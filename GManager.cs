@@ -574,7 +574,10 @@ public class GManager {
                 Item temp_to_change = player.inv.player_inventory.Find(Item => Item.tag == result.Split(':')[0]);
                 if (temp_to_change == null) break;
                 else {
-                    temp_to_change = env.get_item_from_tag(result.Split(':')[1]);
+                    string temp_name = temp_to_change.name;
+                    player.inv.player_inventory.Remove(temp_to_change);
+                    player.inv.player_inventory.Add(env.get_item_from_tag(result.Split(':')[1]));
+                    situ_change(change_types.item_shift, temp_name + "/" + temp_to_change.name);
                 }
             break;
 
@@ -1306,6 +1309,7 @@ public class GManager {
         missing_item,
         drop_all,
         change_env,
+        item_shift,
     }
 
 
@@ -1346,6 +1350,12 @@ public class GManager {
 
                 box.Print("{end}<{DarkGray}Moved to {DarkYellow}Environment{end} {DarkYellow}-->{end}  {DarkGray}" + result + "{end}>");
                 
+            break;
+
+            case change_types.item_shift:
+
+                box.Print("{White}<{DarkYellow}Item {White}<{DarkGray}" + result.Split('/')[0] + "{White}> {DarkYellow}replaced by --> {DarkGray}" + result.Split('/')[1] + "{White}>");
+
             break;
 
             default:

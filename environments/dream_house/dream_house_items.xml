@@ -35,12 +35,23 @@
 
     <item>
 
-        <tag>dream_jar</tag>
-        <name>Dream jar</name>
+        <tag>dream_gun</tag>
+        <name>Pistol</name>
 
-        <desc>A jar, it's filled with something dreamy looking.</desc>
+        <desc>A pistol. It's suprisingly heavy.</desc>
 
-        <aliases>dream jar/weird jar/dream weird jar</aliases>
+        <aliases>toy gun/gun/pistol/toy pistol/dream gun/dream pistol</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>dream_bomb</tag>
+        <name>Bomb</name>
+
+        <desc>A bomb. It's slightly comedic, a heavy black ball with a fuse sticking out of it. Somehow, you can feel the danger from this object just holding it in your hands.</desc>
+
+        <aliases>bath bomb/dream bomb/bomb/dream bath bomb</aliases>
 
     </item>
 
