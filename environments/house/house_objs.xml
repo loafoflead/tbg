@@ -94,6 +94,23 @@
         <aliases>bed/the bed/my bed</aliases>
 
     </obj>
+    <obj>
+
+        <tag>wallpaper</tag>
+        <name>Wallpaper</name>
+
+        <verbs>gen/look under/peel off/look under the peel of the/inspect</verbs>
+        <action>
+            givetag(doctor_who_wallpaper);
+        </action>
+        <action_dia>You peel off a layer of cracking wallpaper and see the words: '{Cyan}Duck, Sally Sparrow! No, seriously, duck!{White}'. What a weird name...</action_dia>
+        
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You examine the message again, but can't glean anything useful from it.</used_dialogue>
+
+        <aliases>wallpaper/the wallpaper</aliases>
+
+    </obj>
 
     <!--  **SIBLING ROOM**  -->
     <obj>
@@ -146,7 +163,7 @@
         <one_time_use>0</one_time_use>
         <used_dialogue></used_dialogue>
 
-        <aliases>mirror/the mirror/</aliases>
+        <aliases>mirror/the mirror</aliases>
 
     </obj>
     <obj>

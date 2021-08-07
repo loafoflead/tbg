@@ -305,6 +305,10 @@ public class GManager {
 
     public int loadsave(string filename) {
 
+        player.inv.player_inventory = new List<Item>();
+        player.player_Values = new List<player_value>();
+        player.player_tags = new List<string>();
+
         if (!filename.Contains(".txt")) {
             return loadsave(filename + ".txt");
         }
@@ -363,6 +367,12 @@ public class GManager {
         player.is_operator = get_bool(save_file[5]);
         env.current_room = env.rooms.Find(room_short => room_short.tag == save_file[6]);
 
+        log_file = "logs\\" + filename;
+
+        if(fm.null_or_empt(save_file[7])) {
+            return 1;
+        }
+
         if (save_file[7].Contains('/')) {
             foreach(string vals in save_file[7].Split('/')) {
                 player.add_value(vals.Split(':')[0], vals.Split(':')[1]);
@@ -372,7 +382,7 @@ public class GManager {
             player.add_value(save_file[7].Split(':')[0], save_file[7].Split(':')[1]);
         }
 
-        log_file = "logs\\" + filename;
+        
 
         return 1;
 
@@ -553,6 +563,19 @@ public class GManager {
                 cm.admin_commands();
                 box.replace_buffer(buff_temp);
                 player.is_operator = old_op;
+            break;
+
+            case "replace":
+            case "replace_item":
+            case "replaceitem":
+                if (!result.Contains(':')) {
+                    break;
+                }
+                Item temp_to_change = player.inv.player_inventory.Find(Item => Item.tag == result.Split(':')[0]);
+                if (temp_to_change == null) break;
+                else {
+                    temp_to_change = env.get_item_from_tag(result.Split(':')[1]);
+                }
             break;
 
             case "emu":
@@ -782,6 +805,18 @@ public class GManager {
             case "clear":
                 box.clr_buffer();
                 box.clr();
+            break;
+
+            case "print":
+                g = "";
+                check_tag(result);
+                box.Print(g);
+            break;
+
+            case "say":
+                g = "";
+                check_tag(result);
+                box.Print("{Cyan}- \"" + g + "{Cyan}\"");
             break;
 
             case "if": //example of syntax: if:inv=headband;go:vault_lobby/say:get headband
@@ -1068,21 +1103,69 @@ public class GManager {
             } catch {
                 box.Print("Internal error in xml level folder using interactable, command was: {Blue}" + action + "{White}:{Red}" + result);
             }
-
             break;
 
-            case "print":
-                g = "";
-                check_tag(result);
-                box.Print(g);
+            case "store":
+                if (!result.Contains(':')) {
+                    box.Print("Syntax error in 'store' command: " + result);
+                    break;
+                }
+                switch(result.Split(':')[0]) {
+
+                    case "room":
+                        player.add_value(result.Split(':')[1], env.get_room_name_by_tag(env.current_room.tag));
+                    break;
+
+                    case "fun":
+                        player.add_value(result.Split(':')[1], player.fun.ToString());
+                    break;
+
+                    case "name":
+                        player.add_value(result.Split(':')[1], player.name);
+                    break;
+
+                    case "bio":
+                        player.add_value(result.Split(':')[1], player.bio);
+                    break;
+
+                    case "environment":
+                        player.add_value(result.Split(':')[1], env.current_env_name.Replace("_", " "));
+                    break;
+
+                    case "items":
+                    case "num_of_items":
+                    case "numofitems":
+                        player.add_value(result.Split(':')[1], player.inv.player_inventory.Count.ToString());
+                    break;
+
+                    case "num_of_values":
+                    case "numofvalues":
+                    case "values":
+                        player.add_value(result.Split(':')[1], player.player_Values.Count.ToString());
+                    break;
+
+                    case "num_of_tags":
+                    case "numoftags":
+                    case "tags":
+                    case "tag_count":
+                        player.add_value(result.Split(':')[1], player.player_tags.Count.ToString());
+                    break;
+
+                    default:
+                        foreach(player_value pv in player.player_Values) {
+                            if (pv.name == result.Split(':')[0]) {
+                                player.add_value(result.Split(':')[1], player.get_value(result.Split(':')[0]).value);
+                                goto break_label_store;
+                            }
+                        }
+                        box.Print("'Do()' error with 'store' command, invalid tag to store the data of requested.");
+                        break_label_store:
+                    break;
+
+                }
             break;
 
-            case "say":
-                g = "";
-                check_tag(result);
-                box.Print("{Cyan}- \"" + g + "{Cyan}\"");
-            break;
-
+            
             default:
                 box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
             break;

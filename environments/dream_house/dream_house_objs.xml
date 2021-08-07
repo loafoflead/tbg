@@ -322,34 +322,32 @@
 
     <obj>
 
-        <tag>kitchen_cupboard</tag>
-        <name>Kitchen cupboard</name>
+        <tag>dream_kitchen_cupboard</tag>
+        <name>Dream kitchen cupboard</name>
 
         <verbs>gen/gen_furniture</verbs>
-        <action></action>
-        <action_dia>You open the kitchen cupboard, and stacks and stacks of old, forgotten cookery fall out at you. You jump back in suprise, but not fast enough to prevent one of the plates from clipping your knee and shattering. You stand away from the cupboard, admiring the mess on the floor.</action_dia>
-
-        <item_req></item_req>
-        <item_dia></item_dia>
-        <tag_req></tag_req>
-        <tag_dia></tag_dia>
-
-        <tag_given>hurt_knee</tag_given>
-        
+        <action>
+            if(tag=hurt_knee) [
+                print(You open the kitchen cupboard, feeling a little worried. Nothing exciting happens, dusty plates are neatly stacked in the cupboard.);
+            ]   ?   [
+                print(You open the cupboard, There are neatly stacked plates inside.);
+            ]
+        </action>
+       
         <one_time_use>1</one_time_use>
-        <used_dialogue>You look at the mess of broken crockery on the floor, unwilling to approach the area of incident further.</used_dialogue>
+        <used_dialogue>You open the cupboard again, finding nothing of interest.</used_dialogue>
 
-        <aliases>kitchen cupboard/cupboard/kitchen counter</aliases>
+        <aliases>kitchen cupboard/cupboard/kitchen counter/dream kitchen cupboard/dream cupboard</aliases>
 
     </obj>
     <obj>
 
-        <tag>unknown_jar</tag>
-        <name>Weird jar</name>
+        <tag>dream_unknown_jar</tag>
+        <name>Dream jar</name>
 
         <verbs>gen/pickup/gen_search/pick up/get/take</verbs>
         <action>
-            give(weird_jar);
+            give(dream_jar);
         </action>
         <action_dia>You pick up the jar off the counter, and examine it, it's full of a cloudy green liquid, you can't quite make out the inside of it. You try and open it, but you can't quite manage it. You decide instead to carry it with you.</action_dia>
 

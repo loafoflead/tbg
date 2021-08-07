@@ -209,21 +209,7 @@ public class Environment {
                 }
 
             }
-            /*{
-                tag = nod.ChildNodes.Item(0).InnerText,
-                name = nod.ChildNodes.Item(1).InnerText,
-                verbs = new List<string>(nod.ChildNodes.Item(2).InnerText.Split('/')),
-                full_action = nod.ChildNodes.Item(3).InnerText.Replace("\r","").Replace("\n","").Replace("\t",""),
-                action_dia = nod.ChildNodes.Item(4).InnerText,
-                item_req = nod.ChildNodes.Item(5).InnerText,
-                item_lock_dia = nod.ChildNodes.Item(6).InnerText,
-                tag_req = nod.ChildNodes.Item(7).InnerText,
-                tag_lock_dia = nod.ChildNodes.Item(8).InnerText,
-                tag_given = nod.ChildNodes.Item(9).InnerText,
-                one_time_use = System.Convert.ToBoolean(int.Parse(nod.ChildNodes.Item(10).InnerText)),
-                used_dialogue = nod.ChildNodes.Item(11).InnerText,
-                aliases = new List<string>(nod.ChildNodes.Item(12).InnerText.Split('/')),
-            };*/
+            if (new_obj.item_req == "") new_obj.item_req = null;
             if (new_obj.verbs.Contains("gen")) {
                 foreach(string s in generic_verbs) {
                     new_obj.verbs.Add(s);
@@ -818,12 +804,12 @@ public class Interactable {
                 }
                 else {
 
-                    if (item_req != "" && gm.player.inv.player_inventory.Contains(gm.env.get_item_from_tag(this.item_req))) {
+                    if (!gm.fm.null_or_empt(item_req) && gm.player.inv.player_inventory.Contains(gm.env.get_item_from_tag(this.item_req))) {
                         //if the item is locked and player has item required then :
                             has_been_used = true; //if its a one time use and hasnt been used, set used to true
                             return 1; //if all succeeds, return a 1 for sucess
                     }
-                    else if (item_req != "" && !gm.player.inv.player_inventory.Contains(gm.env.get_item_from_tag(this.item_req))) {
+                    else if (!gm.fm.null_or_empt(item_req) && !gm.player.inv.player_inventory.Contains(gm.env.get_item_from_tag(this.item_req))) {
 
                         return 3; //3 if interactable is locked and player does not have item needed.
 

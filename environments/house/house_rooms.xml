@@ -55,7 +55,7 @@
 
         </directions>
 
-        <objs>cupboard/bedroom_desk/bed</objs>
+        <objs>cupboard/bedroom_desk/bed/wallpaper</objs>
         <items></items>
 
     </room>
@@ -175,7 +175,7 @@
 
         </directions>
 
-        <objs>magic_portal/sibling_cupboard</objs>
+        <objs>sibling_cupboard</objs>
         <items></items>
 
     </room>

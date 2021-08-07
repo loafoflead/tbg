@@ -8,3 +8,4 @@ north=emu(go l);
 east=emu(go r);
 south=emu(go f);
 west=emu(go b);
+leave=emu(back);

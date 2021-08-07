@@ -22,4 +22,26 @@
 
     </item>
 
+    <item>
+
+        <tag>dream_jar</tag>
+        <name>Dream jar</name>
+
+        <desc>A jar, it's filled with something dreamy looking.</desc>
+
+        <aliases>dream jar/weird jar/dream weird jar</aliases>
+
+    </item>
+
+    <item>
+
+        <tag>dream_jar</tag>
+        <name>Dream jar</name>
+
+        <desc>A jar, it's filled with something dreamy looking.</desc>
+
+        <aliases>dream jar/weird jar/dream weird jar</aliases>
+
+    </item>
+
 </dream_house_items>
