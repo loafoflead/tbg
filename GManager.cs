@@ -1206,7 +1206,14 @@ public class GManager {
                         g += env.current_room.desc;
                     break;
                     default:
-                        g += "invalid tag ERR_011";
+                        foreach(player_value pv in player.player_Values) {
+                            if (pv.name == hashes[i]) {
+                                g += pv.value;
+                                goto break_label_store;
+                            }
+                        }
+                        g += "invalid_tag_error";
+                        break_label_store:
                     break;
                 }
             }
