@@ -158,7 +158,58 @@ public class Environment {
         interactable_doc.Load(interactable_doc_name);
         interactables_xml = interactable_doc.GetElementsByTagName("obj");
         foreach (XmlNode nod in interactables_xml) {
-            Interactable new_obj = new Interactable{
+            Interactable new_obj = new Interactable(); 
+            foreach(XmlNode node_iterator in nod) {
+
+                switch(node_iterator.Name) {
+
+                    case "tag":
+                        new_obj.tag = node_iterator.InnerText;
+                    break;
+                    case "name":
+                        new_obj.name = node_iterator.InnerText;
+                    break;
+                    case "verbs":
+                        new_obj.verbs = new List<string>(node_iterator.InnerText.Split('/'));
+                    break;
+                    case "action_dia":
+                        new_obj.action_dia = node_iterator.InnerText;
+                    break;
+                    case "action":
+                        new_obj.full_action = node_iterator.InnerText.Replace("\r","").Replace("\n","").Replace("\t","");
+                    break;
+                    case "item_req":
+                        new_obj.item_req = node_iterator.InnerText;
+                    break;
+                    case "item_dia":
+                        new_obj.item_lock_dia = node_iterator.InnerText;
+                    break;
+                    case "tag_req":
+                        new_obj.tag_req = node_iterator.InnerText;
+                    break;
+                    case "tag_dia":
+                        new_obj.tag_lock_dia = node_iterator.InnerText;
+                    break;
+                    case "tag_given":
+                        new_obj.tag_given = node_iterator.InnerText;
+                    break;
+                    case "one_time_use":
+                        new_obj.one_time_use = System.Convert.ToBoolean(int.Parse(node_iterator.InnerText));
+                    break;
+                    case "used_dialogue":
+                        new_obj.used_dialogue = node_iterator.InnerText;
+                    break;
+                    case "aliases":
+                        new_obj.aliases = new List<string>(node_iterator.InnerText.Split('/'));
+                    break;
+
+                    default:
+                        break;
+
+                }
+
+            }
+            /*{
                 tag = nod.ChildNodes.Item(0).InnerText,
                 name = nod.ChildNodes.Item(1).InnerText,
                 verbs = new List<string>(nod.ChildNodes.Item(2).InnerText.Split('/')),
@@ -172,7 +223,7 @@ public class Environment {
                 one_time_use = System.Convert.ToBoolean(int.Parse(nod.ChildNodes.Item(10).InnerText)),
                 used_dialogue = nod.ChildNodes.Item(11).InnerText,
                 aliases = new List<string>(nod.ChildNodes.Item(12).InnerText.Split('/')),
-            };
+            };*/
             if (new_obj.verbs.Contains("gen")) {
                 foreach(string s in generic_verbs) {
                     new_obj.verbs.Add(s);
@@ -296,34 +347,6 @@ public class Environment {
 
             }
             }
-
-            /*if (child.ChildNodes.Item(0).InnerText != "") {
-                switch (dir) {
-                    case 0:
-                        left = true;
-                        load_individual_dir(direction_enum.left, child, rs);
-                    break;
-
-                    case 1:
-                        right = true;
-                        load_individual_dir(direction_enum.right, child, rs);
-                    break;
-
-                    case 2:
-                        forwards = true;
-                        load_individual_dir(direction_enum.forwards, child, rs);
-                    break;
-
-                    case 3:
-                        backwards = true;
-                        load_individual_dir(direction_enum.backwards, child, rs);
-                    break;
-
-                    default:
-                        break;
-                }
-                dir ++;
-            }*/
         }
 
     }

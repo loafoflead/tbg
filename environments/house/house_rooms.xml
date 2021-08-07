@@ -552,5 +552,48 @@
 
     </room>
 
+    <!-- HIDDEN GARDEN _/ -->
+    <room> 
+
+        <id>10</id>
+
+        <tag>hidden_garden</tag>
+        <name>Hidden garden</name>
+
+        <desc>A small hidden garden, it's walled off by tall rose-covered bushes. There's a path into one of the bushes south of you, and west is the path back into the garden. This place has a slightly {Grey}dreamy{end} feeling.</desc>
+        
+        <directions>
+            <west>
+                <leads>garden</leads>
+                <dia>You duck through the rusted iron gate back into the garden.</dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+
+            <south>
+                <leads>####</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(You duck through the bushes, getting snagged on some thorns.);
+                    env(dream_house);
+                    set_room(dream_hidden_garden);
+                </action>
+            </south>
+        </directions>
+
+        <objs>birdbath</objs>
+        <items></items>
+
+    </room>
+
 
 </house>

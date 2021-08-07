@@ -379,13 +379,8 @@
 
         <item_req>magic_wand</item_req>
         <item_dia>you try and go through, but it doesnt exist yet</item_dia>
-        <tag_req></tag_req>
-        <tag_dia></tag_dia>
-
-        <tag_given></tag_given>
         
         <one_time_use>0</one_time_use>
-        <used_dialogue></used_dialogue>
 
         <aliases>portal/magic portal</aliases>
 
