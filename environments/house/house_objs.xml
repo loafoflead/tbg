@@ -73,8 +73,7 @@
                 wait( );
                 cutscene(enter_dream.txt);
                 env(dream_house);
-                replace_item(dream_gun:toy_gun);
-                replace_item(dream_bomb:bath_bomb);
+                run(replace_normal_items);
             ]
                 ?
             [
@@ -206,8 +205,7 @@
             clr( );
             env(dream_house);
             set_room(dream_bathroom);
-            replace_item(dream_gun:toy_gun);
-            replace_item(dream_bomb:bath_bomb);
+            run(replace_normal_items);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 
@@ -231,7 +229,9 @@
 
         <verbs>gen/wash in/wash up/clean/clean the</verbs>
         <action>
-            null( );
+            if(tag!=clean_handies) [
+                givetag(clean_handies);
+            ] ? [null();]
         </action>
         <action_dia>You wash your hands.</action_dia>
 
@@ -240,7 +240,7 @@
         <tag_req></tag_req>
         <tag_dia></tag_dia>
 
-        <tag_given>clean_handies</tag_given>
+        <tag_given></tag_given>
         
         <one_time_use>0</one_time_use>
         <used_dialogue></used_dialogue>

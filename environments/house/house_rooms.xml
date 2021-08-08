@@ -598,5 +598,44 @@
 
     </room>
 
+    <!-- DIRT ROAD _/ -->
+    <room> 
+
+        <id>11</id>
+
+        <tag>dirt_road</tag>
+        <name>Dirt road</name>
+
+        <desc>A long dirt road that leads to your village.</desc>
+        
+        <directions>
+            <north>
+                <leads>#</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(You set off down the long dirt road, heading for your village.);
+                    load_env(village);
+                </action>
+            </north>
+
+            <east>
+                <leads>front_garden</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+        </directions>
+
+    </room>
+
 
 </house>

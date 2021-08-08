@@ -248,18 +248,27 @@
         <tag>dream_attic</tag>
         <name>Dream attic</name>
 
-        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with an impassable wall of garbage. There's an open box to your left, and east the stairs back down to your parent's room.</desc>
+        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with a wall of garbage. There's an open box to your left, east the stairs back down to your parent's room, north is the rest of the attic.</desc>
         
         <directions>
             <north>
-                <leads></leads>
+                <leads>#</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <action></action>
+                <action>
+                    if(inv=dream_bomb) [
+                        print(You place the bomb in front of the garbage. As if by magic, it lights itself. You duck behind a wooden pillar, and the blast goes off, shaking the entire room.);
+                        take(dream_bomb);
+                        goto(dream_attic_2);
+                        print(You dodge through the singed remains of the wall of rubbish.);
+                    ]   ?   [
+                        print(You can't get past this wall, you'd need something like a {Grey}bomb{White} to get past this.);
+                    ]
+                </action>
             </north>
 
             <east>
@@ -272,31 +281,16 @@
                 <tag_lock_dia></tag_lock_dia>
                 <action></action>
             </east>
-            <south>
-                <leads></leads>
-                <dia></dia>
-                <lock></lock>
-                <lock_dia></lock_dia>
-                <unlock_dia></unlock_dia>
-                <lock_reqs></lock_reqs>
-                <tag_lock_dia></tag_lock_dia>
-                <action></action>
-            </south>
-            <west>
-                <leads></leads>
-                <dia></dia>
-                <lock></lock>
-                <lock_dia></lock_dia>
-                <unlock_dia></unlock_dia>
-                <lock_reqs></lock_reqs>
-                <tag_lock_dia></tag_lock_dia>
-                <action></action>
-            </west>
-
         </directions>
 
         <objs>dream_attic_box</objs>
-        <items></items>
+        
+        <on_enter>
+            if(tag=catch_beast) [
+                print(You see the monster dart over the wall of garbage north of you. You try and push the rubbish away, but to no avail. You think you'd need a {DarkRed}bomb{White} or something to get rid of that wall.);
+            ]
+        </on_enter>
+        <on_entry_once>True</on_entry_once>
 
     </room>
 
@@ -348,6 +342,7 @@
                                     print(You wonder what that thing could be.);
                                 ]
                             print(You know you're going to have to catch that monster.);
+                            givetag(catch_beast);
                         ]
                     ?
                         [
@@ -423,7 +418,7 @@
 
     </room>
 
-    <!-- KITCHEN X -->
+    <!-- DREAM KITCHEN _/ -->
     <room> 
 
         <id>6</id>
@@ -431,7 +426,7 @@
         <tag>dream_kitchen</tag>
         <name>Dream kitchen</name>
 
-        <desc>A classic looking kitchen. Most of the furnishing is in disrepair, or covered in plastic tarp. There's a kitchen cupboard above you and a jar on the counter. South is the door back to the hallway.</desc>
+        <desc>A classic looking kitchen. Most of the furniture is in disrepair, or covered in plastic tarp. There's a kitchen cupboard above you. South is the door back to the hallway.</desc>
         
         <directions>
             <south>
@@ -446,8 +441,7 @@
             </south>
         </directions>
 
-        <objs>dream_kitchen_cupboard/dream_unknown_jar.</objs>
-        <items></items>
+        <objs>dream_kitchen_cupboard</objs>
 
     </room>
 

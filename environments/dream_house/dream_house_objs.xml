@@ -71,8 +71,7 @@
                 wait(2);
                 print(You wake up, everything looks bright and oversaturated.);
                 env(house);
-                replace_item(toy_gun:dream_gun);
-                replace_item(bath_bomb:dream_bomb);
+                run(replace_dream_items);
             ]
                 ?
             [
@@ -191,8 +190,7 @@
             clr();
             env(dream_house);
             set_room(dream_bathroom);
-            replace_item(toy_gun:dream_gun);
-            replace_item(bath_bomb:dream_bomb);
+            run(replace_dream_items);
         </action>
         <action_dia>You lie in the bath. You sit in it for a second or two, waiting. After a few more seconds of waiting, the memories assault you.</action_dia>
 
@@ -211,12 +209,14 @@
     </obj>
     <obj>
 
-        <tag>sink</tag>
+        <tag>dream_sink</tag>
         <name>Bathroom sink</name>
 
-        <verbs>gen/wash in/wash up/clean/clean the</verbs>
+        <verbs>gen/wash in/wash up/clean/clean the/gen_furniture</verbs>
         <action>
-            null();
+            if(tag!=clean_handies) [
+                givetag(clean_handies);
+            ] ? [null();]
         </action>
         <action_dia>You wash your hands.</action_dia>
 
@@ -225,12 +225,12 @@
         <tag_req></tag_req>
         <tag_dia></tag_dia>
 
-        <tag_given>clean_handies</tag_given>
+        <tag_given></tag_given>
         
         <one_time_use>0</one_time_use>
         <used_dialogue></used_dialogue>
 
-        <aliases>sink/bathroom sink/the sink</aliases>
+        <aliases>sink/bathroom sink/the sink/dream sink</aliases>
 
     </obj>
 
@@ -342,30 +342,6 @@
         <used_dialogue>You open the cupboard again, finding nothing of interest.</used_dialogue>
 
         <aliases>kitchen cupboard/cupboard/kitchen counter/dream kitchen cupboard/dream cupboard</aliases>
-
-    </obj>
-    <obj>
-
-        <tag>dream_unknown_jar</tag>
-        <name>Dream jar</name>
-
-        <verbs>gen/pickup/gen_search/pick up/get/take</verbs>
-        <action>
-            give(dream_jar);
-        </action>
-        <action_dia>You pick up the jar off the counter, and examine it, it's full of a cloudy green liquid, you can't quite make out the inside of it. You try and open it, but you can't quite manage it. You decide instead to carry it with you.</action_dia>
-
-        <item_req></item_req>
-        <item_dia></item_dia>
-        <tag_req></tag_req>
-        <tag_dia></tag_dia>
-
-        <tag_given></tag_given>
-        
-        <one_time_use>1</one_time_use>
-        <used_dialogue>The kitchen counter is empty.</used_dialogue>
-
-        <aliases>unknown jar/weird jar/kitchen counter jar/the jar/jar/kitchen jar/strange jar/unknown substance jar</aliases>
 
     </obj>
 

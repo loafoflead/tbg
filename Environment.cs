@@ -245,7 +245,7 @@ public class Environment {
         room_.tag = "empty_room";
         room_.name = "EMPTY_ROOM_ERROR";
         room_.desc = "empty_room";
-        room_.on_entry_action = "say(empty on entry action?);";
+        room_.on_entry_action = "null();";
         room_.one_time_on_entry = true;
         room_.entry_has_been_executed = false;
         room_.room_interactable_tags = new List<string>();

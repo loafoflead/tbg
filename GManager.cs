@@ -415,7 +415,7 @@ public class GManager {
     string rest_maybe = "";
 
     private static string[] null_action_commands = new string[] {
-        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear"
+        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear", "nl", "newline", "new_line",
     };
 
     private static string[] exceptional_commands = new string[] {
@@ -799,6 +799,12 @@ public class GManager {
 
             case "null":
                 break;
+            
+            case "return":
+            case "stop_action":
+            case "end_action":
+            case "stop":
+                return;
 
             case "take":
                 switch(result.Replace(" ", "")) {
@@ -892,6 +898,12 @@ public class GManager {
             case "clear":
                 box.clr_buffer();
                 box.clr();
+            break;
+            
+            case "nl":
+            case "newline":
+            case "new_line":
+                box.nl();
             break;
 
             case "print":
