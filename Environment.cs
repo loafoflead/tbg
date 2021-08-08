@@ -273,11 +273,11 @@ public class Environment {
                     break;
 
                     case "desc":
-                        room_.desc = node_iterator.InnerText;
+                        room_.desc = node_iterator.InnerText.Replace("\n", "").Replace("\t", "");
                     break;
 
                     case "on_enter":
-                        room_.on_entry_action = node_iterator.InnerText;
+                        room_.on_entry_action = node_iterator.InnerText.Replace("\n", "").Replace("\t", "");
                     break;
 
                     case "on_entry_once":
@@ -326,27 +326,6 @@ public class Environment {
         if (!gm.fm.null_or_empt(current_room.on_entry_action)) {
             gm.Do(current_room.on_entry_action);
         }
-        /*forwards = false;
-        left = false;
-        right = false;
-        backwards = false;
-        XmlNode rrom = get_room_tag(tag);
-        current_tag = rrom.ChildNodes.Item(1).InnerText;
-        current_name = rrom.ChildNodes.Item(2).InnerText;
-        description = rrom.ChildNodes.Item(3).InnerText;
-        getDirs(rrom);
-        try {
-            room_item_tags = new List<string>(rrom.ChildNodes.Item(6).InnerText.Split('/'));
-        } catch {
-            room_item_tags = new List<string>();
-            room_item_tags.Add(rrom.ChildNodes.Item(6).InnerText);
-        }
-        try {
-            room_interctable_tags = new List<string>(rrom.ChildNodes.Item(5).InnerText.Split('/'));
-        } catch {
-            room_interctable_tags = new List<string>();
-            room_interctable_tags.Add(rrom.ChildNodes.Item(5).InnerText);
-        }*/
     }
 
 

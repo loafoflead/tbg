@@ -854,6 +854,10 @@ public class GManager {
                 }
             break;
 
+            case "load_env":
+            case "loadenv":
+            case "load_environment":
+            case "environment":
             case "env":
                 try {
                     env.load_env(result.Replace(" ", ""));
@@ -945,10 +949,15 @@ public class GManager {
                 
 
                 string minue_true = without_if_and_condition.Replace("[" + if_true + "]", "");
+                string if_false = "";
+                
+            if (minue_true.Split('[',2)[0].Contains('?')) {
+            
+
                 minue_true = minue_true.Split('?',2)[1];
                 box.PrintD("command without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());
 
-                string if_false = minue_true.Split('[',2)[1];
+                if_false = minue_true.Split('[',2)[1];
 
                 for(i = 0; i < if_false.Length; i ++) {
 
@@ -969,6 +978,9 @@ public class GManager {
                 }
                 
                 box.PrintD("execute if false: {Yellow}" + if_false);
+            } else {
+                if_false = "null();";
+            }
 
                 if (rest_maybe != "" || fm.is_spaces(rest_maybe)) {
                     box.PrintD("rest of command: {Yellow}" + rest_maybe);
