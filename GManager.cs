@@ -590,7 +590,7 @@ public class GManager {
                     string temp_name = temp_to_change.name;
                     player.inv.player_inventory.Remove(temp_to_change);
                     player.inv.player_inventory.Add(env.get_item_from_tag(result.Split(':')[1]));
-                    situ_change(change_types.item_shift, temp_name + "/" + temp_to_change.name);
+                    situ_change(change_types.item_shift, temp_name + "/" + env.get_item_from_tag(result.Split(':')[1]).name);
                 }
             break;
 
@@ -643,7 +643,7 @@ public class GManager {
                     }
 
                     if (subroutine[i] == ')') {
-                        to_run_at_end = split_at(subroutine, i + 2)[1];
+                        if(subroutine.Length > i + 2) to_run_at_end = split_at(subroutine, i + 2)[1];
                         if (!fm.null_or_empt(to_run_at_end)) {
                             num_of_lines = 2;
                         }

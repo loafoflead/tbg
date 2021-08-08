@@ -5,6 +5,7 @@ inv=
 tags=
 op=false
 intro=intro.txt
-play_intro=true
+play_intro=false
 fast_cutscenes=true
 debug_text_is_printed=false
+to_run_on_startup=create_sub(replace_dream_items=replaceitem(toy_gun:dream_gun);replaceitem(bath_bomb:dream_bomb););create_sub(replace_normal_items=replaceitem(dream_gun:toy_gun);replaceitem(dream_bomb:bath_bomb);)

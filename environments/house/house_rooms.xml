@@ -59,6 +59,7 @@
         <items></items>
 
         <on_enter>say(hi);</on_enter>
+        <on_entry_once>True</on_entry_once>
 
     </room>
 
