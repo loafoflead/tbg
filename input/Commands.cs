@@ -958,6 +958,13 @@ public class Commands {
                         }
                     break;
 
+                    case "routines":
+                    case "subroutines":
+                        foreach(subroutine sbt in gm.env.subroutines) {
+                            gm.box.Print(sbt.name + ", " + sbt.value);
+                        }
+                    break;
+
                     case "tags":
                         string h = "";
                         foreach(string ta in gm.player.player_tags) {

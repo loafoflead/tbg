@@ -82,16 +82,7 @@ public class Environment {
             });
         }
 
-        gm.box.PrintF("got all the rooms");
-        gm.box.k.waitAnyKey();
-
-        load_rooms();
-
-        gm.box.PrintF("All rooms loaded");
-        foreach(room_short rs in rooms) {
-            gm.box.PrintF(rs.name + " " + rs.id.ToString());
-        }
-        gm.box.k.waitAnyKey();
+        load_rooms();   
 
         loadRoom(rooms[0].tag);
 

@@ -414,7 +414,7 @@ public class GManager {
 
     private static string[] exceptional_commands = new string[] {
         "creat_subroutine",
-        "create_sub",
+        "create_sub", "createsub",
         "subroutine",
         "routine",
         "new_sub",
@@ -588,8 +588,30 @@ public class GManager {
                 }
             break;
 
+            case "gosub":
+            case "go_sub":
+            case "go_subroutine":
+            case "run_subroutine":
+            case "call":
+            case "run":
+            case "runsub":
+            case "run_sub":
+            case "execute":
+            case "exec":
+                foreach(subroutine sbt in env.subroutines) {
+                    if (sbt.name == result) {
+                        try {
+                            Do(sbt.value);
+                        } catch {
+                            box.Print("Internal error, 'call_subroutine' function.");
+                        }
+                    }
+                }
+            break;
+
             case "creat_subroutine":
             case "create_sub":
+            case "createsub":
             case "subroutine":
             case "routine":
             case "new_sub":
@@ -597,11 +619,11 @@ public class GManager {
 
                 if (!result.Contains('=')) break;
 
-                string subroutine = result.Split('{',2)[1];
+                string subroutine = result.Split('[',2)[1];
 
                 subroutine = subroutine.Split('=',2)[1];
 
-                string subroutine_name = result.Split('{',2)[1].Split('=',2)[0];
+                string subroutine_name = result.Split('[',2)[1].Split('=',2)[0];
 
                 for(int i = 0; i < subroutine.Length; i ++) {
 
@@ -613,8 +635,10 @@ public class GManager {
                     }
 
                     if (subroutine[i] == ']') {
-                        subroutine = split_at(subroutine, i)[0];
+                        subroutine = split_at(subroutine, i + 4)[0];
                     }
+
+                    box.Print("exec: " + i.ToString());
 
                 }
 
