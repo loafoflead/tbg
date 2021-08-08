@@ -57,6 +57,7 @@ public class GManager {
                 fm.write_at("play_intro=true", 8, "config.txt");
                 fm.write_at("fast cutscenes=false", 9, "config.txt");
                 fm.write_at("debug_text_is_printed=false", 10, "config.txt");
+                fm.write_at("to_run_on_startup=null();", 11, "config.txt");
                 System.Console.WriteLine(i);
                 System.Console.ReadKey();
                 load_config_file("config.txt");
@@ -272,6 +273,11 @@ public class GManager {
         }
 
         box.debug_print = get_bool(lines[9].Split('=')[1]);
+
+        if(!fm.null_or_empt(lines[10]) && lines.Length > 10) {
+            try {Do(lines[10].Split('=',2)[1]);}
+            catch {box.Print("Non-fatal error loading the config file, startup action failed to load.");}
+        }
 
         if(!fm.null_or_empt(lines[3].Split('=')[1])) player.inv.add_to_inv(env.get_item_from_tag(lines[3].Split('=')[1]));
 
@@ -637,6 +643,11 @@ public class GManager {
                     }
 
                     if (subroutine[i] == ')') {
+                        to_run_at_end = split_at(subroutine, i + 2)[1];
+                        if (!fm.null_or_empt(to_run_at_end)) {
+                            num_of_lines = 2;
+                        }
+                        else num_of_lines = 1;
                         subroutine = split_at(subroutine, i)[0];
                     }
 

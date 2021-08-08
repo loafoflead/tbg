@@ -246,6 +246,8 @@ public class Environment {
         room_.name = "EMPTY_ROOM_ERROR";
         room_.desc = "empty_room";
         room_.on_entry_action = "say(empty on entry action?);";
+        room_.one_time_on_entry = true;
+        room_.entry_has_been_executed = false;
         room_.room_interactable_tags = new List<string>();
         room_.room_item_tags = new List<string>();
 
@@ -276,6 +278,10 @@ public class Environment {
 
                     case "on_enter":
                         room_.on_entry_action = node_iterator.InnerText;
+                    break;
+
+                    case "on_entry_once":
+                        room_.one_time_on_entry = System.Boolean.Parse(node_iterator.InnerText);
                     break;
 
                     case "objs":
@@ -668,7 +674,7 @@ public class Environment {
     }
 
 
-    //to be tested
+    //to be tested NOT ANYMORE LOLLLL
     public int Go(string room_tag) {
         try {
 
@@ -682,6 +688,12 @@ public class Environment {
             if (r != null) {
                 previous_room = current_room;
                 current_room = get_room_via_tag(room_tag);
+                if (!gm.fm.null_or_empt(current_room.on_entry_action)) {
+                    if (current_room.entry_has_been_executed == false && current_room.one_time_on_entry == true) {
+                        gm.Do(current_room.on_entry_action);
+                        current_room.entry_has_been_executed = true;
+                    }
+                }
                 return 1;
             } 
             else return 0;
@@ -902,6 +914,9 @@ public class room_short {
     public List<direction> room_directions;
     public List<string> room_interactable_tags;
     public List<string> room_item_tags;
+
+    public bool one_time_on_entry;
+    public bool entry_has_been_executed;
 
 
     public string desc;
