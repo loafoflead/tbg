@@ -223,15 +223,7 @@ public class GManager {
                 box.Print(env.current_room.desc);
                 box.print_screen();
             }
-        /*}
-        else {  If the player doesn't want a new file, load a fresh one at the start positions specified in the config file 
-            fm.newFile("logs\\save_file_" + save_files.Length.ToString() + ".txt");
-            log_file = "logs\\save_file_" + save_files.Length.ToString() + ".txt";
-            save_game();
-            box.nl();
-            box.Print(env.current_room.desc);
-            box.print_screen();
-        }*/
+        
 
     }
 
@@ -420,6 +412,16 @@ public class GManager {
         "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear"
     };
 
+    private static string[] exceptional_commands = new string[] {
+        "creat_subroutine",
+        "create_sub",
+        "subroutine",
+        "routine",
+        "new_sub",
+        "newsub",
+        "if",
+    };
+
     public void Do(string action, string resultt) {
 
         
@@ -430,6 +432,11 @@ public class GManager {
         box.PrintD(result + "," + action);
 
         if (action.Replace(" ", "") != "if") {
+            foreach(string g in exceptional_commands) {
+                if (action.Replace(" ", "") == g) {
+                    goto resume;
+                }
+            }
             num_of_lines = count_char(resultt, ';');
 
             if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
@@ -453,7 +460,7 @@ public class GManager {
             result = result.Replace("(", "").Replace(")", "");
         }
 
-        //resume:
+        resume:
 
         /*
             SYNTAX:
@@ -579,6 +586,43 @@ public class GManager {
                     player.inv.player_inventory.Add(env.get_item_from_tag(result.Split(':')[1]));
                     situ_change(change_types.item_shift, temp_name + "/" + temp_to_change.name);
                 }
+            break;
+
+            case "creat_subroutine":
+            case "create_sub":
+            case "subroutine":
+            case "routine":
+            case "new_sub":
+            case "newsub": //e.x. new_sub{say_hi=say(hello);}
+
+                if (!result.Contains('=')) break;
+
+                string subroutine = result.Split('{',2)[1];
+
+                subroutine = subroutine.Split('=',2)[1];
+
+                string subroutine_name = result.Split('{',2)[1].Split('=',2)[0];
+
+                for(int i = 0; i < subroutine.Length; i ++) {
+
+                    if (subroutine[i] == '[') {
+                        while(subroutine[i] != ']') {
+                            i ++;
+                        }
+                        i ++;
+                    }
+
+                    if (subroutine[i] == ']') {
+                        subroutine = split_at(subroutine, i)[0];
+                    }
+
+                }
+
+                env.subroutines.Add(new subroutine{
+                    name = subroutine_name,
+                    value = subroutine,
+                });
+                
             break;
 
             case "emu":

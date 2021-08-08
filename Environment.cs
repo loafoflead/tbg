@@ -2,6 +2,7 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 
+public class subroutine : player_value {}
 public class Environment {
 
     GManager gm;
@@ -16,6 +17,8 @@ public class Environment {
 
     public List<Item> all_items;
     public List<Interactable> all_interactables;
+
+    public List<subroutine> subroutines;
 
     public room_short current_room;
     public room_short previous_room;
@@ -54,6 +57,7 @@ public class Environment {
         gm = g;
         rooms = new List<room_short>();
         all_items = new List<Item>();
+        subroutines = new List<subroutine>();
     }
 
     public string current_env_name;
@@ -78,8 +82,16 @@ public class Environment {
             });
         }
 
+        gm.box.PrintF("got all the rooms");
+        gm.box.k.waitAnyKey();
+
         load_rooms();
 
+        gm.box.PrintF("All rooms loaded");
+        foreach(room_short rs in rooms) {
+            gm.box.PrintF(rs.name + " " + rs.id.ToString());
+        }
+        gm.box.k.waitAnyKey();
 
         loadRoom(rooms[0].tag);
 
@@ -202,7 +214,7 @@ public class Environment {
                     case "aliases":
                         new_obj.aliases = new List<string>(node_iterator.InnerText.Split('/'));
                     break;
-
+    
                     default:
                         break;
 
@@ -238,40 +250,85 @@ public class Environment {
 
         current_room = room_;
 
-        room_.front_locked = false;
-        room_.back_locked = false;
-        room_.left_locked = false;
-        room_.right_locked = false;
+        room_.id = 0;
+        room_.tag = "empty_room";
+        room_.name = "EMPTY_ROOM_ERROR";
+        room_.desc = "empty_room";
+        room_.on_entry_action = "say(empty on entry action?);";
+        room_.room_interactable_tags = new List<string>();
+        room_.room_item_tags = new List<string>();
 
-        room_.id = int.Parse(room_.associated_node.ChildNodes.Item(0).InnerText);
+        foreach (XmlNode node_iterator in room_.associated_node) {
 
-        room_.name = room_.associated_node.ChildNodes.Item(2).InnerText;
-        room_.tag = room_.associated_node.ChildNodes.Item(1).InnerText;
-        
-        room_.desc = room_.associated_node.ChildNodes.Item(3).InnerText;
+                
+                switch(node_iterator.Name) {
+
+                    case "id":
+                        try {
+                            room_.id = int.Parse(node_iterator.InnerText);
+                        } catch {
+                            room_.id = 999;
+                        }
+                    break;
+                    
+                    case "tag":
+                        room_.tag = node_iterator.InnerText;
+                    break;
+
+                    case "name":
+                        room_.name = node_iterator.InnerText;
+                    break;
+
+                    case "desc":
+                        room_.desc = node_iterator.InnerText;
+                    break;
+
+                    case "on_enter":
+                        room_.on_entry_action = node_iterator.InnerText;
+                    break;
+
+                    case "objs":
+                        if (gm.fm.null_or_empt(node_iterator.InnerText)) break;
+                        try {
+                            room_.room_interactable_tags = new List<string>(node_iterator.InnerText.Split('/'));
+                        } catch {
+                            room_.room_interactable_tags = new List<string>();
+                            room_.room_interactable_tags.Add(node_iterator.InnerText);
+                        }
+                    break;
+
+                    case "items":
+                        if (gm.fm.null_or_empt(node_iterator.InnerText)) break;
+                        try {
+                            room_.room_item_tags = new List<string>(node_iterator.InnerText.Split('/'));
+                        } catch {
+                            room_.room_item_tags = new List<string>();
+                            room_.room_item_tags.Add(node_iterator.InnerText);
+                        }
+                    break;
+
+                    default:
+                        break;
+
+                }
+
+        }
+   
 
         get_ind_dirs(room_);
 
-        XmlNode rrom = room_.associated_node;
+        
 
-        try {
-            room_.room_item_tags = new List<string>(rrom.ChildNodes.Item(6).InnerText.Split('/'));
-        } catch {
-            room_.room_item_tags = new List<string>();
-            room_.room_item_tags.Add(rrom.ChildNodes.Item(6).InnerText);
-        }
-        try {
-            room_.room_interactable_tags = new List<string>(rrom.ChildNodes.Item(5).InnerText.Split('/'));
-        } catch {
-            room_.room_interactable_tags = new List<string>();
-            room_.room_interactable_tags.Add(rrom.ChildNodes.Item(5).InnerText);
-        }
+        
 
     }
 
     //works
     public void loadRoom(string tag) {
         current_room = rooms.Find(room_short => room_short.tag == tag);
+        if (!gm.fm.null_or_empt(current_room.on_entry_action)) {
+            gm.Do(current_room.on_entry_action);
+        }
         /*forwards = false;
         left = false;
         right = false;
@@ -867,5 +924,7 @@ public class room_short {
     public bool left_locked;
     public bool right_locked;
     public bool back_locked;
+
+    public string on_entry_action;
     
 }

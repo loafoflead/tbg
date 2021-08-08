@@ -58,6 +58,8 @@
         <objs>cupboard/bedroom_desk/bed/wallpaper</objs>
         <items></items>
 
+        <on_enter>say(hi);</on_enter>
+
     </room>
 
     <!-- HALLWAY _/ -->

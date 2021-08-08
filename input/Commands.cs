@@ -629,6 +629,12 @@ public class Commands {
                 try {
                     switch (arguments[1]) {
 
+                        case "room":
+                            gm.box.Print("{Gray}" + gm.env.current_room.name + ", tag: " + gm.env.current_room.tag + ", id: " + gm.env.current_room.id.ToString() + 
+                            ", objs: " + get_string(gm.env.current_room.room_interactable_tags.ToArray()) + ", items: " + get_string(gm.env.current_room.room_item_tags.ToArray()) + ", on enter action: " + 
+                            gm.env.current_room.on_entry_action + "." );
+                        break;
+
                         case "obj":
                             Interactable temp = gm.env.get_interactable_tag(arguments[2]);
                             gm.box.Print("{Magenta}" + temp.name + "{Magenta}, lock: " + temp.item_req + ", has_been_used: " + temp.has_been_used + ", one_time_use: " + temp.one_time_use + ".");
