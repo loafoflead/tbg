@@ -619,26 +619,27 @@ public class GManager {
 
                 if (!result.Contains('=')) break;
 
-                string subroutine = result.Split('[',2)[1];
+                box.Print("{Green}" + result);
+
+                string subroutine = result.Split('(',2)[1];
 
                 subroutine = subroutine.Split('=',2)[1];
 
-                string subroutine_name = result.Split('[',2)[1].Split('=',2)[0];
+                string subroutine_name = result.Split('(',2)[1].Split('=',2)[0];
 
                 for(int i = 0; i < subroutine.Length; i ++) {
 
-                    if (subroutine[i] == '[') {
-                        while(subroutine[i] != ']') {
+                    if (subroutine[i] == '(') {
+                        while(subroutine[i] != ')') {
                             i ++;
                         }
                         i ++;
                     }
 
-                    if (subroutine[i] == ']') {
-                        subroutine = split_at(subroutine, i + 4)[0];
+                    if (subroutine[i] == ')') {
+                        subroutine = split_at(subroutine, i)[0];
                     }
 
-                    box.Print("exec: " + i.ToString());
 
                 }
 
