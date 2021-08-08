@@ -547,6 +547,17 @@ public class Commands {
                         }
                     break;
 
+                    case "raw":
+                    case "raw_print":
+                    case "raw_printouts":
+                        if (gm.box.print_raw == true) {
+                            gm.box.print_raw = false;
+                        }
+                        else {
+                            gm.box.print_raw = true;
+                        }
+                    break;
+
                     case "show_debug":
                     case "debug_print":
                     case "debug":

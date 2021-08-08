@@ -12,6 +12,7 @@ public class Box {
     public int width;
 
     public bool debug_print = false;
+    public bool print_raw = false;
 
 
     public KeyHandler k;
@@ -205,6 +206,16 @@ public class Box {
         width = Console.WindowWidth;
         int line_index = 1;
         foreach(string f in buffer) {
+            if (print_raw == true) {
+                foreach(char ch in f.Replace("$", "")) {
+                    if (Console.CursorLeft > width - 3 || ch == '\n') {
+                            line_index ++;
+                            Console.SetCursorPosition(2, line_index);
+                        }
+                    Console.Write(ch);
+                }
+                continue;
+            }
             List<sub_string> strings = get_colours(f);
             Console.SetCursorPosition(2, line_index);
             foreach(sub_string str in strings) {
@@ -256,6 +267,18 @@ public class Box {
         width = Console.WindowWidth;
         int line_index = 1;
         foreach(string f in buffer) {
+
+            if (print_raw == true) {
+                foreach(char ch in f.Replace("$", "")) {
+                    if (Console.CursorLeft > width - 3 || ch == '\n') {
+                            line_index ++;
+                            Console.SetCursorPosition(2, line_index);
+                        }
+                    Console.Write(ch);
+                }
+                continue;
+            }
+
             List<sub_string> strings = get_colours(f);
             Console.SetCursorPosition(2, line_index);
             foreach(sub_string str in strings) {
