@@ -248,7 +248,7 @@
         <tag>dream_attic</tag>
         <name>Dream attic</name>
 
-        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with a wall of garbage. There's an open box to your left, east the stairs back down to your parent's room, north is the rest of the attic.</desc>
+        <desc>A long, low-ceilinged room. It's dark, and the path ahead of you is cluttered with a wall of garbage. East are the stairs back down to your parent's room, north is the rest of the attic.</desc>
         
         <directions>
             <north>

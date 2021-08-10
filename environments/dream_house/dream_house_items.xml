@@ -55,4 +55,15 @@
 
     </item>
 
+    <item>
+
+        <tag>acoustic_hammer</tag>
+        <name>{Cyan}Acoustic {Yellow}hammer</name>
+
+        <desc>A weird looking hammer with small pulsating lights on the handle, and the head of it looks to be made of some kind of crystal. There's a button on the side of it, when you press it the head lights up a deep green and you hear a slightly irregular buzzing whirr from the device. You think this thing could be pretty useful.<desc>
+
+        <aliases>acoustic hammer/hammer/acoustic/sonic/sonic hammer/sonic screwdriver/screwdriver</aliases>
+
+    </item>
+
 </dream_house_items>

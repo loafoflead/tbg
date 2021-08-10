@@ -197,7 +197,11 @@ public class Environment {
                         new_obj.tag_given = node_iterator.InnerText;
                     break;
                     case "one_time_use":
-                        new_obj.one_time_use = System.Convert.ToBoolean(int.Parse(node_iterator.InnerText));
+                        try {
+                            new_obj.one_time_use = System.Convert.ToBoolean(int.Parse(node_iterator.InnerText));
+                        } catch {
+                            new_obj.one_time_use = false;
+                        }
                     break;
                     case "used_dialogue":
                         new_obj.used_dialogue = node_iterator.InnerText;

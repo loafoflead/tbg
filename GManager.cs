@@ -393,8 +393,11 @@ public class GManager {
         }
         Do(full_act.Split('(',2)[0].Replace(" ", ""), '(' + full_act.Split('(',2)[1]);
         
-        if (rest_maybe != "" || !fm.is_spaces(rest_maybe)) {
-            Do(rest_maybe.Split('(',2)[0].Replace(" ", ""), '(' + rest_maybe.Split('(',2)[1]);
+        if (rest_maybe != "" && !fm.is_spaces(rest_maybe) && rest_maybe != "    " && rest_maybe.Replace(" ", "") != "]" && rest_maybe.Replace(" ", "") != "[") {
+            try {Do(rest_maybe.Split('(',2)[0].Replace(" ", ""), '(' + rest_maybe.Split('(',2)[1]);}
+            catch {
+                box.Print("{Red}Fatal internal error in 'Do()' command.");
+            }
             rest_maybe = "";
         }
         
@@ -409,6 +412,30 @@ public class GManager {
                 to_return ++;
             }
         }
+        return to_return;
+    }
+
+    public int count_to_end(string str, int start_index = 0, char start_char = '[', char final_char = ']') {
+        int to_return = 0;
+        for(to_return = start_index; to_return < str.Length; to_return ++) {
+            /*box.refresh_box();
+            box.PrintF("index: " + to_return + ", string[0]: " + split_at(str, to_return)[0]);
+            box.flush();
+            box.clr_buffer();
+            box.k.waitAnyKey();*/
+            if (str[to_return] == start_char) {
+                to_return = count_to_end(str, to_return + 1) + 1;
+            }
+            if (str[to_return] == final_char) {
+                /*box.clr_buffer();
+                box.refresh_box();
+                box.PrintF("final string: " + split_at(str, to_return)[0] + ", index: " + to_return.ToString());
+                box.k.waitAnyKey();*/
+                return to_return;
+            }
+        }
+        /*box.PrintF("final string: " + split_at(str, to_return)[0]);
+        box.k.waitAnyKey();*/
         return to_return;
     }
 
@@ -761,11 +788,72 @@ public class GManager {
                 player.remove_value_by_tag(result.Replace(" ", ""));
             break;
 
+            case "increment":
+            case "inc":
+            case "add_to":
+            case "add_to_value":
+            case "add_to_val":
+            case "++":
+                if(result.Contains(':')) {
+                    player_value temp_value = player.player_Values.Find(player_value => player_value.name == result.Split(':',2)[0]);  
+                    if (temp_value == null) {
+                        box.PrintD("Attempted to increment a value that did not exist.");
+                        break;
+                    }
+                    try {
+                        int tem_int = int.Parse(temp_value.value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", ""));
+                        tem_int += int.Parse(result.Split(':',2)[1].Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", ""));
+                        temp_value.value = tem_int.ToString();
+                    } catch {
+                        box.PrintD("Attempted to increment a value that could not be resolved to an int, value was: '" + temp_value.value + "'");
+                    }
+                } else {
+                    player_value temp_value = player.player_Values.Find(player_value => player_value.name == result);
+                    if (temp_value == null) {
+                        box.PrintD("Attempted to increment a value that did not exist.");
+                        break;
+                    }
+                    try {
+                        int tem_int = int.Parse(temp_value.value.Replace(" ", ""));
+                        tem_int ++;
+                        temp_value.value = tem_int.ToString();
+                    } catch {
+                        box.PrintD("Attempted to increment a value that could not be resolved to an int, value was: '" + temp_value.value + "'");
+                    }
+                }
+            break;  
+
+            case "decrement":
+            case "dec":
+            case "remove_from":
+            case "remove_from_value":
+            case "remove_from_val":
+            case "--":
+                if(!result.Contains(':')) {
+                    player_value temp_value = player.player_Values.Find(player_value => player_value.name == result.Split(':',2)[0]);  
+                    if (temp_value == null) break;
+                    try {
+                        int tem_int = int.Parse(temp_value.value);
+                        tem_int -= int.Parse(result.Split(':',2)[1]);
+                        temp_value.value = tem_int.ToString();
+                    } catch {}
+                } else {
+                    player_value temp_value = player.player_Values.Find(player_value => player_value.name == result);
+                    if (temp_value == null) break;
+                    try {
+                        int tem_int = int.Parse(temp_value.value);
+                        tem_int --;
+                        temp_value.value = tem_int.ToString();
+                    } catch {}
+                }
+            break;  
+
             case "change_value":
             case "change_val":
             case "edit_val":
             case "editvalue":
-                player_value temp_val = player.get_value(result.Split(';')[0]);
+            case "edit_value":
+                player_value temp_val = player.get_value(result.Split(':')[0]);
                 temp_val.value = result.Split(':')[1].Replace(" ", "");
             break;
 
@@ -940,44 +1028,62 @@ public class GManager {
                 
                 string if_true =  without_if_and_condition.Split('[',2)[1];
 
-                int i = 0;
+                //int i = 0;
 
-                for(i = 0; i < if_true.Length; i ++) {
+                if (box.debug_print == true) box.flush();
 
-                    if (if_true[i] == '[') {
-                        while(if_true[i] != ']') {
-                            i ++;
-                        }
-                        i ++;
+                if_true = split_at(without_if_and_condition.Split('[',2)[1], count_to_end(if_true))[0];
+
+                //foreach(string g in exceptional_commands) {
+                    if (if_true.Contains("[")) {
+                        if_true += "]";
+                    }   else {
+                        if_true = if_true.Replace("]", "");
                     }
-
-                    if (if_true[i] == ']') {
-                        if_true = split_at(if_true, i)[0];
-                    }
-
-                }
+                //}
 
                 box.PrintD("execute if true: {Yellow}" + if_true);
+
+                if (box.debug_print == true) box.flush();
                 
+                if (box.debug_print == true) box.k.waitAnyKey();
 
                 string minue_true = without_if_and_condition.Replace("[" + if_true + "]", "");
                 string if_false = "";
                 
-            if (minue_true.Split('[',2)[0].Contains('?')) {
+            if (minue_true.Split('[',2)[0].Contains('?') || minue_true.Split('[',2)[0].Contains("else")) {
             
 
-                minue_true = minue_true.Split('?',2)[1];
+                try {minue_true = minue_true.Split('?',2)[1]; }
+                catch {minue_true = minue_true.Split("else",2)[1]; }
                 box.PrintD("command without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());
 
                 if_false = minue_true.Split('[',2)[1];
 
-                for(i = 0; i < if_false.Length; i ++) {
+                try {
+                    if (!fm.is_spaces(split_at(if_false, count_to_end(if_false) + 1)[1])) {
+                        rest_maybe = split_at(if_false, count_to_end(if_false) + 1)[1].Replace("\t", "").Replace("\n", "").Replace("\r", "");
+                    }
+                } catch {
+                    box.PrintD("No rest of the command was found, rest_maybe = NULL");
+                    if (box.debug_print == true) box.flush();
+                }
+
+                if_false = split_at(if_false, count_to_end(if_false))[0];
+
+                box.PrintD("Split successful, result: " + if_false);
+                if (box.debug_print == true) box.flush();
+
+                if (if_false.Contains("[")) {
+                    if_false += "]";
+                }   else {
+                    if_false = if_false.Replace("]", "");
+                }
+
+                /*for(i = 0; i < if_false.Length; i ++) {
 
                     if (if_false[i] == '[') {
-                        while(if_false[i] != ']') {
-                            i ++;
-                        }
-                        i ++;
+                        
                     }
 
                     if (if_false[i] == ']') {
@@ -987,10 +1093,13 @@ public class GManager {
                         if_false = split_at(if_false, i)[0];
                     }
 
-                }
+                }*/
                 
                 box.PrintD("execute if false: {Yellow}" + if_false);
+
+                if (box.debug_print == true) box.flush();
             } else {
+                rest_maybe = minue_true;
                 if_false = "null();";
             }
 
@@ -1002,7 +1111,8 @@ public class GManager {
                     string temp_true = if_true;
                     if_true = if_false;
                     if_false = temp_true;
-                    compare_tag.Replace("!", "");
+                    compare_tag =  compare_tag.Replace("!", "");
+                    box.PrintD("comparison inverted, '!=' used. new comparison: " + compare_tag);
                 }
 
                 switch(compare_tag.Replace(" ", "")) {
@@ -1062,6 +1172,18 @@ public class GManager {
                     case "val":
                     case "value_is":
                         if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
+                            checkDo(if_true);
+                        }
+                        else {
+                            checkDo(if_false);
+                        }
+                    break;
+
+                    case "value_exists":
+                    case "val_exists":
+                    case "val?":
+                        player_value random_val = player.player_Values.Find(player_value => player_value.name == condition);
+                        if (random_val != null) {
                             checkDo(if_true);
                         }
                         else {
