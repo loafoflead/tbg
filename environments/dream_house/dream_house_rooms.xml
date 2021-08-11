@@ -346,7 +346,12 @@
                         ]
                     ?
                         [
-                            print(The front door is locked.);
+                            if(inv=acoustic_hammer) [
+                                print(You use the acoustic hammer on the door, it opens with a click.);
+                                goto(dream_front_garden);
+                            ]   ?   [
+                                print(The front door is locked.);
+                            ]
                         ]
                 </action>
             </east>

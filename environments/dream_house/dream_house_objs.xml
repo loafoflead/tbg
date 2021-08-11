@@ -308,7 +308,7 @@
 
         <tag_given></tag_given>
         
-        <one_time_use></one_time_use>
+        <one_time_use>0</one_time_use>
         <used_dialogue></used_dialogue>
 
         <aliases>shelves/garage shelves/shelf/garage shelf</aliases>

@@ -86,10 +86,16 @@ public class Environment {
 
         loadRoom(rooms[0].tag);
 
+        gm.box.PrintD("Rooms loaded");
+
         all_interactables = new List<Interactable>();
         load_env_interactables(filename);
-        //
+
+        gm.box.PrintD("Interactables loaded");
+        
         load_env_items(filename);
+
+        gm.box.PrintD("Items loaded");
 
         string cutscene_name = "";
         if(System.IO.File.Exists(filename + "_cutscene.txt")) {
@@ -132,13 +138,18 @@ public class Environment {
         item_doc.Load(item_doc_name);
         items_xml = item_doc.GetElementsByTagName("item");
         foreach (XmlNode nod in items_xml) {
-            all_items.Add(new Item{
-                name = nod.ChildNodes.Item(1).InnerText,
-                description = nod.ChildNodes.Item(2).InnerText,
-                tag = nod.ChildNodes.Item(0).InnerText,
-                aliases = new List<string>(nod.ChildNodes.Item(3).InnerText.Split('/')),
-                environment_owned = filename,
-            });
+            try {
+                all_items.Add(new Item{
+                    name = nod.ChildNodes.Item(1).InnerText,
+                    description = nod.ChildNodes.Item(2).InnerText,
+                    tag = nod.ChildNodes.Item(0).InnerText,
+                    aliases = new List<string>(nod.ChildNodes.Item(3).InnerText.Split('/')),
+                    environment_owned = filename,
+                });
+            } catch {
+                gm.box.PrintD("An item could not be loaded from xml file: " + filename + ", attempting to print the tag: ");
+                try {gm.box.PrintD(nod.ChildNodes.Item(0).InnerText);} catch {gm.box.PrintD("The tag could not be retrieved or is invalid, the most common error made is forgetting to close a tag, make sure it's: <tag>[tagname]</tag>");}
+            }
         }
     }
 

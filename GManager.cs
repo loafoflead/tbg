@@ -312,12 +312,16 @@ public class GManager {
         }
 
         if (!System.IO.File.Exists("logs\\" + filename)) {
+            box.PrintD("Save file did not exist!");
             return 3;
         }
 
         string[] save_file = fm.readall("logs\\" + filename);
+
+        box.PrintD("Save file in save_file array, length: " + save_file.Length);
         
         if (save_file.Length < 1) {
+            box.PrintD("Save file was empty!");
             return 0;
         }
 
@@ -327,6 +331,7 @@ public class GManager {
         try {
             env.load_env(save_file[2]);
         } catch {
+            box.PrintD("Failed to load environment from save! '" + save_file[2] + "'");
             return 0;
         }
 
