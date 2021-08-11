@@ -15,6 +15,8 @@ public class GManager {
     private bool intro = false;
     public bool fast_cutscenes = false;
 
+    public bool step_through_actions = false;
+
 
     public bool show_old_msgs = true;
 
@@ -448,7 +450,7 @@ public class GManager {
     string rest_maybe = "";
 
     private static string[] null_action_commands = new string[] {
-        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear", "nl", "newline", "new_line",
+        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear", "nl", "newline", "new_line", "waitk", "wait_key", "wait_k", "wait_any_key"
     };
 
     private static string[] exceptional_commands = new string[] {
@@ -471,6 +473,8 @@ public class GManager {
         string action = actionn.Replace("\r", "").Replace("\n", "").Replace("\t", "");
         box.PrintD(action + "," + result);
 
+        box.flush();
+        if(step_through_actions == true) box.k.waitAnyKey();
 
         if (action.Replace(" ", "") != "if") {
             foreach(string g in exceptional_commands) {
@@ -483,16 +487,6 @@ public class GManager {
             if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
             else to_run_at_end = null;
 
-            /*if (resultt.Contains("if")) { // print(hi); if(tag=name):(say(hi);)?(say(bye);)
-                                                //                                           ^ this is where it gets cut
-                result = resultt.Split(';',2)[1];
-
-                result = result.Replace("(", "").Replace(")", "");
-
-                goto resume;
-
-            }*/
-
             box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end);
             box.PrintD("running: {Red}" + resultt.Split(';',2)[0]);
 
@@ -502,25 +496,6 @@ public class GManager {
         }
 
         resume:
-
-        /*
-            SYNTAX:
-
-                <action>print(Hi!);</action>
-
-                <action>
-                    if(tag=hurt_knee):
-                        (
-                            print(bye);
-                            give(money);
-                        )
-                    ?
-                        (
-                            print(no money!!);
-                        )
-                </action>
-
-        */
 
         if (fm.null_or_empt(result)) {
             foreach(string g in null_action_commands) {
@@ -533,55 +508,6 @@ public class GManager {
         }
 
         resume_null_action:
-
-        //box.Print("action: " + action + ", result: \n" + result.Replace(":", "{White}:{DarkYellow}").Replace("(", "{White}({Cyan}").Replace(")", "{White})").Replace(" ", "").Replace("+", "{Red}+\n{White}").Replace("?", "{Blue}\n?\n{White}").Replace("if:", "{Red}if{White}:\n"));
-        /*box.clr_buffer();
-        box.clr();
-        box.flush();
-        box.Print("action: " + action);
-        string print = "";
-        char previous_character = ' ';
-        foreach(char ch in result) {
-            switch(ch) {
-                case '?':
-                    print += "\n{Blue}?\n";
-                    continue;
-
-                case ':':
-                    print += "{White}:{DarkYellow}";
-                    continue;
-
-                case '+':
-                    print += "{Red}+\n{White}";
-                    continue;
-                
-                case '(':
-                    print += "{White}({Cyan}";
-                    continue;
-
-                case ')':
-                    print += "{White})";
-                    continue;
-
-                case ' ':
-                    if (previous_character == ' ') {
-                        continue;
-                    }
-                    else {
-                        print += ch.ToString();
-                    }
-                break;
-
-                default:
-                    print += ch.ToString();
-                break;
-            }
-            previous_character = ch;
-        }
-        box.Print(print);
-        box.flush();
-        box.k.waitAnyKey();
-        */
 
         switch (action.Replace(" ", "")) {
             case "give":
@@ -721,6 +647,13 @@ public class GManager {
                 }
             break;
 
+            case "wait_key":
+            case "waitk":
+            case "wait_k":
+            case "wait_for_key":
+                box.k.waitAnyKey();
+            break;
+
             case "name":
                 if(!fm.null_or_empt(result)) {
                     player.name = result;
@@ -758,6 +691,7 @@ public class GManager {
             break;
             
             case "go":
+            case "goto":
                 int b = env.Go(result.Replace(" ", ""));
                 System.Console.WriteLine(b.ToString());
                 if (b == 0) {
@@ -1597,7 +1531,7 @@ public class GManager {
 
     }
 
-    string[] split_at(string to_split, int index) {
+    public string[] split_at(string to_split, int index) {
         string[] to_return = new string[2];
         for (int i = 0; i < index; i ++) {
             to_return[0] += to_split[i];

@@ -392,6 +392,8 @@ public class Commands {
                     } 
                 }
 
+                gm.box.Print("{DarkGrey}Unknown command :/");
+
 
                 //do thing to sift through every interctable to check if any of the args correspond to the verb or the object k cool bye
                 //thanks!
@@ -568,6 +570,16 @@ public class Commands {
                         }
                         else {
                             gm.box.debug_print = true;
+                        }
+                    break;
+
+                    case "step_through_actions":
+                    case "step_through":
+                    case "step":
+                        if (gm.step_through_actions == true) {
+                            gm.step_through_actions = false;
+                        } else {
+                            gm.step_through_actions = true;
                         }
                     break;
 

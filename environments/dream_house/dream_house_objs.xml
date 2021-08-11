@@ -352,21 +352,27 @@
                 print(You approach the beast nervously, you hope you can maybe work this out with the creature.);
                 say(Uh, hello?);
                 print(You say.);
+                flush();
                 wait(2);
                 print(The beast doesn't react. You move closer to it. Suddenly it spins around to face you. You notice an unsettling lack of facial features on the creature. You can see the key gripped in its hand, standing out against the dark backdrop
  of the monster. There's a pause so long it's almost awkward, then the beast lunges at you.);
                 print({Red}OW!!!!!!!!!!!!);
+                flush();
+                wait(1);
                 print(The monster scratches you with a long claw.);
                 decrement(health);
                 print(You jump away from the creature in shock.);
+                flush();
                 if(inv=dream_gun) [
                     print(You pull out your toy gun, noticing that it feels a lot heavier in the dream, and fire at the beast.);
                     flush();
                     emu(/border !);
                     clear();
+                    flush();
+                    wait_key();
                     print({DarkRed}bang);
-                    fllush();
-                    wait(1);
+                    flush();
+                    waitk();
                     emu(/border █);
                     clear();
                     print(The house key is on the floor in a pool of something that looks like oil. You lift the key from the muck.);
