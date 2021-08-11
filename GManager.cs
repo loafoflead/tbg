@@ -1120,220 +1120,15 @@ public class GManager {
                     box.PrintD("comparison inverted, '!=' used. new comparison: " + compare_tag);
                 }
 
-                switch(compare_tag.Replace(" ", "")) {
+                bool true_false = check_conditions(compare_tag, condition);
 
-                    case "fun":
-
-                        if(player.fun == int.Parse(condition)) {
-
-                            checkDo(if_true);
-
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "rand5050":
-                    case "5050":
-                    case "1|2":
-                    case "rand_5050":
-                    case "random5050":
-                    case "random_5050":
-                    case "random_one_in_two":
-                        if (fm.getRan(1,101) < 50) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "rand2080":
-                    case "1|4":
-                    case "rand14":
-                    case "random_one_in_four":
-                        if (fm.getRan(1,101) < 50) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "rand100":
-                    case "random100":
-                    case "rand":
-                    case "100":
-                        if (fm.getRan(1,101) < int.Parse(condition)) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "value":
-                    case "val":
-                    case "value_is":
-                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "value_exists":
-                    case "val_exists":
-                    case "val?":
-                        player_value random_val = player.player_Values.Find(player_value => player_value.name == condition);
-                        if (random_val != null) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "value_isnt":
-                    case "!value":
-                    case "!val":
-                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
-                            checkDo(if_false);
-                        }
-                        else {
-                            checkDo(if_true);
-                        }
-                    break;
-
-                    case "ask":
-                        if(cm.YN(condition)) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-                    
-                    case "inv":
-                    case "inventory":
-                    case "inv_contains":
-
-                        if(condition == "empty" || condition == "0" || condition == "null") {
-                            if (player.inv.player_inventory.Count == 0) {
-                                checkDo(if_true);
-                            }
-                            else {
-                                checkDo(if_false);
-                            }
-                            break;
-                        }
-
-                        if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
-
-                            checkDo(if_true);
-
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-
-                    break;
-
-                    case "name":
-                        
-                        if(player.name == condition) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-
-                    break;
-
-                    case "room":
-                    case "current_room":
-                        if(env.current_room.tag == condition) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "op":
-                    case "operator":
-                    bool tf = false;
-                        if (condition == "true" || condition == "t" || condition == "1") {
-                            tf = true;
-                        }
-                        else {
-                            tf = false;
-                        }
-
-                        if(player.is_operator == tf) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "tag":
-                    case "tags":
-                    case "t":
-                        if(player.player_tags.Contains(condition)) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "resp":
-                    case "player_in":
-                    case "response":
-                        box.Print("{Cyan}Input >");
-                        box.nl();
-                        box.print_screen();
-                        if(System.Console.ReadLine() == condition) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    case "YN":
-                    case "yes_or_no":
-                    case "yes_no":
-                    case "yn":
-                        if(cm.YN(condition) == true) {
-                            checkDo(if_true);
-                        }
-                        else {
-                            checkDo(if_false);
-                        }
-                    break;
-
-                    default:
-                        foreach(player_value pv in player.player_Values) {/* foreach player value */
-                            if (pv.name == compare_tag) { 
-                                if (pv.value == condition) {
-                                    checkDo(if_true);
-                                }
-                                else {
-                                    checkDo(if_false);
-                                }
-                                goto break_label;
-                            }
-                        }
-                        box.Print("Internal error, invalid comparison tag requested; " + compare_tag + "=" + condition);
-                        break_label:
-                    break;
-
+                if (true_false == true) {
+                    checkDo(if_true);
+                }else {
+                    checkDo(if_false);
                 }
+
+                
             } catch {
                 box.Print("Internal error in xml level folder using interactable, command was: {Blue}" + action + "{White}:{Red}" + result);
             }
@@ -1410,6 +1205,213 @@ public class GManager {
         
     }
 
+    public bool check_conditions(string compare_tag, string condition) {
+        switch(compare_tag.Replace(" ", "")) {
+
+                    case "fun":
+
+                        if(player.fun == int.Parse(condition)) {
+
+                            return true;
+
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "rand5050":
+                    case "5050":
+                    case "1|2":
+                    case "rand_5050":
+                    case "random5050":
+                    case "random_5050":
+                    case "random_one_in_two":
+                        if (fm.getRan(1,101) < 50) {
+                           return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "rand2080":
+                    case "1|4":
+                    case "rand14":
+                    case "random_one_in_four":
+                        if (fm.getRan(1,101) < 50) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "rand100":
+                    case "random100":
+                    case "rand":
+                    case "100":
+                        if (fm.getRan(1,101) < int.Parse(condition)) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "value":
+                    case "val":
+                    case "value_is":
+                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "value_exists":
+                    case "val_exists":
+                    case "val?":
+                        player_value random_val = player.player_Values.Find(player_value => player_value.name == condition);
+                        if (random_val != null) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "value_isnt":
+                    case "!value":
+                    case "!val":
+                        if (player.get_value(condition.Split(':')[0]).value == condition.Split(':')[1]) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "ask":
+                        if(cm.YN(condition)) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    
+                    case "inv":
+                    case "inventory":
+                    case "inv_contains":
+
+                        if(condition == "empty" || condition == "0" || condition == "null") {
+                            if (player.inv.player_inventory.Count == 0) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+
+                        if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
+
+                            return true;
+
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "name":
+                        
+                        if(player.name == condition) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "room":
+                    case "current_room":
+                        if(env.current_room.tag == condition) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+
+                    case "op":
+                    case "operator":
+                    bool tf = false;
+                        if (condition == "true" || condition == "t" || condition == "1") {
+                            tf = true;
+                        }
+                        else {
+                            tf = false;
+                        }
+
+                        if(player.is_operator == tf) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "tag":
+                    case "tags":
+                    case "t":
+                        if(player.player_tags.Contains(condition)) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "resp":
+                    case "player_in":
+                    case "response":
+                        box.Print("{Cyan}Input >");
+                        box.nl();
+                        box.print_screen();
+                        if(System.Console.ReadLine() == condition) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "YN":
+                    case "yes_or_no":
+                    case "yes_no":
+                    case "yn":
+                        if(cm.YN(condition) == true) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    default:
+                        foreach(player_value pv in player.player_Values) {/* foreach player value */
+                            if (pv.name == compare_tag) { 
+                                if (pv.value == condition) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                            goto break_label;
+                        }
+                        box.Print("Internal error, invalid comparison tag requested; " + compare_tag + "=" + condition);
+                        break_label:
+                    break;
+
+                }
+                return false;
+    }
+
     void check_tag(string t) {
 
         if (!t.Contains("#")) {
@@ -1440,6 +1442,75 @@ public class GManager {
                         g += env.current_room.desc;
                     break;
                     default:
+
+                        if(hashes[i].Contains('[') || hashes[i].Contains(']')) {
+
+                            string new_res = hashes[i];
+
+                            box.PrintD(new_res);
+                            box.flush();
+
+
+
+                            string compare_tag = new_res.Split('=')[0].Split(':',2)[1]; //the tag containing what to compare to, inv, name, etc..
+                            box.PrintD("Compare tag: {Yellow}" + compare_tag);
+
+                            string condition = new_res.Split("=")[1].Split(":",2)[0].Replace(" ", ""); // the string that denotes the condition to be met by the compare tag
+                            box.PrintD("Condition: {Yellow}" + condition);
+
+                            string without_if_and_condition = new_res.Split(':',2)[1]; //just the results of the action
+                            box.PrintD("command without condition: {Yellow}" + without_if_and_condition);
+                
+                            string if_true =  without_if_and_condition.Split('[',2)[1];
+
+                            if (box.debug_print == true) box.flush();
+
+                            if_true = split_at(without_if_and_condition.Split('[',2)[1], count_to_end(if_true))[0];
+                
+
+                            box.PrintD("write if true: {Yellow}" + if_true);
+
+                            if (box.debug_print == true) box.flush();
+                
+                            if (box.debug_print == true) box.k.waitAnyKey();
+
+                            string minue_true = without_if_and_condition.Replace("[" + if_true + "]", "");
+                            string if_false = "";
+                
+                            if (minue_true.Split('[',2)[0].Contains('?') || minue_true.Split('[',2)[0].Contains("else")) {
+            
+
+                                try {minue_true = minue_true.Split('?',2)[1]; }
+                                catch {minue_true = minue_true.Split("else",2)[1]; }
+                                box.PrintD("text without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());  
+
+                                if_false = minue_true.Split('[',2)[1];
+
+                            if_false = split_at(if_false, count_to_end(if_false))[0];
+
+                            box.PrintD("Split successful, result: " + if_false);
+                            if (box.debug_print == true) box.flush();
+                
+                            box.PrintD("write if false: {Yellow}" + if_false);
+
+                            if (box.debug_print == true) box.flush();
+
+                        } else {
+                            if_false = "";
+                        }
+
+                            bool check = check_conditions(compare_tag, condition);
+
+                            if (check == true) {
+                                g += if_true;
+                                break;
+                            } else {
+                                g += if_false;
+                                break;
+                            }
+
+                        }
+
                         foreach(player_value pv in player.player_Values) {
                             if (pv.name == hashes[i]) {
                                 g += pv.value;
