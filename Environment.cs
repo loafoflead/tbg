@@ -340,6 +340,7 @@ public class Environment {
         current_room = rooms.Find(room_short => room_short.tag == tag);
         if (!gm.fm.null_or_empt(current_room.on_entry_action)) {
             gm.Do(current_room.on_entry_action);
+            current_room.entry_has_been_executed = true;
         }
     }
 
@@ -662,7 +663,7 @@ public class Environment {
 
     //may work
     void effect_obj(Interactable obk) {
-        gm.box.Print(obk.action_dia);
+        if(!gm.fm.null_or_empt(obk.action_dia)) gm.box.Print(obk.action_dia);
         //if(!gm.fm.null_or_empt(obk.tag_given)) gm.player.add_tag(obk.tag_given);
         gm.Do(obk.full_action);
     }

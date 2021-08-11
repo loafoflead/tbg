@@ -486,11 +486,11 @@
         <tag>dream_attic_2</tag>
         <name>Dream attic, 2</name>
 
-        <desc>A cramped little hallway with piles of old, dusty boxes on either side of you. You look ahead of you, there it #if(tag=no_beast)[was]?[is]#.</desc>
+        <desc>A cramped little hallway with piles of old, dusty boxes on either side of you. You look ahead of you, #if:inv=dream_house_key:[that's where the creature was]?[the creature is sitting there, with it's back to you]#. South  is the passage back to the attic.</desc>
         
         <directions>
-            <north>
-                <leads>#</leads>
+            <south>
+                <leads>dream_attic</leads>
                 <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
@@ -498,37 +498,12 @@
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
                 <action>
-                    if(inv=dream_bomb) [
-                        print(You place the bomb in front of the garbage. As if by magic, it lights itself. You duck behind a wooden pillar, and the blast goes off, shaking the entire room.);
-                        take(dream_bomb);
-                        goto(dream_attic_2);
-                        print(You dodge through the singed remains of the wall of rubbish.);
-                    ]   ?   [
-                        print(You can't get past this wall, you'd need something like a {Grey}bomb{White} to get past this.);
-                    ]
+                    
                 </action>
-            </north>
-
-            <east>
-                <leads>dream_parents_room</leads>
-                <dia></dia>
-                <lock></lock>
-                <lock_dia></lock_dia>
-                <unlock_dia></unlock_dia>
-                <lock_reqs></lock_reqs>
-                <tag_lock_dia></tag_lock_dia>
-                <action></action>
-            </east>
+            </south>
         </directions>
 
-        <objs>dream_attic_box</objs>
-        
-        <on_enter>
-            if(tag=catch_beast) [
-                print(You see the monster dart over the wall of garbage north of you. You try and push the rubbish away, but to no avail. You think you'd need a {DarkRed}bomb{White} or something to get rid of that wall.);
-            ]
-        </on_enter>
-        <on_entry_once>True</on_entry_once>
+        <objs>the_beast</objs>
 
     </room>
 

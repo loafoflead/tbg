@@ -192,7 +192,7 @@ public class GManager {
                             box.flush();
                             box.waitf(0.5f);
                             box.clr_buffer();
-                            box.Print(env.current_room.desc);
+                            Do("print", "(" + env.current_room.desc + ");");
                             box.print_screen();
                         }
                         else {
@@ -202,7 +202,7 @@ public class GManager {
                             box.flush();
                             box.waitf(0.5f);
                             box.clr_buffer();
-                            box.Print(env.current_room.desc);
+                            Do("print", "(" + env.current_room.desc + ");");
                             box.print_screen();
                         }
 
@@ -221,7 +221,7 @@ public class GManager {
                 box.flush();
                 box.waitf(0.5f);
                 box.clr_buffer();
-                box.Print(env.current_room.desc);
+                Do("print", "(" + env.current_room.desc + ");");
                 box.print_screen();
             }
         
@@ -392,6 +392,7 @@ public class GManager {
     }
 
     public void Do(string full_act) {
+        full_act = full_act.Replace("\r", "").Replace("\n", "").Replace("\t", "");
         if (!full_act.Contains('(') || !full_act.Contains(')') || !full_act.Contains(';')) {
             box.Print("Internal error, incomplete command requested; " + full_act + ", ERR_013");
             return;
@@ -460,14 +461,16 @@ public class GManager {
         "if",
     };
 
-    public void Do(string action, string resultt) {
+    public void Do(string actionn, string resultt) {
 
         
 
-        string result = resultt;
+        string result = resultt.Replace("\r", "").Replace("\n", "").Replace("\t", "");
         string to_run_at_end = "";
         int num_of_lines = 0;
-        box.PrintD(result + "," + action);
+        string action = actionn.Replace("\r", "").Replace("\n", "").Replace("\t", "");
+        box.PrintD(action + "," + result);
+
 
         if (action.Replace(" ", "") != "if") {
             foreach(string g in exceptional_commands) {
@@ -991,6 +994,7 @@ public class GManager {
             case "clear":
                 box.clr_buffer();
                 box.clr();
+                box.refresh_box();
             break;
             
             case "nl":

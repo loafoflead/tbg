@@ -206,6 +206,7 @@ public class Box {
         width = Console.WindowWidth;
         int line_index = 1;
         foreach(string f in buffer) {
+            default_col();
             if (print_raw == true) {
                 foreach(char ch in f.Replace("$", "")) {
                     if (Console.CursorLeft > width - 3 || ch == '\n') {
@@ -267,6 +268,8 @@ public class Box {
         width = Console.WindowWidth;
         int line_index = 1;
         foreach(string f in buffer) {
+
+            default_col();
 
             if (print_raw == true) {
                 foreach(char ch in f.Replace("$", "")) {

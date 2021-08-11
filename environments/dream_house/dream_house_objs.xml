@@ -339,6 +339,56 @@
 
     </obj>
 
+    <!-- THE BEAST !!!! -->
+    <obj>
+
+        <tag>the_beast</tag>
+        <name>bëast</name>
+
+        <verbs>gen/talk to/speak to/attack/punch/kick/shoot/burn/kill/destroy</verbs>
+        <action>
+            if(inv!=dream_house_key) [
+
+                print(You approach the beast nervously, you hope you can maybe work this out with the creature.);
+                say(Uh, hello?);
+                print(You say.);
+                wait(2);
+                print(The beast doesn't react. You move closer to it. Suddenly it spins around to face you. You notice an unsettling lack of facial features on the creature. You can see the key gripped in its hand, standing out against the dark backdrop
+ of the monster. There's a pause so long it's almost awkward, then the beast lunges at you.);
+                print({Red}OW!!!!!!!!!!!!);
+                print(The monster scratches you with a long claw.);
+                decrement(health);
+                print(You jump away from the creature in shock.);
+                if(inv=dream_gun) [
+                    print(You pull out your toy gun, noticing that it feels a lot heavier in the dream, and fire at the beast.);
+                    flush();
+                    emu(/border !);
+                    clear();
+                    print({DarkRed}bang);
+                    fllush();
+                    wait(1);
+                    emu(/border █);
+                    clear();
+                    print(The house key is on the floor in a pool of something that looks like oil. You lift the key from the muck.);
+                    give(dream_house_key);
+                ]   ?   [
+                    print(The beast lunged at you. You're certain it killed you, but you wake up in your bed a moment later.);
+                    load_env(house);
+                    setroom(bedroom);
+                ]
+
+            ]   ?   [
+                print(The beast is gone.);
+            ]
+        </action>
+       
+        <one_time_use></one_time_use>
+        <used_dialogue></used_dialogue>
+
+        <aliases>beast/the beast/the creature/creature/monster/the monster/thing/guy</aliases>
+
+    </obj>
+
     <!--  **MAGIC_PORTAL**  -->
     <obj>
 

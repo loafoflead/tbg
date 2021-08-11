@@ -356,7 +356,7 @@ public class Commands {
             case "explore":
             case "check":
             case "look":
-                gm.box.Print(gm.env.current_room.desc);
+                gm.Do("print" + "(" + gm.env.current_room.desc + ");");
             break;
 
             case "where":
