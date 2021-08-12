@@ -25,8 +25,6 @@ public class Action {
 
     }
 
-    string[] to_execute;
-
     struct action {
         public int length;
         public action_type action_Type;
@@ -52,6 +50,9 @@ public class Action {
         public string if_false;
         public string content_to_repeat;
 
+        public string routine_name;
+        public string sub_routine;
+
         string get_op(string st) {
             foreach(char t in st) {
                 if (t == '=' || t == '<' || t == '>' || t == '!') {
@@ -69,6 +70,7 @@ public class Action {
         repeat = 1,
         regular = 2,
         null_action = 3,
+        subroutine =4,
     };
 
     private string[] exceptional_actions = new string[] {
@@ -113,6 +115,13 @@ public class Action {
                     actions.Add(to_add);
 
                 }
+                else if ("new_subroutine" == act) {
+
+                    action to_add = parse_subroutine(gm.split_at(full_act, i)[1]);
+                    i += to_add.length = act.Length;
+                    actions.Add(to_add);
+
+                }
                 else {
                     
                     action _to_add = parse_regular(gm.split_at(full_act, i)[1], act);
@@ -154,6 +163,13 @@ public class Action {
                     }
                 break;
 
+                case action_type.subroutine:
+                    gm.env.subroutines.Add(new subroutine{
+                        name = ac.routine_name,
+                        value = ac.sub_routine,
+                    });
+                break;
+
             }
         }
 
@@ -161,6 +177,44 @@ public class Action {
 
     }
 
+
+    action parse_subroutine(string routine) {
+
+        if (!routine.Contains('[') || !routine.Contains(']')) {
+            gm.box.PrintD("repeat action was recognized with invalid syntax.");
+            return new action{
+                action_tag = "null",
+                content = "();"
+            };
+        }
+
+        prd("found subroutine declaration");
+
+        action to_return = new action();
+
+        to_return.action_tag = "new_subroutine";
+
+        to_return.action_Type = action_type.subroutine;
+
+        string routine_name = routine.Split('[',2)[1];
+        routine_name = routine_name.Split('=',2)[0];
+
+        string routine_proper = routine.Split("=",2)[1];
+
+        routine_proper = gm.split_at(routine_proper, gm.count_to_end(routine_proper))[0];
+
+        to_return.routine_name = routine_name;
+        to_return.sub_routine = routine_proper;
+
+        to_return.length = gm.count_to_end(routine.Split('[',2)[1]) + 1;
+
+        action_status(to_return);
+        gm.box.flush();
+        gm.box.k.waitAnyKey();
+
+        return to_return;
+
+    }
 
     action parse_regular(string action_script, string action_t) {
 
@@ -177,7 +231,7 @@ public class Action {
 
         to_return.action_Type = action_type.regular;
 
-        string content = gm.split_at(rest, gm.count_to_end(rest, 1, '(', ')'))[0];
+        string content = gm.split_at(rest, gm.count_to_end(rest, 0, '(', ')'))[0];
 
         to_return.content = content;
 
@@ -202,7 +256,7 @@ public class Action {
             };
         }
 
-        pr("found repeat");
+        prd("found repeat");
 
         action to_return = new action();
 
@@ -320,6 +374,16 @@ public class Action {
                 pr("condition: " + ac.condition);
                 pr("content to repeat: " + ac.content_to_repeat);
                 pr("lenght: " + ac.length.ToString());
+            break;
+
+            case action_type.subroutine:
+                prd("subrotine name: " + ac.routine_name);
+                prd("subroutine: " + ac.sub_routine);
+                prd("Lenght: " + ac.length);
+            break;
+
+            default:
+                prd("Error in 'action_status(action ac)', invalid or missing action_type.");
             break;
 
         }
