@@ -387,7 +387,7 @@ public class Action {
 
         if_true_and_if_false = gm.split_at(if_true_and_if_false, gm.count_to_end(if_true_and_if_false))[1];
 
-        if (!if_true_and_if_false.Split('[',2)[0].Contains("?")) {
+        if (!if_true_and_if_false.Split('[',2)[0].Contains("?") && !if_true_and_if_false.Split('[',2)[0].Contains("else")) {
 
             prd("if statement without false");
 

@@ -512,6 +512,7 @@ public class Environment {
     void effect_direction(direction dir) {
         Go(dir.direction_leads);
         gm.box.Print(dir.action_dialogue);
+        gm.situ_change(GManager.change_types.move_to, get_room_name_by_tag(dir.direction_leads));
     }
 
 

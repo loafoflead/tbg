@@ -12,14 +12,16 @@
         
         <directions>
             <north>
-                <leads>dream_garden</leads>
-                <dia>You clamber out of your window and crash into the bushes into your garden.</dia>
+                <leads>#</leads>
+                <dia></dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action>
+                    print(You try and open the window. It's sealed shut.);
+                </action>
             </north>
 
             <east>
@@ -30,7 +32,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </east>
             <south>
                 <leads>dream_hallway</leads>
@@ -40,7 +42,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </south>
             <west>
                 <leads></leads>
@@ -50,7 +52,7 @@
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <lock_tag_req></lock_tag_req>
+                <action></action>
             </west>
 
         </directions>
@@ -511,6 +513,135 @@
         </directions>
 
         <objs>the_beast</objs>
+
+    </room>
+
+    <!-- DREAM FRONT GARDEN -->
+    <room> 
+
+        <id>9</id>
+
+        <tag>dream_front_garden</tag>
+        <name>Dream front garden</name>
+
+        <desc>Your front garden. It's early morning, and there's still dewdrops on the grass. East is a beaten dirt path to the road to your small village, north is your front door. South is your garage door.</desc>
+        
+        <directions>
+            <north>
+                <leads>dream_downstairs_hallway</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </north>
+
+            <east>
+                <leads>dream_dirt_path</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                </action>
+            </east>
+            <south>
+                <leads>##</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(The garage door is locked.);
+                </action>
+            </south>
+        </directions>
+
+        <objs></objs>
+        <items></items>
+
+    </room>
+
+    <!-- DREAM BACK GARDEN _/ -->
+    <room> 
+
+        <id>10</id>
+
+        <tag>dream_back_garden</tag>
+        <name>Dream back garden</name>
+
+        <desc>Your back garden, it's dark and foggy, you can't see very far in front of you. You're able to make out a birdbath in front of you, but you can't see anything else through the thick fog.</desc>
+        
+        <directions>
+            <west>
+                <leads>dream_hidden_garden</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+        </directions>
+
+        <objs>dream_birdbath</objs>
+
+        <on_enter>
+            if(tags!defeated_beast) [
+                print(You hear a dismal screeching from inside the house. You decide to ignore it.);
+                givetag(escaped);
+            ]
+        </on_enter>
+        <on_entry_once>True</on_entry_once>
+
+    </room>
+
+    <!-- DREAM HIDDEN GARDEN _/ -->
+    <room> 
+
+        <id>11</id>
+
+        <tag>dream_hidden_garden</tag>
+        <name>Dream hidden garden</name>
+
+        <desc>A small hidden garden, it's walled off by tall thorn covered bushes. There's a path into one of the bushes north of you, and east is the path back into the garden. This place has an unsettlingnly real feeling to it.</desc>
+        
+        <directions>
+            <east>
+                <leads>dream_back_garden</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </east>
+            <north>
+                <leads>#</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(You duck through the bushes, getting snagged on some thorns.);
+                    env(house);
+                    set_room(hidden_garden);
+                    run(replace_normal_items);
+                </action>
+            </north>
+            
+        </directions>
+
 
     </room>
 

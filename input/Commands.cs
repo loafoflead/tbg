@@ -908,7 +908,7 @@ public class Commands {
                         foreach(string ta in gm.player.player_tags) {
                             h += ta + " ";
                         }
-                        gm.box.PrintD(h);
+                        gm.box.Print(h);
                     break;
 
                     default:
@@ -1026,7 +1026,7 @@ public class Commands {
                         foreach(string ta in gm.player.player_tags) {
                             h += ta + " ";
                         }
-                        gm.box.PrintD(h);
+                        gm.box.Print(h);
                     break;
 
                     case "values":

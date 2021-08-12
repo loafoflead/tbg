@@ -229,11 +229,22 @@
 
         <verbs>gen/wash in/wash up/clean/clean the</verbs>
         <action>
-            if(tag!=clean_handies) [
+            if(tag!clean_handies) [
+                print(You wash your hands in the sink.);
                 givetag(clean_handies);
-            ] ? [null();]
+            ] ? [
+                if(tag=dirty_handies) [
+                    print(You wash your hands in the sink, cleaning the dirt from them.);
+                    givetag(clean_handies);
+                ]
+                ?
+                [
+                    print(Your handies are already clean :/);
+                    return();
+                ]
+            ]
         </action>
-        <action_dia>You wash your hands.</action_dia>
+        <action_dia></action_dia>
 
         <item_req></item_req>
         <item_dia></item_dia>

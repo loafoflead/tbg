@@ -339,6 +339,31 @@
 
     </obj>
 
+    <!-- DREAM BACK GARDEN -->
+    <obj>
+
+        <tag>dream_birdbath</tag>
+        <name>Dream birdbath</name>
+
+        <verbs>gen/gen_furniture/drink from</verbs>
+        <action>
+            print(You approach the birdbath. It's full almost to overflowing, but not with water, with some kind of black liquid, like oil.);
+            if(tags=clean_handies) [
+                print(You decide not to dip your clean hands into the strange substance.);
+            ]
+            ? [
+                print(You put one finger into the oily substance. It didn't feel liquid it all, it was like putting your hand into a cloud. You pull it out again, and notice your hand is covered in a thin black film.);
+                givetag(dirty_handies);
+            ]
+        </action>
+       
+        <one_time_use>1</one_time_use>
+        <used_dialogue>You examine the birdbath again, finding nothing, but moving closer to the birdbath you notice a rough iron gate west of you.</used_dialogue>
+
+        <aliases>birdbath/dream bath/dream birdbath/bath</aliases>
+
+    </obj>
+
     <!-- THE BEAST !!!! -->
     <obj>
 
