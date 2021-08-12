@@ -108,6 +108,7 @@ public class Commands {
     }
 
     public void emulate(string command) {
+        System.Collections.Generic.List<string> cpy = gm.box.copy_buffer();
         arguments = new string[10];
         if (command.Contains(" ")) arguments = command.Split(" ");
         else arguments[0] = command;
@@ -131,6 +132,8 @@ public class Commands {
             
             //gm.box.Print("{Gray}>\tUnkown Command!\t'" + h + "'");
         }
+        gm.box.replace_buffer(cpy);
+        gm.box.refresh_box();
     }
 
     public void regular_commands() {
