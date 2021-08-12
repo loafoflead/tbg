@@ -15,9 +15,7 @@ public class Action {
         string full_action = full_actionn.Replace("\r", "").Replace("\n", "").Replace("\t", "");
 
         if (!full_action.Contains('(')) return 0;
-
-        string action = full_action.Split('(',2)[0];
-        string rest_of_command = "(" + full_action.Split('(',2)[0];
+        if (gm.fm.null_or_empt(full_action)) return 0;
 
         evaluate_action(full_action);
 
@@ -85,12 +83,34 @@ public class Action {
         gm.box.PrintD(str);
     }
 
+    private static string[] null_action_commands = new string[] {
+        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear", "nl", "newline", "new_line", "waitk", "wait_key", "wait_k", "wait_any_key"
+    };
+
+    private static string[] exceptional_commands = new string[] {
+        "creat_subroutine",
+        "create_sub", "createsub",
+        "subroutine",
+        "routine",
+        "new_sub",
+        "newsub",
+        "new_subroutine",
+        "sub",
+    };
+
+    private bool array_contains(string str, string[] array) {
+        foreach(string h in array) {
+            if (h == str) {
+                return true;
+            }
+        }   
+        return false;
+    }
+
     int evaluate_action(string full_act) {
 
         List<action> actions = new List<action>();
     
-        gm.box.Print(full_act);
-
         string act = "";
 
         for(int i = 0; i < full_act.Length; i ++) {
@@ -98,7 +118,7 @@ public class Action {
             string current = full_act[i].ToString();
 
             if(current != "(" && current != "[") {
-                act += current;
+                if (current != " ") act += current;
             }   else {
             
                 if ("if" == act) {
@@ -115,10 +135,17 @@ public class Action {
                     actions.Add(to_add);
 
                 }
-                else if ("new_subroutine" == act) {
+                else if (array_contains(act, exceptional_commands)) {
 
                     action to_add = parse_subroutine(gm.split_at(full_act, i)[1]);
-                    i += to_add.length = act.Length;
+                    i += to_add.length - act.Length;
+                    actions.Add(to_add);
+
+                }
+                else if (array_contains(act, null_action_commands)) {
+
+                    action to_add = parse_null(act);
+                    i += to_add.length - act.Length;
                     actions.Add(to_add);
 
                 }
@@ -130,7 +157,7 @@ public class Action {
 
                 }
 
-                pr("latest: " + act + ", index: " + i.ToString() + ", length: " + full_act.Length.ToString());
+                prd("latest: " + act + ", index: " + i.ToString() + ", length: " + full_act.Length.ToString());
                 act = "";
                 
 
@@ -141,13 +168,11 @@ public class Action {
 
         foreach(action ac in actions) {
             action_status(ac);
-            gm.box.flush();
-            gm.box.k.waitAnyKey();
             switch(ac.action_Type) {
 
                 case action_type.regular:
                     try {
-                        gm.Do(ac.action_tag, ac.content);
+                        gm.Dod(ac.action_tag, ac.content);
                     } catch {
                         prd("failed to run a regular action;");
                     }
@@ -170,6 +195,13 @@ public class Action {
                     });
                 break;
 
+                case action_type.null_action:
+                    gm.Dod(ac.action_tag, "();");
+                break;
+
+            }
+            if (gm.step_through_actions == true) {
+                gm.box.k.waitAnyKey();
             }
         }
 
@@ -177,6 +209,19 @@ public class Action {
 
     }
 
+    action parse_null(string tag) {
+
+        prd("found null");
+
+        action ac  = new action();
+        ac.action_Type = action_type.null_action;
+        ac.length = tag.Length + 3;
+        ac.action_tag = tag;
+
+        action_status(ac);
+        
+        return ac;
+    }
 
     action parse_subroutine(string routine) {
 
@@ -206,12 +251,10 @@ public class Action {
         to_return.routine_name = routine_name;
         to_return.sub_routine = routine_proper;
 
-        to_return.length = gm.count_to_end(routine.Split('[',2)[1]) + 1;
+        to_return.length = gm.count_to_end(routine.Split('[',2)[1]) + to_return.action_tag.Length + 1;
 
         action_status(to_return);
-        gm.box.flush();
-        gm.box.k.waitAnyKey();
-
+        
         return to_return;
 
     }
@@ -221,7 +264,7 @@ public class Action {
         action_t = action_t.Replace("[", "").Replace("]", "");
        if (action_t.Contains(';')) action_t = action_t.Split(';',2)[1];
 
-        pr("found regular");
+        prd("found regular");
 
         action to_return = new action();
 
@@ -233,14 +276,20 @@ public class Action {
 
         string content = gm.split_at(rest, gm.count_to_end(rest, 0, '(', ')'))[0];
 
+        if (gm.fm.null_or_empt(content)) {
+            to_return.action_Type = action_type.null_action;
+            to_return.length = to_return.action_tag.Length + 3;
+            action_status(to_return);
+            
+            return to_return;
+        }
+
         to_return.content = content;
 
         to_return.length = to_return.action_tag.Length + content.Length + 3;
 
         action_status(to_return);
-        gm.box.flush();
-        gm.box.k.waitAnyKey();
-
+        
         return to_return;
 
     }
@@ -278,8 +327,7 @@ public class Action {
         to_return.length = gm.count_to_end(repeat_string.Replace(to_repeat, to_repeat + "§"), 0, '¨', '§');
 
         action_status(to_return);
-        gm.box.flush();
-        gm.box.k.waitAnyKey();
+        
 
         return to_return;
 
@@ -295,7 +343,7 @@ public class Action {
             };
         }
 
-        pr("found if");
+        prd("found if");
 
         action to_return = new action();
 
@@ -314,14 +362,14 @@ public class Action {
 
         if_true_and_if_false = gm.split_at(if_true_and_if_false, gm.count_to_end(if_true_and_if_false))[1];
 
-        if (!if_true_and_if_false.Split('[',2)[0].Contains("else")) {
+        if (!if_true_and_if_false.Split('[',2)[0].Contains("?")) {
+
+            prd("if statement without false");
 
             to_return.length = gm.count_to_end(if_string.Replace(if_true, if_true + "§"), 0, '¨', '§');
-        
-            action_status(to_return);
-            gm.box.flush();
-            gm.box.k.waitAnyKey();
 
+            action_status(to_return);
+            
             to_return.action_Type = action_type.conditional;
 
             return to_return;
@@ -338,9 +386,7 @@ public class Action {
         to_return.length = gm.count_to_end(if_string.Replace(if_false, if_false + "§"), 0, '¨', '§');
         
         action_status(to_return);
-        gm.box.flush();
-        gm.box.k.waitAnyKey();
-
+        
         to_return.action_Type = action_type.conditional;
 
         return to_return;
@@ -348,10 +394,12 @@ public class Action {
 
     private void action_status(action ac) {
 
+        if (gm.box.debug_print ==false) return;
+
         switch(ac.action_Type) {
 
             case action_type.regular:
-                gm.box.Print("action: " + ac.action_tag);
+                pr("action: " + ac.action_tag);
                 gm.box.Print("content: " + ac.content);
                 pr(ac.length.ToString());
             break;
@@ -387,6 +435,12 @@ public class Action {
             break;
 
         }
+
+        gm.box.flush();
+        gm.box.k.waitAnyKey();
+
     }
+
+    
 
 }

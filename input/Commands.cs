@@ -57,7 +57,7 @@ public class Commands {
 
         if (succeeded == true && gm.show_old_msgs == true) { /* If the command was found, print it to the old command reel */
 
-            gm.box.PrintLn(" ", 100); //empty the line
+            try {gm.box.PrintLn(" ", 100); //empty the line
             if (get_string(arguments).Remove(get_string(arguments).Length - 1, 1) == "quit"){
                 arguments[0] = "{DarkRed}quit{DarkGray}";
             }
@@ -72,6 +72,9 @@ public class Commands {
                 "{DarkGray}, " + get_back_str(previous_msgs.ToArray()) /* then the previous ones in DarkGray */, 100
             );
             previous_msgs.Add(get_string(arguments).Remove(get_string(arguments).Length - 1, 1) + ", "); /* add the most recent message to the previous message list */
+            } catch {
+                previous_msgs.Add(":/");
+            }
 
         }
 
@@ -430,13 +433,18 @@ public class Commands {
 
         arguments[0] = arguments[0].Replace("/", "");
 
+        if (gm.fm.null_or_empt(arguments[0])) {
+            succeeded = false;
+            return;
+        }
+
         switch (arguments[0]) {
 
             case "get":
             case "obtain":
             case "give":
                 if (arguments.Length > 1) {
-                    gm.Do("give", "(" + arguments[1] + ");");
+                    gm.Do("give(" + arguments[1] + ");");
                 }
                 else {
                     gm.box.Print("Incorrect syntax, '{Cyan}give [item_tag]{end}'. type '{Cyan}/list items all{end}' for the items in the room.");
@@ -479,6 +487,7 @@ public class Commands {
             case "log":
                 gm.box.Print("Log file name: {Gray}" + gm.log_file);
             break;
+
             case "loadsave":
                 if (arguments.Length < 2) {
                     gm.box.Print("Incorrect syntax, usage is '{Cyan}/loadsave [save file name].");
@@ -496,6 +505,7 @@ public class Commands {
                     gm.box.Print("Save file corrupt!");
                 }
             break;
+
             case "listsaves":
                 string[] save_files = System.IO.Directory.GetFiles("logs\\");
                 int number = 1;
@@ -513,20 +523,28 @@ public class Commands {
                 else {
 
                     gm.box.seperator_character = char.Parse(arguments[1]);
+                    gm.box.Print("Seperator updated to " + arguments[1]);
                     return;
 
                 } 
+
+            case "act":
+                gm.ac.execute(arguments[1]);
+            break;
 
             case "c":
             case "cpy":
             case "copy":
                 buffer_copy = gm.box.copy_buffer();
+                gm.box.Print("{Magenta}Buffer copied.");
             break;
 
             case "p":
             case "pst":
             case "paste":
                 gm.box.replace_buffer(buffer_copy);
+                gm.box.Print("{Magenta}Buffer pasted.");
+                gm.box.refresh_box();
             break;
 
             case "disp":
@@ -547,6 +565,7 @@ public class Commands {
                         else {
                             gm.show_old_msgs = true;
                         }
+                        gm.box.Print("{Magenta}previous_messages_shown = {Grey}" + gm.show_old_msgs.ToString());
                     break;
 
                     case "raw":
@@ -558,6 +577,7 @@ public class Commands {
                         else {
                             gm.box.print_raw = true;
                         }
+                        gm.box.Print("{Magenta}raw_printout = {Grey}" + gm.box.print_raw.ToString());
                     break;
 
                     case "show_debug":
@@ -571,6 +591,7 @@ public class Commands {
                         else {
                             gm.box.debug_print = true;
                         }
+                        gm.box.Print("{Magenta}debug_print = {Grey}" + gm.box.debug_print.ToString());
                     break;
 
                     case "step_through_actions":
@@ -581,6 +602,7 @@ public class Commands {
                         } else {
                             gm.step_through_actions = true;
                         }
+                        gm.box.Print("{Magenta}step_through_actions = {Grey}" + gm.step_through_actions.ToString());
                     break;
 
                     case "colours":
@@ -903,7 +925,7 @@ public class Commands {
                     gm.box.Print("{Magenta}Player name: " + gm.player.name);
                     return;
                 }
-                else gm.Do("name", "(" + arguments[1] + ");");
+                else gm.player.name = arguments[1];
             break;
 
             case "bio":
@@ -911,7 +933,7 @@ public class Commands {
                     gm.box.Print("{Magenta}Player bio: " + gm.player.bio);
                     return;
                 }
-                gm.Do("bio", "(" + arguments[1] + ");");
+                gm.player.bio = arguments[1];
             break;
 
             case "inspect":

@@ -347,15 +347,14 @@
 
         <verbs>gen/talk to/speak to/attack/punch/kick/shoot/burn/kill/destroy</verbs>
         <action>
-            if(inv!=dream_house_key) [
+            if(inv!dream_house_key) [
 
                 print(You approach the beast nervously, you hope you can maybe work this out with the creature.);
                 say(Uh, hello?);
                 print(You say.);
                 flush();
                 wait(2);
-                print(The beast doesn't react. You move closer to it. Suddenly it spins around to face you. You notice an unsettling lack of facial features on the creature. You can see the key gripped in its hand, standing out against the dark backdrop
- of the monster. There's a pause so long it's almost awkward, then the beast lunges at you.);
+                print(The beast doesn't react. You move closer to it. Suddenly it spins around to face you. You notice an unsettling lack of facial features on the creature. You can see the key gripped in its hand, standing out against the dark backdrop of the monster. There's a pause so long it's almost awkward, then the beast lunges at you.);
                 print({Red}OW!!!!!!!!!!!!);
                 flush();
                 wait(1);

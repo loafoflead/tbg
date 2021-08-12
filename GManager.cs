@@ -92,7 +92,6 @@ public class GManager {
 
         while (is_running == true) {
             cm.getInput();
-            //box.nl();
             box.print_screen();
         }
 
@@ -196,7 +195,7 @@ public class GManager {
                             box.flush();
                             box.waitf(0.5f);
                             box.clr_buffer();
-                            Do("print", "(" + env.current_room.desc + ");");
+                            Do("print(" + env.current_room.desc + ");");
                             box.print_screen();
                         }
                         else {
@@ -206,7 +205,7 @@ public class GManager {
                             box.flush();
                             box.waitf(0.5f);
                             box.clr_buffer();
-                            Do("print", "(" + env.current_room.desc + ");");
+                            Do("print(" + env.current_room.desc + ");");
                             box.print_screen();
                         }
 
@@ -222,10 +221,11 @@ public class GManager {
             else { /* If the save can be loaded; */
                 box.clr_buffer();
                 box.Print("Save file successfully loaded!");
+                box.PrintD("env: " + env.current_env_name);
                 box.flush();
-                box.waitf(0.5f);
+                box.waitf(2f);
                 box.clr_buffer();
-                Do("print", "(" + env.current_room.desc + ");");
+                Do("print(" + env.current_room.desc + ");");
                 box.print_screen();
             }
         
@@ -334,6 +334,7 @@ public class GManager {
 
         try {
             env.load_env(save_file[2]);
+            box.PrintD("loaded env");
         } catch {
             box.PrintD("Failed to load environment from save! '" + save_file[2] + "'");
             return 0;
@@ -389,27 +390,15 @@ public class GManager {
             player.add_value(save_file[7].Split(':')[0], save_file[7].Split(':')[1]);
         }
 
-        
+        if(box.debug_print == true) box.k.waitAnyKey();
 
         return 1;
 
     }
 
     public void Do(string full_act) {
-        full_act = full_act.Replace("\r", "").Replace("\n", "").Replace("\t", "");
-        if (!full_act.Contains('(') || !full_act.Contains(')') || !full_act.Contains(';')) {
-            box.Print("Internal error, incomplete command requested; " + full_act + ", ERR_013");
-            return;
-        }
-        Do(full_act.Split('(',2)[0].Replace(" ", ""), '(' + full_act.Split('(',2)[1]);
-        
-        if (rest_maybe != "" && !fm.is_spaces(rest_maybe) && rest_maybe != "    " && rest_maybe.Replace(" ", "") != "]" && rest_maybe.Replace(" ", "") != "[") {
-            try {Do(rest_maybe.Split('(',2)[0].Replace(" ", ""), '(' + rest_maybe.Split('(',2)[1]);}
-            catch {
-                box.Print("{Red}Fatal internal error in 'Do()' command.");
-            }
-            rest_maybe = "";
-        }
+
+        ac.execute(full_act);
         
     }
 
@@ -449,23 +438,11 @@ public class GManager {
         return to_return;
     }
 
-    string rest_maybe = "";
+    
 
-    private static string[] null_action_commands = new string[] {
-        "null", "nl", "wait", "wt", "flush", "flsh", "clr", "clear", "nl", "newline", "new_line", "waitk", "wait_key", "wait_k", "wait_any_key"
-    };
+    public void Dod(string action, string result) {
 
-    private static string[] exceptional_commands = new string[] {
-        "creat_subroutine",
-        "create_sub", "createsub",
-        "subroutine",
-        "routine",
-        "new_sub",
-        "newsub",
-        "if",
-    };
 
-    public void Do(string action, string result) {
 
         switch (action.Replace(" ", "")) {
             case "give":
@@ -884,129 +861,6 @@ public class GManager {
                 box.Print("{Cyan}- \"" + g + "{Cyan}\"");
             break;
 
-            case "if": //example of syntax: if:inv=headband;go:vault_lobby/say:get headband
-                       // new syntax: if:(inv=headband):(go:vault)?(say:get headband)
-                       // if:(name=hi):(if:(op=true):(say:no)?(say:pee))?(say:bye)
-                       // if:(name=no_name):(say:noname haha cringe)?(say:i like pee)
-                       /*if     :    (name=no_name):(if:(inv=headband):(say:hi)?(say:bye))?(say:i like pee)*/
-                       // give:headband+print:hb
-                       
-            try {
-
-                string new_res = result;
-
-                string compare_tag = new_res.Split('=')[0].Split('(',2)[1]; //the tag containing what to compare to, inv, name, etc..
-                box.PrintD("Compare tag: {Yellow}" + compare_tag);
-
-                string condition = new_res.Split("=")[1].Split(")",2)[0].Replace(" ", ""); // the string that denotes the condition to be met by the compare tag
-                box.PrintD("Condition: {Yellow}" + condition);
-
-                string without_if_and_condition = new_res.Split(')',2)[1]; //just the results of the action
-                box.PrintD("command without condition: {Yellow}" + without_if_and_condition);
-                
-                string if_true =  without_if_and_condition.Split('[',2)[1];
-
-                //int i = 0;
-
-                if (box.debug_print == true) box.flush();
-
-                if_true = split_at(without_if_and_condition.Split('[',2)[1], count_to_end(if_true))[0];
-
-                //foreach(string g in exceptional_commands) {
-                    if (if_true.Contains("[")) {
-                        if_true += "]";
-                    }   else {
-                        if_true = if_true.Replace("]", "");
-                    }
-                //}
-
-                box.PrintD("execute if true: {Yellow}" + if_true);
-
-                if (box.debug_print == true) box.flush();
-                
-                if (box.debug_print == true) box.k.waitAnyKey();
-
-                string minue_true = without_if_and_condition.Replace("[" + if_true + "]", "");
-                string if_false = "";
-                
-            if (minue_true.Split('[',2)[0].Contains('?') || minue_true.Split('[',2)[0].Contains("else")) {
-            
-
-                try {minue_true = minue_true.Split('?',2)[1]; }
-                catch {minue_true = minue_true.Split("else",2)[1]; }
-                box.PrintD("command without true: {Yellow}" + minue_true + ", true length: " + if_true.Length.ToString());
-
-                if_false = minue_true.Split('[',2)[1];
-
-                try {
-                    if (!fm.is_spaces(split_at(if_false, count_to_end(if_false) + 1)[1])) {
-                        rest_maybe = split_at(if_false, count_to_end(if_false) + 1)[1].Replace("\t", "").Replace("\n", "").Replace("\r", "");
-                    }
-                } catch {
-                    box.PrintD("No rest of the command was found, rest_maybe = NULL");
-                    if (box.debug_print == true) box.flush();
-                }
-
-                if_false = split_at(if_false, count_to_end(if_false))[0];
-
-                box.PrintD("Split successful, result: " + if_false);
-                if (box.debug_print == true) box.flush();
-
-                if (if_false.Contains("[")) {
-                    if_false += "]";
-                }   else {
-                    if_false = if_false.Replace("]", "");
-                }
-
-                /*for(i = 0; i < if_false.Length; i ++) {
-
-                    if (if_false[i] == '[') {
-                        
-                    }
-
-                    if (if_false[i] == ']') {
-                        try {
-                            if (!fm.is_spaces(split_at(if_false, i + 1)[1])) rest_maybe = split_at(if_false, i + 1)[1].Replace("\t", "").Replace("\n", "");
-                        } catch {}
-                        if_false = split_at(if_false, i)[0];
-                    }
-
-                }*/
-                
-                box.PrintD("execute if false: {Yellow}" + if_false);
-
-                if (box.debug_print == true) box.flush();
-            } else {
-                rest_maybe = minue_true;
-                if_false = "null();";
-            }
-
-                if (rest_maybe != "" || fm.is_spaces(rest_maybe)) {
-                    box.PrintD("rest of command: {Yellow}" + rest_maybe);
-                }
-
-                if (compare_tag.Contains('!')) {
-                    string temp_true = if_true;
-                    if_true = if_false;
-                    if_false = temp_true;
-                    compare_tag =  compare_tag.Replace("!", "");
-                    box.PrintD("comparison inverted, '!=' used. new comparison: " + compare_tag);
-                }
-
-                bool true_false = check_conditions(compare_tag, "=", condition);
-
-                if (true_false == true) {
-                    checkDo(if_true);
-                }else {
-                    checkDo(if_false);
-                }
-
-                
-            } catch {
-                box.Print("Internal error in xml level folder using interactable, command was: {Blue}" + action + "{White}:{Red}" + result);
-            }
-            break;
-
             case "store":
                 if (!result.Contains(':')) {
                     box.Print("Syntax error in 'store' command: " + result);
@@ -1069,7 +923,7 @@ public class GManager {
 
             
             default:
-                box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
+                //box.Print("Fatal 'Do' Internal Error occurred ERR_07. {DarkRed}" + action + "//{Red}" + result);
             break;
         }
 
@@ -1202,20 +1056,24 @@ public class GManager {
 
                         if(condition == "empty" || condition == "0" || condition == "null") {
                             if (player.inv.player_inventory.Count == 0) {
-                                return true;
+                                if (operation == "=") return true;
+                                else return false;
                             }
                             else {
-                                return false;
+                                if (operation == "!") return true;
+                                else return false;
                             }
                         }
 
                         if(player.inv.player_inventory.Contains(env.get_item_from_tag(condition))) {
 
-                            return true;
+                            if (operation == "=") return true;
+                            else return false;
 
                         }
                         else {
-                            return false;
+                            if (operation == "!") return true;
+                            else return false;
                         }
 
 

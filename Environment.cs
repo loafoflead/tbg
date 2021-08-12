@@ -82,20 +82,34 @@ public class Environment {
             });
         }
 
+        gm.box.PrintD("Rooms in memory, unloaded");
+        if (gm.box.debug_print) gm.box.flush();
+        if (gm.box.debug_print) gm.box.k.waitAnyKey();
+
         load_rooms();   
+
+        gm.box.PrintD("loaded rooms");
+        if (gm.box.debug_print) gm.box.flush();
+        if (gm.box.debug_print) gm.box.k.waitAnyKey();
 
         loadRoom(rooms[0].tag);
 
         gm.box.PrintD("Rooms loaded");
+        if (gm.box.debug_print) gm.box.flush();
+        if (gm.box.debug_print) gm.box.k.waitAnyKey();
 
         all_interactables = new List<Interactable>();
         load_env_interactables(filename);
 
         gm.box.PrintD("Interactables loaded");
+        if (gm.box.debug_print) gm.box.flush();
+        if (gm.box.debug_print) gm.box.k.waitAnyKey();
         
         load_env_items(filename);
 
         gm.box.PrintD("Items loaded");
+        if (gm.box.debug_print) gm.box.flush();
+        if (gm.box.debug_print) gm.box.k.waitAnyKey();
 
         string cutscene_name = "";
         if(System.IO.File.Exists(filename + "_cutscene.txt")) {
@@ -114,6 +128,7 @@ public class Environment {
 
         foreach(room_short rs in rooms) {
             loadRoom_ind(rs);
+            gm.box.PrintD("loaded room: " + rs.name);
         }
 
     }
@@ -244,7 +259,7 @@ public class Environment {
                 }
             }
             if (gm.fm.null_or_empt(new_obj.full_action)) {
-                new_obj.full_action = "null:empty_action";
+                new_obj.full_action = "null();";
             }
             all_interactables.Add(new_obj);
         }
@@ -288,7 +303,7 @@ public class Environment {
                     break;
 
                     case "desc":
-                        room_.desc = node_iterator.InnerText.Replace("\n", "").Replace("\t", "");
+                        room_.desc = node_iterator.InnerText.Replace("\r", "").Replace("\n", "").Replace("\t", "");
                     break;
 
                     case "on_enter":
@@ -429,83 +444,6 @@ public class Environment {
 
     }
 
-    //to be tested
-    /*void getDirs(XmlNode room) {
-        XmlNode dirs = room.ChildNodes.Item(4); //this gets the 'direction' tag from the file
-        room_directions = new List<direction>();
-        int dir = 0;
-        foreach(XmlNode child in dirs) { //runs through each direction, 'left', 'right', etc...
-            if (child.ChildNodes.Item(0).InnerText != "") {
-                switch (dir) {
-                    case 0:
-                        left = true;
-                        load_dir(direction_enum.left, child);
-                    break;
-
-                    case 1:
-                        right = true;
-                        load_dir(direction_enum.right, child);
-                    break;
-
-                    case 2:
-                        forwards = true;
-                        load_dir(direction_enum.forwards, child);
-                    break;
-
-                    case 3:
-                        backwards = true;
-                        load_dir(direction_enum.backwards, child);
-                    break;
-
-                    default:
-                        break;
-                }
-                dir ++;
-            }
-        }
-    }*/
-
-    //to be tested
-/*    void load_dir(direction_enum dir, XmlNode direction_node) {
-        try{ 
-            direction direc = new direction{
-
-            corresponding_enum = dir,
-            direction_str = dir.ToString(),
-            direction_int = (int) dir,
-
-            direction_leads = direction_node.ChildNodes.Item(0).InnerText,
-            action_dialogue = direction_node.ChildNodes.Item(1).InnerText,
-            is_locked = System.Convert.ToBoolean(int.Parse(direction_node.ChildNodes.Item(2).InnerText)),
-            item_locked_dialogue = direction_node.ChildNodes.Item(3).InnerText,
-            item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
-            tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
-            item_required = direction_node.ChildNodes.Item(5).InnerText,
-            direction_action = direction_node.ChildNodes.Item(7).InnerText,
-
-            };  
-            room_directions.Add(direc);
-        } catch {
-            direction direc = new direction{
-
-            corresponding_enum = dir,
-            direction_str = dir.ToString(),
-            direction_int = (int) dir,
-
-            direction_leads = direction_node.ChildNodes.Item(0).InnerText,
-            action_dialogue = direction_node.ChildNodes.Item(1).InnerText,
-            is_locked = false,
-            item_locked_dialogue = direction_node.ChildNodes.Item(3).InnerText,
-            item_unlock_dialogue = direction_node.ChildNodes.Item(4).InnerText,
-            tag_locked_dialogue = direction_node.ChildNodes.Item(6).InnerText,
-            item_required = direction_node.ChildNodes.Item(5).InnerText,
-            direction_action = direction_node.ChildNodes.Item(7).InnerText,
-
-            }; 
-            room_directions.Add(direc);
-        }
-    }*/
-
     public int Move(direction_enum direction_Enum) {
         foreach(direction direc in current_room.room_directions) {
             if (direc.direction_int == (int) direction_Enum) {
@@ -572,7 +510,7 @@ public class Environment {
     }
 
     void effect_direction(direction dir) {
-        gm.Do("go", "(" + dir.direction_leads + ");");
+        Go(dir.direction_leads);
         gm.box.Print(dir.action_dialogue);
     }
 
@@ -675,7 +613,7 @@ public class Environment {
 
             if(room_tag.Contains(":")) {
                 string env_name = room_tag.Split(":")[0];
-                gm.Do("env", "(" + room_tag.Split(":")[1] + ");");
+                load_env(room_tag.Split(':',2)[1]);
                 return 1;
             }
 
