@@ -9,6 +9,7 @@ public class GManager {
     public Environment env;
     public Player player;
     public Commands cm;
+    public Action ac;
 
     public bool is_running = true;
 
@@ -31,6 +32,7 @@ public class GManager {
         env = new Environment(this);
         player = new Player(this);
         cm = new Commands(this);
+        ac = new Action(this);
 
         /*log_file = fm.newFile("log_01");
         if (fm.write_at("pee", 1, log_file) == 0) {
@@ -463,51 +465,7 @@ public class GManager {
         "if",
     };
 
-    public void Do(string actionn, string resultt) {
-
-        
-
-        string result = resultt.Replace("\r", "").Replace("\n", "").Replace("\t", "");
-        string to_run_at_end = "";
-        int num_of_lines = 0;
-        string action = actionn.Replace("\r", "").Replace("\n", "").Replace("\t", "");
-        box.PrintD(action + "," + result);
-
-        box.flush();
-        if(step_through_actions == true) box.k.waitAnyKey();
-
-        if (action.Replace(" ", "") != "if") {
-            foreach(string g in exceptional_commands) {
-                if (action.Replace(" ", "") == g) {
-                    goto resume;
-                }
-            }
-            num_of_lines = count_char(resultt, ';');
-
-            if (num_of_lines > 1) to_run_at_end = resultt.Split(';',2)[1];
-            else to_run_at_end = null;
-
-            box.PrintD("num of lines: " + num_of_lines.ToString() + ", to run: " + to_run_at_end);
-            box.PrintD("running: {Red}" + resultt.Split(';',2)[0]);
-
-            result = resultt.Split(';',2)[0];
-
-            result = result.Replace("(", "").Replace(")", "");
-        }
-
-        resume:
-
-        if (fm.null_or_empt(result)) {
-            foreach(string g in null_action_commands) {
-                if (g == action) {
-                    goto resume_null_action;
-                }
-            }
-            box.Print("Internal error, incomplete command requested; ERR_013");
-            return;
-        }
-
-        resume_null_action:
+    public void Do(string action, string result) {
 
         switch (action.Replace(" ", "")) {
             case "give":
@@ -582,38 +540,15 @@ public class GManager {
             case "subroutine":
             case "routine":
             case "new_sub":
-            case "newsub": //e.x. new_sub{say_hi=say(hello);}
+            case "newsub": //e.x. new_sub(say_hi=say(hello);)
 
                 if (!result.Contains('=')) break;
 
                 box.Print("{Green}" + result);
 
-                string subroutine = result.Split('(',2)[1];
+                string subroutine = result.Split('=',2)[0];
 
-                subroutine = subroutine.Split('=',2)[1];
-
-                string subroutine_name = result.Split('(',2)[1].Split('=',2)[0];
-
-                for(int i = 0; i < subroutine.Length; i ++) {
-
-                    if (subroutine[i] == '(') {
-                        while(subroutine[i] != ')') {
-                            i ++;
-                        }
-                        i ++;
-                    }
-
-                    if (subroutine[i] == ')') {
-                        if(subroutine.Length > i + 2) to_run_at_end = split_at(subroutine, i + 2)[1];
-                        if (!fm.null_or_empt(to_run_at_end)) {
-                            num_of_lines = 2;
-                        }
-                        else num_of_lines = 1;
-                        subroutine = split_at(subroutine, i)[0];
-                    }
-
-
-                }
+                string subroutine_name = result.Split('=',2)[1];
 
                 env.subroutines.Add(new subroutine{
                     name = subroutine_name,
@@ -1058,7 +993,7 @@ public class GManager {
                     box.PrintD("comparison inverted, '!=' used. new comparison: " + compare_tag);
                 }
 
-                bool true_false = check_conditions(compare_tag, condition);
+                bool true_false = check_conditions(compare_tag, "=", condition);
 
                 if (true_false == true) {
                     checkDo(if_true);
@@ -1138,25 +1073,50 @@ public class GManager {
             break;
         }
 
-        if (num_of_lines > 1) Do(to_run_at_end);
-
         
     }
 
-    public bool check_conditions(string compare_tag, string condition) {
+    public bool check_conditions(string compare_tag, string operation, string condition) {
+
+
         switch(compare_tag.Replace(" ", "")) {
 
                     case "fun":
+                        switch (operation) {
+                            case "<":
+                                if(player.fun <= int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
 
-                        if(player.fun == int.Parse(condition)) {
+                            case ">":
+                                if(player.fun >= int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
 
-                            return true;
+                            case "=":
+                                if(player.fun == int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
 
+                            case "!":
+                                if(player.fun != int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            
                         }
-                        else {
-                            return false;
-                        }
-
+                    break;
 
                     case "rand5050":
                     case "5050":
@@ -1333,11 +1293,47 @@ public class GManager {
                     default:
                         foreach(player_value pv in player.player_Values) {/* foreach player value */
                             if (pv.name == compare_tag) { 
-                                if (pv.value == condition) {
+                                try {
+                                    switch (operation) {
+                                    case "<":
+                                if(int.Parse(pv.value) <= int.Parse(condition)) {
                                     return true;
                                 }
                                 else {
                                     return false;
+                                }
+
+                            case ">":
+                                if(int.Parse(pv.value) >= int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+
+                            case "=":
+                                if(int.Parse(pv.value) == int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+
+                            case "!":
+                                if(int.Parse(pv.value) != int.Parse(condition)) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            
+                        }
+                                } catch {
+                                    if (pv.value == condition) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
                                 }
                             }
                             goto break_label;
@@ -1437,7 +1433,7 @@ public class GManager {
                             if_false = "";
                         }
 
-                            bool check = check_conditions(compare_tag, condition);
+                            bool check = check_conditions(compare_tag, "=", condition);
 
                             if (check == true) {
                                 g += if_true;
