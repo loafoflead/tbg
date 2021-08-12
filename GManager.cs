@@ -746,7 +746,8 @@ public class GManager {
             case "stop_action":
             case "end_action":
             case "stop":
-                return;
+                ac.cease();
+            return;
 
             case "take":
                 switch(result.Replace(" ", "")) {

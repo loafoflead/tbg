@@ -327,12 +327,19 @@
                 <action>
                     if(inv=dream_house_key)
                         [
+                            if(tags=defeated_beast) [
+                                print(You unlock the door and walk out into the front garden.);
+                                go(dream_front_garden);
+                                return();
+                            ]
                             print(The front door is locked.);
-                            <!--wait();-->
                             print(Do you want to unlock it with-);
                             flush();
+                            wait();
                             print(In a flash, a dark figure snatches the key out of your hands, and runs away into the hallway.);
                             take(dream_house_key);
+                            flush();
+                            wait(2);
                             if(tags=saw_beast)
                                 [
                                     print(After recovering from your shock, you remember the thing you saw in your sibling's cupboard earlier.);

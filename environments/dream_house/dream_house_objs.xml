@@ -376,19 +376,19 @@
                     clear();
                     print(The house key is on the floor in a pool of something that looks like oil. You lift the key from the muck.);
                     give(dream_house_key);
+                    givetag(defeated_beast);
                 ]   ?   [
                     print(The beast lunged at you. You're certain it killed you, but you wake up in your bed a moment later.);
                     load_env(house);
                     setroom(bedroom);
+                    wait(3);
+                    say(Crap.);
                 ]
 
             ]   ?   [
                 print(The beast is gone.);
             ]
         </action>
-       
-        <one_time_use></one_time_use>
-        <used_dialogue></used_dialogue>
 
         <aliases>beast/the beast/the creature/creature/monster/the monster/thing/guy</aliases>
 

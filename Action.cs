@@ -69,6 +69,7 @@ public class Action {
         regular = 2,
         null_action = 3,
         subroutine =4,
+        cancel = 5,
     };
 
     private string[] exceptional_actions = new string[] {
@@ -98,6 +99,10 @@ public class Action {
         "sub",
     };
 
+    private static string[] return_commands = new string[] {
+        "return", "end", "stop", "cancel", "quit", "stop_action", "end_action", "halt"
+    };
+
     private bool array_contains(string str, string[] array) {
         foreach(string h in array) {
             if (h == str) {
@@ -107,9 +112,15 @@ public class Action {
         return false;
     }
 
+    List<action> actions = new List<action>();
+
+    public void cease() {
+        //actions = new List<action>();
+    }
+
     int evaluate_action(string full_act) {
 
-        List<action> actions = new List<action>();
+        actions = new List<action>();
     
         string act = "";
 
@@ -135,14 +146,22 @@ public class Action {
                     actions.Add(to_add);
 
                 }
-                else if (array_contains(act, exceptional_commands)) {
+                else if (array_contains(act, return_commands)) { /* RETURN COMMANDS */
+
+                    action to_add = new action();
+                    i += 3;
+                    to_add.action_Type = action_type.cancel;
+                    actions.Add(to_add);
+
+                }
+                else if (array_contains(act, exceptional_commands)) { /* EXCEPTIONAL COMMANDS: CREATE_SUB */
 
                     action to_add = parse_subroutine(gm.split_at(full_act, i)[1]);
                     i += to_add.length - act.Length;
                     actions.Add(to_add);
 
                 }
-                else if (array_contains(act, null_action_commands)) {
+                else if (array_contains(act, null_action_commands)) { /* NULL ACTION COMMANDs */
 
                     action to_add = parse_null(act);
                     i += to_add.length - act.Length;
@@ -199,6 +218,12 @@ public class Action {
                     gm.Dod(ac.action_tag, "();");
                 break;
 
+                case action_type.cancel:    
+                    return 1;
+
+                default:
+                    break;
+
             }
             if (gm.step_through_actions == true) {
                 gm.box.k.waitAnyKey();
@@ -215,7 +240,7 @@ public class Action {
 
         action ac  = new action();
         ac.action_Type = action_type.null_action;
-        ac.length = tag.Length + 3;
+        ac.length = tag.Length + 2;
         ac.action_tag = tag;
 
         action_status(ac);
