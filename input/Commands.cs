@@ -276,6 +276,8 @@ public class Commands {
 
                     case "l":
                     case "left":
+                    case "north":
+                    case "n":
                         int h = gm.env.Move(Environment.direction_enum.left);
                         if (h == 0) {
                             gm.box.Print("There isn't a passage there!");
@@ -284,6 +286,8 @@ public class Commands {
 
                     case "r":
                     case "right":
+                    case "east":
+                    case "e":
                         if (gm.env.Move(Environment.direction_enum.right) == 0) {
                             gm.box.Print("There isn't a passage there!");
                         }
@@ -292,6 +296,8 @@ public class Commands {
                     case "f":
                     case "forward":
                     case "forwards":
+                    case "south":
+                    case "s":
                         if (gm.env.Move(Environment.direction_enum.forwards) == 0) {
                             gm.box.Print("There isn't a passage there!");
                         }
@@ -301,6 +307,8 @@ public class Commands {
                     case "back":
                     case "backward":
                     case "backwards":
+                    case "west":
+                    case "w":
                         if (gm.env.Move(Environment.direction_enum.backwards) == 0) {
                             gm.box.Print("There isn't a passage there!");
                         }
