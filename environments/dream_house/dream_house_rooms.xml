@@ -691,6 +691,52 @@
 
     </room>
 
+    <room> 
+
+        <id>13</id>
+
+        <tag>foggy_path</tag>
+        <name>Foggy path</name>
+
+        <desc>You can barely see, the fog is getting heavier. You're not sure where to go from here.</desc>
+        
+        <directions>
+            <west>
+                <leads>dream_front_garden</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+            <east>
+                <leads>#</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(You look forward into the fog. You're not sure you really want to try and explore it. Will you go east?);
+                    store(yn:go_to_fog);
+                    if(go_to_fog=true) [
+                        print(You decide to go forwards into the fog.);
+                        go(foggy_path);
+                    ] ? [
+                        print(You decide to back away.);
+                    ]
+                    release(go_to_fog);
+                </action>
+            </east>
+            
+        </directions>
+
+
+    </room>
+
 
 </dream_house_rooms>
 

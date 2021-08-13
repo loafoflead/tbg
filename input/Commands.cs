@@ -1176,4 +1176,46 @@ public class Commands {
         return YN(question);
     }
 
+    public void list_pages(System.Collections.Generic.List<object> ls) {
+        try
+        {
+            int page = int.Parse(arguments[2]);
+            System.Collections.Generic.List<string[]> pages = new System.Collections.Generic.List<string[]>();
+            string[] curr_page;
+            int i = 0;
+            curr_page = new string[6];
+            foreach (room_short rs in ls)
+            {
+                if (i == 6)
+                {
+                    i = 0;
+                    pages.Add(curr_page);
+                    curr_page = new string[6];
+                }
+                curr_page[i] = rs.tag;
+                i++;
+            }
+            pages.Add(curr_page);
+            try
+            {
+                gm.box.Print("{Green}+{White}--------{Green}+{White}");
+                gm.box.Print("{Green}Page {White}" + page.ToString());
+                foreach (string temp_page in pages[page])
+                {
+                    gm.box.Print(temp_page);
+                }
+                gm.box.Print("{Green}+{White}--------{Green}+{White}");
+            }
+            catch
+            {
+                gm.box.Print("Invalid page number");
+            }
+        }
+        catch
+        {
+            gm.box.Print("Page number was not a number.");
+        }
+    
+    }
+
 }
