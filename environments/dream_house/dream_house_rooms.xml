@@ -524,7 +524,7 @@
         <tag>dream_front_garden</tag>
         <name>Dream front garden</name>
 
-        <desc>Your front garden. It's early morning, and there's still dewdrops on the grass. East is a beaten dirt path to the road to your small village, north is your front door. South is your garage door.</desc>
+        <desc>Your front garden. It's dark and foggy, the grass is wet and the soil is mushy. East is a beaten dirt path to the road to your small village, north is your front door. South is your garage door.</desc>
         
         <directions>
             <north>
@@ -540,14 +540,13 @@
 
             <east>
                 <leads>dream_dirt_path</leads>
-                <dia></dia>
+                <dia>You open the little wooden gate out of your garden, into the fog.</dia>
                 <lock></lock>
                 <lock_dia></lock_dia>
                 <unlock_dia></unlock_dia>
                 <lock_reqs></lock_reqs>
                 <tag_lock_dia></tag_lock_dia>
-                <action>
-                </action>
+                <action></action>
             </east>
             <south>
                 <leads>##</leads>
@@ -639,6 +638,53 @@
                     run(replace_normal_items);
                 </action>
             </north>
+            
+        </directions>
+
+
+    </room>
+
+    <!-- DREAM DIRT PATH _/ -->
+    <room> 
+
+        <id>12</id>
+
+        <tag>dream_dirt_path</tag>
+        <name>Dream dirt path</name>
+
+        <desc>It's really foggy, you can only see about a meter in front of you. You take a few ambling steps forward to get a better look around, but you dont feel like straying too far away just yet. West is the gate back to the front garden.</desc>
+        
+        <directions>
+            <west>
+                <leads>dream_front_garden</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action></action>
+            </west>
+            <east>
+                <leads>#</leads>
+                <dia></dia>
+                <lock></lock>
+                <lock_dia></lock_dia>
+                <unlock_dia></unlock_dia>
+                <lock_reqs></lock_reqs>
+                <tag_lock_dia></tag_lock_dia>
+                <action>
+                    print(You look forward into the fog. You're not sure you really want to try and explore it. Will you go east?);
+                    store(yn:go_to_fog);
+                    if(go_to_fog=true) [
+                        print(You decide to go forwards into the fog.);
+                        go(foggy_path);
+                    ] ? [
+                        print(You decide to back away.);
+                    ]
+                    release(go_to_fog);
+                </action>
+            </east>
             
         </directions>
 

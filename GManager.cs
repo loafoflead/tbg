@@ -639,6 +639,10 @@ public class GManager {
             break;
 
             case "remove_value":
+            case "release":
+            case "delete":
+            case "rem_val":
+            case "release_value":
                 player.remove_value_by_tag(result.Replace(" ", ""));
             break;
 
@@ -870,48 +874,83 @@ public class GManager {
                 switch(result.Split(':')[0]) {
 
                     case "room":
-                        player.add_value(result.Split(':')[1], env.get_room_name_by_tag(env.current_room.tag));
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], env.get_room_name_by_tag(env.current_room.tag));
+                        else player.get_value(result.Split(':',2)[1]).value = env.get_room_name_by_tag(env.current_room.tag);
+                    break;
+
+                    case "room_tag":
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], env.current_room.tag);
+                        else player.get_value(result.Split(':',2)[1]).value = env.current_room.tag;
                     break;
 
                     case "fun":
-                        player.add_value(result.Split(':')[1], player.fun.ToString());
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.fun.ToString());
+                        else player.get_value(result.Split(':',2)[1]).value = player.fun.ToString();
                     break;
 
                     case "name":
-                        player.add_value(result.Split(':')[1], player.name);
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.name);
+                        else player.get_value(result.Split(':',2)[1]).value  = player.name;
                     break;
 
                     case "bio":
-                        player.add_value(result.Split(':')[1], player.bio);
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.bio);
+                        else player.get_value(result.Split(':',2)[1]).value = player.bio;
                     break;
 
                     case "environment":
-                        player.add_value(result.Split(':')[1], env.current_env_name.Replace("_", " "));
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], env.current_env_name.Replace("_", ""));
+                        else player.get_value(result.Split(':',2)[1]).value = env.current_env_name.Replace("_", "");
+                    break;
+
+                    case "env_tag":
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], env.current_env_name);
+                        else player.get_value(result.Split(':',2)[1]).value = env.current_env_name;
                     break;
 
                     case "items":
                     case "num_of_items":
                     case "numofitems":
-                        player.add_value(result.Split(':')[1], player.inv.player_inventory.Count.ToString());
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.inv.player_inventory.Count.ToString());
+                        else player.get_value(result.Split(':',2)[1]).value = player.inv.player_inventory.Count.ToString();
                     break;
 
                     case "num_of_values":
                     case "numofvalues":
                     case "values":
-                        player.add_value(result.Split(':')[1], player.player_Values.Count.ToString());
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.player_Values.Count.ToString());
+                        player.player_Values.Count.ToString();
                     break;
 
                     case "num_of_tags":
                     case "numoftags":
                     case "tags":
                     case "tag_count":
-                        player.add_value(result.Split(':')[1], player.player_tags.Count.ToString());
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.player_tags.Count.ToString());
+                        else player.get_value(result.Split(':',2)[1]).value = player.player_tags.Count.ToString();
+                    break;
+
+                    case "ask":
+                    case "input":
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':',2)[1], System.Console.ReadLine());
+                        else player.get_value(result.Split(':',2)[1]).value = System.Console.ReadLine();
+                    break;
+
+                    case "yn":
+                    case "YN":
+                    case "y/n":
+                    case "Y/N":
+                    case "yes_no":
+                    case "yes_or_no":
+                        if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':',2)[1], cm.YN("(y)es or (n)o?").ToString().ToLower());
+                        else player.get_value(result.Split(':',2)[1]).value = cm.YN("(y)es or (n)o?").ToString().ToLower();
                     break;
 
                     default:
                         foreach(player_value pv in player.player_Values) {
                             if (pv.name == result.Split(':')[0]) {
-                                player.add_value(result.Split(':')[1], player.get_value(result.Split(':')[0]).value);
+                                if(player.get_value(result.Split(':',2)[1]) == null) player.add_value(result.Split(':')[1], player.get_value(result.Split(':')[0]).value);
+                                else player.get_value(result.Split(':',2)[1]).value = player.get_value(result.Split(':')[0]).value;
                                 goto break_label_store;
                             }
                         }
