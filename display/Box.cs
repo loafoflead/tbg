@@ -343,6 +343,13 @@ public class Box {
         public ConsoleColor bg_color;
     }
 
+    string capitalise_first_letter(string str) {
+        char tem = str[0];
+        str = str.Remove(0, 1);
+        str = tem.ToString().ToUpper() + str;
+        return str;
+    }
+
     List<sub_string> get_colours(string str) {
 
         List<sub_string> to_return = new List<sub_string>();
@@ -389,7 +396,8 @@ public class Box {
                     bg_col = "0";
                 }
                 
-                
+                fg_col = capitalise_first_letter(fg_col);
+                bg_col = capitalise_first_letter(bg_col);
 
                 try { //try and add the int value of the colour to the sub string
                     to_return.Add(new sub_string {
